@@ -1,0 +1,8 @@
+{
+  "entryPoints": [
+    "src/index.ts"
+  ],
+  "name": "Wesib: Navigation Support",
+  "out": "./target/typedoc",
+  "tsconfig": "tsconfig.main.json"
+}
