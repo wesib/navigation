@@ -1,3 +1,4 @@
+import { beforeEach, describe, expect, it } from '@jest/globals';
 import { ContextRegistry, ContextValues } from '@proc7ts/context-values';
 import { PageLoadURLModifier } from './page-load-url-modifier';
 

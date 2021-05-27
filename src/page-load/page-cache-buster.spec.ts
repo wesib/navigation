@@ -1,13 +1,14 @@
+import { afterEach, beforeEach, describe, expect, it, jest } from '@jest/globals';
 import { afterThe } from '@proc7ts/fun-events';
 import { HttpFetch } from '@wesib/generic';
 import { bootstrapComponents, BootstrapContext, BootstrapWindow, Feature } from '@wesib/wesib';
+import { Mock, SpyInstance } from 'jest-mock';
 import { Navigation } from '../navigation';
+import { Page } from '../page';
 import { LocationMock } from '../spec/location-mock';
 import { appRevSearchParam } from './page-cache-buster.impl';
 import { PageLoadParam } from './page-load-param';
 import { PageLoadSupport } from './page-load-support.feature';
-import Mock = jest.Mock;
-import SpyInstance = jest.SpyInstance;
 
 describe('PageCacheBuster', () => {
 
@@ -63,13 +64,13 @@ describe('PageCacheBuster', () => {
   });
 
   let navigation: Navigation;
-  let updateSpy: SpyInstance;
-  let reloadSpy: SpyInstance;
+  let updateSpy: SpyInstance<Page, [string | URL]>;
+  let reloadSpy: SpyInstance<void, []>;
 
   beforeEach(() => {
     navigation = context.get(Navigation);
     updateSpy = jest.spyOn(navigation, 'update');
-    updateSpy.mockImplementation(() => Promise.resolve());
+    updateSpy.mockImplementation(() => ({} as Page));
     reloadSpy = jest.spyOn(navigation, 'reload');
   });
 
@@ -129,7 +130,7 @@ describe('PageCacheBuster', () => {
     });
 
     expect(updateSpy).toHaveBeenCalled();
-    expect(updateSpy.mock.calls[0][0].href)
+    expect((updateSpy.mock.calls[0][0] as URL).href)
         .toBe(`http://localhost/some?q=v&${appRevSearchParam}=${responseRev}`);
     expect(reloadSpy).toHaveBeenCalledTimes(1);
   });

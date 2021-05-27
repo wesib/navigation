@@ -1,8 +1,9 @@
-import Mock = jest.Mock;
-import Mocked = jest.Mocked;
+import { afterEach, beforeEach, describe, expect, it, jest } from '@jest/globals';
 import { afterSupplied, onceAfter, onceOn, onSupplied } from '@proc7ts/fun-events';
 import { asis, noop } from '@proc7ts/primitives';
 import { bootstrapComponents, BootstrapContext, BootstrapWindow, Feature } from '@wesib/wesib';
+import { MockObject } from '@wesib/wesib/testing';
+import { Mock } from 'jest-mock';
 import { Navigation } from './navigation';
 import { NavigationAgent } from './navigation-agent';
 import { EnterPageEvent, LeavePageEvent, NavigationEventType, StayOnPageEvent } from './navigation.event';
@@ -99,13 +100,13 @@ describe('Navigation', () => {
 
   describe('[AfterEvent__symbol]', () => {
     it('is the same as `read`', () => {
-      expect(afterSupplied(navigation)).toBe(navigation.read);
+      void expect(afterSupplied(navigation)).toBe(navigation.read);
     });
   });
 
   describe('[OnEvent__symbol]', () => {
     it('is the same as `on`', () => {
-      expect(onSupplied(navigation)).toBe(navigation.on);
+      void expect(onSupplied(navigation)).toBe(navigation.on);
     });
   });
 
@@ -463,7 +464,7 @@ describe('Navigation', () => {
   describe('pretend', () => {
 
     let param: PageParam<string, string>;
-    let mockHandle: Mocked<PageParam.Handle<string, string>>;
+    let mockHandle: MockObject<PageParam.Handle<string, string>>;
     let fromPage: Page;
 
     beforeEach(() => {

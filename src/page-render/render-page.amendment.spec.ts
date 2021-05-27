@@ -1,4 +1,5 @@
 import { queuedRenderScheduler } from '@frontmeans/render-scheduler';
+import { afterEach, beforeEach, describe, expect, it, jest } from '@jest/globals';
 import { afterThe } from '@proc7ts/fun-events';
 import { noop, valueProvider } from '@proc7ts/primitives';
 import { HttpFetch } from '@wesib/generic';
@@ -10,13 +11,13 @@ import {
   DefaultPreRenderScheduler,
   DefaultRenderScheduler,
 } from '@wesib/wesib';
+import { Mock } from 'jest-mock';
 import { Navigation } from '../navigation';
 import { PageLoadAgent, PageLoadParam } from '../page-load';
 import { LocationMock } from '../spec/location-mock';
 import { PageRenderer, PageRendererExecution } from './page-renderer';
 import { RenderPageDef } from './render-page-def';
 import { RenderPage } from './render-page.amendment';
-import Mock = jest.Mock;
 
 describe('@RenderPage', () => {
 

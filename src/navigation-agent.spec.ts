@@ -1,11 +1,12 @@
+import { beforeEach, describe, expect, it, jest } from '@jest/globals';
 import { ContextRegistry, ContextSupply } from '@proc7ts/context-values';
 import { noop } from '@proc7ts/primitives';
 import { Supply } from '@proc7ts/supply';
+import { Mock } from 'jest-mock';
 import { Navigation } from './navigation';
 import { NavigationAgent } from './navigation-agent';
 import { Page } from './page';
 import { testPageParam } from './spec/test-page-param';
-import Mock = jest.Mock;
 
 describe('NavigationAgent', () => {
 

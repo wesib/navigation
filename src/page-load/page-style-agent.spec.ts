@@ -1,12 +1,13 @@
+import { afterEach, beforeEach, describe, expect, it, jest } from '@jest/globals';
 import { afterThe } from '@proc7ts/fun-events';
 import { noop } from '@proc7ts/primitives';
 import { HttpFetch } from '@wesib/generic';
 import { bootstrapComponents, BootstrapContext, BootstrapWindow, Feature } from '@wesib/wesib';
+import { Mock } from 'jest-mock';
 import { Navigation } from '../navigation';
 import { LocationMock } from '../spec/location-mock';
 import { PageLoadParam } from './page-load-param';
 import { PageLoadSupport } from './page-load-support.feature';
-import Mock = jest.Mock;
 
 describe('pageStyleAgent', () => {
 

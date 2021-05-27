@@ -1,8 +1,9 @@
+import { beforeEach, describe, expect, it, jest } from '@jest/globals';
 import { ContextRegistry } from '@proc7ts/context-values';
 import { EventEmitter, onceOn, OnEvent, onSupplied } from '@proc7ts/fun-events';
+import { Mock } from 'jest-mock';
 import { PageLoadAgent } from './page-load-agent';
 import { PageLoadResponse } from './page-load-response';
-import Mock = jest.Mock;
 
 describe('PageLoadAgent', () => {
 

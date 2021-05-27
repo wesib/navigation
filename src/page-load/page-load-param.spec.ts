@@ -1,8 +1,10 @@
+import { afterEach, beforeEach, describe, expect, it, jest } from '@jest/globals';
 import { afterThe, EventEmitter, onceOn } from '@proc7ts/fun-events';
 import { noop } from '@proc7ts/primitives';
 import { Supply } from '@proc7ts/supply';
 import { HttpFetch } from '@wesib/generic';
 import { bootstrapComponents, BootstrapContext, BootstrapWindow, Feature } from '@wesib/wesib';
+import { Mock } from 'jest-mock';
 import { Navigation } from '../navigation';
 import { Page } from '../page';
 import { LocationMock } from '../spec/location-mock';
@@ -10,7 +12,6 @@ import { testPageParam } from '../spec/test-page-param';
 import { PageLoadAgent } from './page-load-agent';
 import { PageLoadParam } from './page-load-param';
 import { PageLoadResponse } from './page-load-response';
-import Mock = jest.Mock;
 
 describe('PageLoadParam', () => {
 

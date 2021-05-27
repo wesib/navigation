@@ -1,9 +1,10 @@
+import { beforeEach, describe, expect, it, jest } from '@jest/globals';
 import { EventEmitter, onEventBy } from '@proc7ts/fun-events';
+import { Mock } from 'jest-mock';
 import { Page } from '../page';
 import { cachingPageLoader } from './caching-page-loader.impl';
 import { PageLoadResponse } from './page-load-response';
 import { PageLoader } from './page-loader.impl';
-import Mock = jest.Mock;
 
 describe('cachingPageLoader', () => {
 
