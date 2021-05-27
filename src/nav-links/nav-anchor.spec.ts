@@ -1,6 +1,8 @@
 import { immediateRenderScheduler } from '@frontmeans/render-scheduler';
+import { afterEach, beforeEach, describe, expect, it, jest } from '@jest/globals';
 import { mapOn_, trackValue, ValueTracker } from '@proc7ts/fun-events';
 import { bootstrapComponents, Component, ComponentContext, DefaultRenderScheduler, Feature } from '@wesib/wesib';
+import { MockObject } from '@wesib/wesib/testing';
 import { Navigation } from '../navigation';
 import { navAnchor, NavAnchor } from './nav-anchor';
 import { NavLink } from './nav-link';
@@ -27,7 +29,7 @@ describe('navAnchor', () => {
     element.remove();
   });
 
-  let mockNavigation: jest.Mocked<Navigation>;
+  let mockNavigation: MockObject<Navigation>;
   let pageURL: ValueTracker<URL>;
 
   beforeEach(() => {

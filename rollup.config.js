@@ -25,32 +25,22 @@ export default {
   treeshake: {
     moduleSideEffects: false,
   },
-  output: [
-    {
-      format: 'cjs',
-      sourcemap: true,
-      dir: './dist',
-      entryFileNames: '[name].cjs',
-      chunkFileNames: '_[name].cjs',
-      hoistTransitiveImports: false,
-    },
-    {
-      format: 'esm',
-      sourcemap: true,
-      dir: '.',
-      entryFileNames: 'dist/[name].js',
-      chunkFileNames: 'dist/_[name].js',
-      hoistTransitiveImports: false,
-      plugins: [
-        flatDts({
-          tsconfig: 'tsconfig.main.json',
-          lib: true,
-          compilerOptions: {
-            declarationMap: true,
-          },
-          internal: ['**/impl/**', '**/*.impl'],
-        }),
-      ],
-    },
-  ],
+  output: {
+    format: 'esm',
+    sourcemap: true,
+    dir: '.',
+    entryFileNames: 'dist/[name].js',
+    chunkFileNames: 'dist/_[name].js',
+    hoistTransitiveImports: false,
+    plugins: [
+      flatDts({
+        tsconfig: 'tsconfig.main.json',
+        lib: true,
+        compilerOptions: {
+          declarationMap: true,
+        },
+        internal: ['**/impl/**', '**/*.impl'],
+      }),
+    ],
+  },
 };

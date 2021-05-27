@@ -1,3 +1,4 @@
+import { describe, expect, it } from '@jest/globals';
 import { getHashURL, setHashURL } from './hash-url';
 
 describe('getHashURL', () => {

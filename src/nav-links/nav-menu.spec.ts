@@ -1,8 +1,10 @@
+import { afterEach, beforeEach, describe, expect, it, jest } from '@jest/globals';
 import { Contextual__symbol } from '@proc7ts/context-values';
 import { afterThe, trackValue, translateAfter_ } from '@proc7ts/fun-events';
 import { Supply } from '@proc7ts/supply';
 import { BootstrapWindow, Component, ComponentContext, ComponentSlot } from '@wesib/wesib';
-import { MockElement, testElement } from '@wesib/wesib/testing';
+import { MockElement, MockObject, testElement } from '@wesib/wesib/testing';
+import { Mock } from 'jest-mock';
 import { Navigation } from '../navigation';
 import { Page } from '../page';
 import { LocationMock } from '../spec/location-mock';
@@ -149,9 +151,9 @@ describe('NavMenu', () => {
 
   describe('activation by path', () => {
 
-    let link1: jest.Mocked<Required<NavLink>>;
-    let link2: jest.Mocked<Required<NavLink>>;
-    let link3: jest.Mocked<Required<NavLink>>;
+    let link1: MockObject<Required<NavLink>>;
+    let link2: MockObject<Required<NavLink>>;
+    let link3: MockObject<Required<NavLink>>;
 
     beforeEach(() => {
       link1 = testLink('index/path');
@@ -305,9 +307,9 @@ describe('NavMenu', () => {
 
   describe('activation by search parameters', () => {
 
-    let link1: jest.Mocked<Required<NavLink>>;
-    let link2: jest.Mocked<Required<NavLink>>;
-    let link3: jest.Mocked<Required<NavLink>>;
+    let link1: MockObject<Required<NavLink>>;
+    let link2: MockObject<Required<NavLink>>;
+    let link3: MockObject<Required<NavLink>>;
 
     beforeEach(() => {
       link1 = testLink('index?a=1');
@@ -394,9 +396,9 @@ describe('NavMenu', () => {
 
   describe('activation by hash parameters', () => {
 
-    let link1: jest.Mocked<Required<NavLink>>;
-    let link2: jest.Mocked<Required<NavLink>>;
-    let link3: jest.Mocked<Required<NavLink>>;
+    let link1: MockObject<Required<NavLink>>;
+    let link2: MockObject<Required<NavLink>>;
+    let link3: MockObject<Required<NavLink>>;
 
     beforeEach(() => {
       link1 = testLink('path#hash?a=1');
@@ -469,10 +471,10 @@ describe('NavMenu', () => {
 
   describe('activation with custom weighing', () => {
 
-    let link1: jest.Mocked<Required<NavLink>>;
-    let link2: jest.Mocked<Required<NavLink>>;
-    let link3: jest.Mocked<Required<NavLink>>;
-    let weigh: jest.Mock<
+    let link1: MockObject<Required<NavLink>>;
+    let link2: MockObject<Required<NavLink>>;
+    let link3: MockObject<Required<NavLink>>;
+    let weigh: Mock<
         number,
         [{ link: NavLink; menu: NavMenu; page: Page }]>;
 
@@ -492,7 +494,7 @@ describe('NavMenu', () => {
     });
   });
 
-  function testLink(href: string): jest.Mocked<Required<NavLink>> {
+  function testLink(href: string): MockObject<Required<NavLink>> {
     return {
       href,
       supply: new Supply(),
@@ -500,10 +502,10 @@ describe('NavMenu', () => {
     };
   }
 
-  function lastActivation(link: jest.Mocked<Required<NavLink>>): Supply {
+  function lastActivation(link: MockObject<Required<NavLink>>): Supply {
 
     const results = link.activate.mock.results;
 
-    return results[results.length - 1].value;
+    return results[results.length - 1].value as Supply;
   }
 });

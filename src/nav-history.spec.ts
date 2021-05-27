@@ -1,13 +1,14 @@
+import { afterEach, beforeEach, describe, expect, it, jest } from '@jest/globals';
 import { onceOn } from '@proc7ts/fun-events';
 import { noop } from '@proc7ts/primitives';
 import { bootstrapComponents, BootstrapContext, BootstrapWindow, Feature } from '@wesib/wesib';
+import { MockObject } from '@wesib/wesib/testing';
 import { NAV_DATA_KEY, NavDataEnvelope } from './nav-history.impl';
 import { Navigation } from './navigation';
 import { Page } from './page';
 import { PageParam } from './page-param';
 import { LocationMock, navHistoryState } from './spec/location-mock';
 import { testPageParam, testPageParamHandle } from './spec/test-page-param';
-import Mocked = jest.Mocked;
 
 describe('NavHistory', () => {
 
@@ -47,7 +48,7 @@ describe('NavHistory', () => {
     navigation.read(p => page = p);
   });
 
-  let handle: Mocked<PageParam.Handle<string, string>>;
+  let handle: MockObject<PageParam.Handle<string, string>>;
   let param: PageParam<string, string>;
 
   beforeEach(() => {
