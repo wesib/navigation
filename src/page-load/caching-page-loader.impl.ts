@@ -53,7 +53,9 @@ export function cachingPageLoader(loader: PageLoader): PageLoader {
         supply.cuts(trackSupply).cuts(tracker);
 
         tracked = {
-          on: tracker.read.do(valueOn_(asis)),
+          on: tracker.read.do(
+              valueOn_<[PageLoadResponse?], PageLoadResponse>(asis),
+          ),
           num: 0,
         };
       }
