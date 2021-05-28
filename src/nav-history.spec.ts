@@ -2,11 +2,11 @@ import { afterEach, beforeEach, describe, expect, it, jest } from '@jest/globals
 import { onceOn } from '@proc7ts/fun-events';
 import { noop } from '@proc7ts/primitives';
 import { bootstrapComponents, BootstrapContext, BootstrapWindow, Feature } from '@wesib/wesib';
-import { MockObject } from '@wesib/wesib/testing';
 import { NAV_DATA_KEY, NavDataEnvelope } from './nav-history.impl';
 import { Navigation } from './navigation';
 import { Page } from './page';
 import { PageParam } from './page-param';
+import { MockObject } from './spec';
 import { LocationMock, navHistoryState } from './spec/location-mock';
 import { testPageParam, testPageParamHandle } from './spec/test-page-param';
 

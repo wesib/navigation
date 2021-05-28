@@ -1,9 +1,9 @@
 import { expect, jest } from '@jest/globals';
 import { noop } from '@proc7ts/primitives';
 import { BootstrapWindow } from '@wesib/wesib';
-import { MockObject } from '@wesib/wesib/testing';
 import { Mock } from 'jest-mock';
 import { NAV_DATA_KEY, NavDataEnvelope, PartialNavData } from '../nav-history.impl';
+import { MockObject } from './mock-object';
 
 export class LocationMock {
 

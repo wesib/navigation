@@ -1,7 +1,7 @@
 import { jest } from '@jest/globals';
-import { MockObject } from '@wesib/wesib/testing';
 import { Page } from '../page';
 import { PageParam } from '../page-param';
+import { MockObject } from './mock-object';
 
 export function testPageParamHandle(
     state: { value: string } = { value: '' },
