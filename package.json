@@ -25,7 +25,6 @@
   "types": "./index.d.ts",
   "exports": "./dist/wesib.navigation.js",
   "peerDependencies": {
-    "@frontmeans/namespace-aliaser": "^2.4.0",
     "@proc7ts/context-values": "^6.2.0",
     "@proc7ts/fun-events": "^10.5.0",
     "@wesib/generic": "^1.0.0-beta.44",
@@ -35,6 +34,7 @@
     "@frontmeans/dom-events": "^1.2.0",
     "@frontmeans/dom-primitives": "^1.1.0",
     "@frontmeans/drek": "^1.2.0",
+    "@frontmeans/namespace-aliaser": "^2.5.0",
     "@frontmeans/render-scheduler": "^1.7.0",
     "@hatsy/http-header-value": "^3.6.0",
     "@proc7ts/amend": "^1.0.0",
@@ -43,7 +43,6 @@
     "@proc7ts/supply": "^1.1.0"
   },
   "devDependencies": {
-    "@frontmeans/namespace-aliaser": "^2.4.0",
     "@frontmeans/render-scheduler": "^1.5.0",
     "@jest/globals": "^27.0.3",
     "@proc7ts/context-values": "^6.2.0",
