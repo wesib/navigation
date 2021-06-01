@@ -166,4 +166,3 @@ export function navElement<TElement extends Element>(
     });
   };
 }
-
