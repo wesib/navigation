@@ -56,7 +56,7 @@
     "@wesib/generic": "^1.0.0",
     "@wesib/wesib": "^1.0.0",
     "cross-fetch": "^3.1.4",
-    "eslint": "^7.28.0",
+    "eslint": "^7.29.0",
     "eslint-plugin-jest": "^24.3.6",
     "gh-pages": "^3.2.2",
     "jest": "^27.0.4",
