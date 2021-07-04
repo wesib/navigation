@@ -24,7 +24,7 @@ class PageHashURLParam$ extends PageParam<URL, URL | string | null | undefined> 
     return handle;
   }
 
-  byDefault(page: Page): PageParam.Handle<URL, URL> {
+  override byDefault(page: Page): PageParam.Handle<URL, URL> {
     return this.create(page, null);
   }
 
