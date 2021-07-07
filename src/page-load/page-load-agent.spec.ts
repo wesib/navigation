@@ -1,5 +1,5 @@
 import { beforeEach, describe, expect, it, jest } from '@jest/globals';
-import { ContextRegistry } from '@proc7ts/context-values';
+import { CxBuilder, cxConstAsset } from '@proc7ts/context-builder';
 import { EventEmitter, onceOn, OnEvent, onSupplied } from '@proc7ts/fun-events';
 import { Mock } from 'jest-mock';
 import { PageLoadAgent } from './page-load-agent';
@@ -7,15 +7,12 @@ import { PageLoadResponse } from './page-load-response';
 
 describe('PageLoadAgent', () => {
 
-  let registry: ContextRegistry;
+  let cxBuilder: CxBuilder;
   let agent: PageLoadAgent;
 
   beforeEach(() => {
-    registry = new ContextRegistry();
-
-    const values = registry.newValues();
-
-    agent = values.get(PageLoadAgent);
+    cxBuilder = new CxBuilder(get => ({ get }));
+    agent = cxBuilder.get(PageLoadAgent);
   });
 
   let request: Request;
@@ -32,17 +29,15 @@ describe('PageLoadAgent', () => {
     expect(agent(mockLoad, request)).toBe(emitter.on);
     expect(mockLoad).toHaveBeenCalledWith(request);
   });
-  it('performs the load without agents registered and with `null` fallback value', () => {
-    agent = registry.newValues().get(PageLoadAgent, { or: null })!;
-    expect(agent(mockLoad, request)).toBe(emitter.on);
-    expect(mockLoad).toHaveBeenCalledWith(request);
+  it('returns `null` fallback value without agents', () => {
+    expect(cxBuilder.get(PageLoadAgent, { or: null })).toBeNull();
   });
   it('calls the registered agent', async () => {
 
     const emitter2 = new EventEmitter<[PageLoadResponse]>();
     const mockAgent = jest.fn(() => emitter2.on);
 
-    registry.provide({ a: PageLoadAgent, is: mockAgent });
+    cxBuilder.provide(cxConstAsset(PageLoadAgent, mockAgent));
 
     const response1 = { name: 'document1' } as any;
     const response2 = { name: 'document2' } as any;
@@ -55,10 +50,7 @@ describe('PageLoadAgent', () => {
     expect(response).toBe(response2);
   });
   it('performs the load by calling `next`', () => {
-    registry.provide<PageLoadAgent, []>({
-      a: PageLoadAgent,
-      is: next => next(),
-    });
+    cxBuilder.provide(cxConstAsset(PageLoadAgent, next => next()));
 
     expect(agent(mockLoad, request)).toBe(emitter.on);
     expect(mockLoad).toHaveBeenCalledWith(request);
@@ -69,17 +61,17 @@ describe('PageLoadAgent', () => {
         (next, _request) => next(),
     );
 
-    registry.provide<PageLoadAgent, []>({
-      a: PageLoadAgent,
-      is: next => next(),
-    });
-    registry.provide<PageLoadAgent, []>({
-      a: PageLoadAgent,
-      is: mockAgent,
-    });
+    cxBuilder.provide(cxConstAsset(PageLoadAgent, next => next()));
+    cxBuilder.provide(cxConstAsset(PageLoadAgent, mockAgent));
 
     expect(agent(mockLoad, request)).toBe(emitter.on);
     expect(mockAgent).toHaveBeenCalledWith(expect.any(Function), request);
     expect(mockLoad).toHaveBeenCalledWith(request);
+  });
+
+  describe('toString', () => {
+    it('provides string representation', () => {
+      expect(String(PageLoadAgent)).toBe('[PageLoadAgent]');
+    });
   });
 });

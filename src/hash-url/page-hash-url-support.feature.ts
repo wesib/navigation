@@ -7,7 +7,10 @@ import { PageHashURLValueParam } from './page-hash-url-param.impl';
 
 const PageHashURLSupport__feature: FeatureDef = {
   setup(setup) {
-    setup.provide({ a: NavigationAgent, is: pageHashURLAgent });
+    setup.provide({
+      entry: NavigationAgent,
+      placeAsset: (_target, collector) => collector(PageHashURL$agent),
+    });
   },
 };
 
@@ -22,7 +25,7 @@ export class PageHashURLSupport {
 
 }
 
-function pageHashURLAgent(
+function PageHashURL$agent(
     next: (this: void, target?: Navigation.Target) => void,
     _when: 'pretend' | 'pre-open' | 'pre-replace',
     _from: Page,

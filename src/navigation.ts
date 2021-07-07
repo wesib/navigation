@@ -1,5 +1,5 @@
 import { DomEventDispatcher, OnDomEvent } from '@frontmeans/dom-events';
-import { ContextKey, ContextKey__symbol, SingleContextKey } from '@proc7ts/context-values';
+import { CxEntry, cxScoped, cxSingle } from '@proc7ts/context-values';
 import {
   AfterEvent,
   AfterEvent__symbol,
@@ -13,7 +13,7 @@ import {
   trackValue,
 } from '@proc7ts/fun-events';
 import { mergeFunctions, noop } from '@proc7ts/primitives';
-import { BootstrapContext, bootstrapDefault, BootstrapWindow } from '@wesib/wesib';
+import { BootstrapContext, BootstrapWindow } from '@wesib/wesib';
 import { NavHistory, PageEntry } from './nav-history.impl';
 import { NavigationAgent } from './navigation-agent';
 import {
@@ -26,14 +26,11 @@ import {
 import { Page } from './page';
 import { PageParam } from './page-param';
 
-/**
- * @internal
- */
-const Navigation__key = (/*#__PURE__*/ new SingleContextKey<Navigation>(
-    'navigation',
-    {
-      byDefault: bootstrapDefault(createNavigation),
-    },
+const Navigation$perContext: CxEntry.Definer<Navigation> = (/*#__PURE__*/ cxScoped(
+    BootstrapContext,
+    (/*#__PURE__*/ cxSingle({
+      byDefault: Navigation$byDefault,
+    })),
 ));
 
 /**
@@ -54,8 +51,12 @@ const Navigation__key = (/*#__PURE__*/ new SingleContextKey<Navigation>(
  */
 export abstract class Navigation implements EventSender<[NavigationEvent]>, EventKeeper<[Page]> {
 
-  static get [ContextKey__symbol](): ContextKey<Navigation> {
-    return Navigation__key;
+  static perContext(target: CxEntry.Target<Navigation>): CxEntry.Definition<Navigation> {
+    return Navigation$perContext(target);
+  }
+
+  static toString(): string {
+    return '[Navigation]';
   }
 
   /**
@@ -344,13 +345,13 @@ export namespace Navigation {
 
 }
 
-function createNavigation(context: BootstrapContext): Navigation {
+function Navigation$byDefault(target: CxEntry.Target<Navigation>): Navigation {
 
-  const window = context.get(BootstrapWindow);
+  const window = target.get(BootstrapWindow);
   const { document, history } = window;
   const dispatcher = new DomEventDispatcher(window);
-  const navHistory = context.get(NavHistory);
-  const agent = context.get(NavigationAgent);
+  const navHistory = target.get(NavHistory);
+  const agent = target.get(NavigationAgent);
   const nav = trackValue<PageEntry>(navHistory.init());
 
   nav.read(nextEntry => nextEntry.apply()); // The very first page entry receiver applies scheduled updates to page

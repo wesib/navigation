@@ -1,5 +1,6 @@
-import { beforeEach, describe, expect, it, jest } from '@jest/globals';
-import { ContextRegistry, ContextSupply } from '@proc7ts/context-values';
+import { afterEach, beforeEach, describe, expect, it, jest } from '@jest/globals';
+import { CxBuilder, cxConstAsset } from '@proc7ts/context-builder';
+import { CxReferenceError } from '@proc7ts/context-values';
 import { noop } from '@proc7ts/primitives';
 import { Supply } from '@proc7ts/supply';
 import { Mock } from 'jest-mock';
@@ -10,15 +11,12 @@ import { testPageParam } from './spec/test-page-param';
 
 describe('NavigationAgent', () => {
 
-  let registry: ContextRegistry;
+  let cxBuilder: CxBuilder;
   let agent: NavigationAgent;
 
   beforeEach(() => {
-    registry = new ContextRegistry();
-
-    const values = registry.newValues();
-
-    agent = values.get(NavigationAgent);
+    cxBuilder = new CxBuilder(get => ({ get }));
+    agent = cxBuilder.get(NavigationAgent);
   });
 
   let mockNavigate: Mock<void, [Navigation.Target?]>;
@@ -48,6 +46,13 @@ describe('NavigationAgent', () => {
     };
   });
 
+  beforeEach(() => {
+    Supply.onUnexpectedAbort(noop);
+  });
+  afterEach(() => {
+    Supply.onUnexpectedAbort();
+  });
+
   it('performs navigation without agents', () => {
     agent(mockNavigate, when, from, to);
     expect(mockNavigate).toHaveBeenCalledWith(expect.objectContaining({
@@ -55,16 +60,15 @@ describe('NavigationAgent', () => {
       get: expect.any(Function),
     }));
   });
-  it('performs navigation without agents with `null` fallback value', () => {
-    agent = registry.newValues().get(NavigationAgent, { or: null })!;
-    agent(mockNavigate, when, from, to);
-    expect(mockNavigate).toHaveBeenCalledWith(to);
+  it('returns `null` fallback without agents', () => {
+    expect(cxBuilder.get(NavigationAgent, { or: null })).toBeNull();
   });
   it('performs navigation without agents by fallback one', () => {
+    cxBuilder = new CxBuilder(get => ({ get }));
 
     const mockAgent = jest.fn();
 
-    agent = registry.newValues().get(NavigationAgent, { or: mockAgent });
+    agent = cxBuilder.get(NavigationAgent, { or: mockAgent });
     agent(mockNavigate, when, from, to);
     expect(mockAgent).toHaveBeenCalledWith(mockNavigate, when, from, to);
   });
@@ -79,19 +83,13 @@ describe('NavigationAgent', () => {
         ) => next(),
     );
 
-    registry.provide<NavigationAgent, []>({
-      a: NavigationAgent,
-      is: mockAgent,
-    });
+    cxBuilder.provide(cxConstAsset(NavigationAgent, mockAgent));
 
     agent(mockNavigate, when, from, to);
     expect(mockAgent).toHaveBeenCalledWith(expect.any(Function), when, from, to);
   });
   it('performs navigation by calling `next`', () => {
-    registry.provide<NavigationAgent, []>({
-      a: NavigationAgent,
-      is: next => next(),
-    });
+    cxBuilder.provide(cxConstAsset(NavigationAgent, next => next()));
 
     agent(mockNavigate, when, from, to);
     expect(mockNavigate).toHaveBeenCalledWith({
@@ -101,10 +99,7 @@ describe('NavigationAgent', () => {
     });
   });
   it('updates URL', () => {
-    registry.provide<NavigationAgent, []>({
-      a: NavigationAgent,
-      is: next => next({ url: new URL('http://localhost/other') }),
-    });
+    cxBuilder.provide(cxConstAsset(NavigationAgent, next => next({ url: new URL('http://localhost/other') })));
 
     agent(mockNavigate, when, from, to);
     expect(mockNavigate).toHaveBeenCalledWith({
@@ -115,10 +110,7 @@ describe('NavigationAgent', () => {
     });
   });
   it('updates URL using path', () => {
-    registry.provide<NavigationAgent, []>({
-      a: NavigationAgent,
-      is: next => next({ url: 'other' }),
-    });
+    cxBuilder.provide(cxConstAsset(NavigationAgent, next => next({ url: 'other' })));
 
     agent(mockNavigate, when, from, to);
     expect(mockNavigate).toHaveBeenCalledWith({
@@ -129,10 +121,7 @@ describe('NavigationAgent', () => {
     });
   });
   it('updates title', () => {
-    registry.provide<NavigationAgent, []>({
-      a: NavigationAgent,
-      is: next => next({ title: 'other title' }),
-    });
+    cxBuilder.provide(cxConstAsset(NavigationAgent, next => next({ title: 'other title' })));
 
     agent(mockNavigate, when, from, to);
     expect(mockNavigate).toHaveBeenCalledWith({
@@ -143,10 +132,7 @@ describe('NavigationAgent', () => {
     });
   });
   it('updates data', () => {
-    registry.provide<NavigationAgent, []>({
-      a: NavigationAgent,
-      is: next => next({ data: 'other data' }),
-    });
+    cxBuilder.provide(cxConstAsset(NavigationAgent, next => next({ data: 'other data' })));
 
     agent(mockNavigate, when, from, to);
     expect(mockNavigate).toHaveBeenCalledWith({
@@ -160,17 +146,11 @@ describe('NavigationAgent', () => {
 
     const [param] = testPageParam();
 
-    registry.provide<NavigationAgent, []>({
-      a: NavigationAgent,
-      is: next => next(),
-    });
-    registry.provide({
-      a: NavigationAgent,
-      is: (next, _when, _from, toPage) => {
-        toPage.get(param);
-        return next();
-      },
-    });
+    cxBuilder.provide(cxConstAsset(NavigationAgent, next => next()));
+    cxBuilder.provide(cxConstAsset(NavigationAgent, (next, _when, _from, toPage) => {
+      toPage.get(param);
+      return next();
+    }));
 
     agent(mockNavigate, when, from, to);
     expect(to.get).toHaveBeenCalledWith(param);
@@ -179,34 +159,24 @@ describe('NavigationAgent', () => {
 
     const [param] = testPageParam();
 
-    registry.provide<NavigationAgent, []>({
-      a: NavigationAgent,
-      is: next => next(),
-    });
-    registry.provide({
-      a: NavigationAgent,
-      is: (next, _when, _from, toPage) => {
-        toPage.put(param, 'test');
-        return next();
-      },
-    });
+    cxBuilder.provide(cxConstAsset(NavigationAgent, next => next()));
+    cxBuilder.provide(cxConstAsset(NavigationAgent, (next, _when, _from, toPage) => {
+      toPage.put(param, 'test');
+      return next();
+    }));
 
     agent(mockNavigate, when, from, to);
     expect(to.put).toHaveBeenCalledWith(param, 'test');
   });
   it('throws when context destroyed', () => {
 
-    const contextSupply = new Supply();
-
-    registry.provide({ a: ContextSupply, is: contextSupply });
-
-    const values = registry.newValues();
-
-    agent = values.get(NavigationAgent);
-
     const reason = new Error('reason');
 
-    contextSupply.off(reason);
-    expect(() => agent(mockNavigate, when, from, to)).toThrow(reason);
+    cxBuilder.supply.off(reason);
+    expect(() => agent(mockNavigate, when, from, to)).toThrow(new CxReferenceError(
+        NavigationAgent,
+        'The [NavigationAgent] is unavailable',
+        reason,
+    ));
   });
 });

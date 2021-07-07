@@ -1,13 +1,11 @@
 import { importNode } from '@frontmeans/dom-primitives';
+import { CxValues } from '@proc7ts/context-values';
 import { mapOn_ } from '@proc7ts/fun-events';
 import { filterArray, filterIt, itsEach, mapIt, PushIterable } from '@proc7ts/push-iterator';
-import { BootstrapContext, BootstrapWindow } from '@wesib/wesib';
+import { BootstrapWindow } from '@wesib/wesib';
 import { PageLoadAgent } from './page-load-agent';
 
-/**
- * @internal
- */
-export function pageScriptsAgent(context: BootstrapContext): PageLoadAgent {
+export function pageScriptsAgent(context: CxValues): PageLoadAgent {
 
   const doc = context.get(BootstrapWindow).document;
 

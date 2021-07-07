@@ -1,35 +1,32 @@
 import { hthvParse, hthvQuote } from '@hatsy/http-header-value';
-import { SingleContextKey } from '@proc7ts/context-values';
+import { CxEntry, cxScoped, cxSingle } from '@proc7ts/context-values';
 import { afterThe, digOn_, EventNotifier, mapOn_, OnEvent, onEventBy, resolveOnOrdered } from '@proc7ts/fun-events';
 import { HttpFetch } from '@wesib/generic';
-import { BootstrapContext, bootstrapDefault, BootstrapWindow } from '@wesib/wesib';
+import { BootstrapContext, BootstrapWindow } from '@wesib/wesib';
 import { Page } from '../page';
 import { PageLoadAgent } from './page-load-agent';
 import { PageLoadRequestsParam } from './page-load-requests.impl';
 import { PageLoadResponse } from './page-load-response';
 import { PageLoadURLModifier } from './page-load-url-modifier';
 
-/**
- * @internal
- */
 export type PageLoader = (this: void, page: Page) => OnEvent<[PageLoadResponse]>;
 
-/**
- * @internal
- */
-export const PageLoader = (/*#__PURE__*/ new SingleContextKey<PageLoader>(
-    'page-loader',
-    {
-      byDefault: bootstrapDefault(newPageLoader),
-    },
-));
+export const PageLoader: CxEntry<PageLoader> = {
+  perContext: (/*#__PURE__*/ cxScoped(
+      BootstrapContext,
+      (/*#__PURE__*/ cxSingle({
+        byDefault: PageLoader$create,
+      })),
+  )),
+  toString: () => '[PageLoader]',
+};
 
-function newPageLoader(context: BootstrapContext): PageLoader {
+function PageLoader$create(target: CxEntry.Target<PageLoader>): PageLoader {
 
-  const window = context.get(BootstrapWindow);
-  const httpFetch = context.get(HttpFetch);
-  const modifyURL = context.get(PageLoadURLModifier);
-  const agent = context.get(PageLoadAgent);
+  const window = target.get(BootstrapWindow);
+  const httpFetch = target.get(HttpFetch);
+  const modifyURL = target.get(PageLoadURLModifier);
+  const agent = target.get(PageLoadAgent);
   const parser = new window.DOMParser();
 
   return page => {

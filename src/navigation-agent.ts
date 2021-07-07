@@ -1,6 +1,4 @@
-import { ContextValueSlot } from '@proc7ts/context-values';
-import { contextDestroyed, ContextUpKey, ContextUpRef } from '@proc7ts/context-values/updatable';
-import { AfterEvent, afterThe, digAfter } from '@proc7ts/fun-events';
+import { cxDynamic, CxEntry } from '@proc7ts/context-values';
 import { BootstrapWindow } from '@wesib/wesib';
 import { Navigation } from './navigation';
 import { Page } from './page';
@@ -32,126 +30,6 @@ export type NavigationAgent =
         to: Page,
     ) => void;
 
-/**
- * @internal
- */
-class NavigationAgentKey
-    extends ContextUpKey<NavigationAgent.Combined, NavigationAgent>
-    implements ContextUpRef<NavigationAgent.Combined, NavigationAgent> {
-
-  readonly upKey: ContextUpKey.UpKey<NavigationAgent.Combined, NavigationAgent>;
-
-  constructor(name: string) {
-    super(name);
-    this.upKey = this.createUpKey(
-        slot => {
-
-          const { document } = slot.context.get(BootstrapWindow);
-
-          slot.insert(slot.seed.do(
-              digAfter((...agents) => {
-                if (agents.length) {
-                  return afterThe(combinedAgent);
-                }
-                if (slot.hasFallback && slot.or) {
-                  return slot.or;
-                }
-
-                return afterThe(defaultNavigationAgent);
-
-                function combinedAgent(
-                    next: (this: void, target: Navigation.URLTarget) => void,
-                    when: 'pretend' | 'pre-open' | 'pre-replace',
-                    from: Page,
-                    to: Page,
-                ): void {
-
-                  return navigate(0, to);
-
-                  function navigate(agentIdx: number, agentTo: Page): void {
-
-                    const agent = agents[agentIdx];
-
-                    if (!agent) {
-                      return next(agentTo);
-                    }
-
-                    agent(
-                        (
-                            {
-                              url: nextURL = agentTo.url,
-                              title: nextTitle = agentTo.title,
-                              // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
-                              data: nextData = agentTo.data,
-                            }: Navigation.Target = agentTo,
-                        ) => navigate(
-                            agentIdx + 1,
-                            {
-                              url: new URL(String(nextURL), document.baseURI),
-                              title: nextTitle,
-                              // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
-                              data: nextData,
-                              get visited() {
-                                return agentTo.visited;
-                              },
-                              get current() {
-                                return agentTo.current;
-                              },
-                              get<T>(ref: PageParam.Ref<T, unknown>): T | undefined {
-                                return agentTo.get(ref);
-                              },
-                              put(ref, input) {
-                                agentTo.put(ref, input);
-                              },
-                            },
-                        ),
-                        when,
-                        from,
-                        agentTo,
-                    );
-                  }
-                }
-              }),
-          ));
-        },
-    );
-  }
-
-  grow(
-      slot: ContextValueSlot<
-          NavigationAgent.Combined,
-          ContextUpKey.Source<NavigationAgent>,
-          AfterEvent<NavigationAgent[]>>,
-  ): void {
-
-    let delegated: NavigationAgent.Combined;
-
-    slot.context.get(
-        this.upKey,
-        slot.hasFallback ? { or: slot.or != null ? afterThe(slot.or) : slot.or } : undefined,
-    )!(
-        agent => delegated = agent,
-    ).whenOff(
-        reason => delegated = contextDestroyed(reason),
-    );
-
-    slot.insert((next, when, from, to) => delegated(next, when, from, to));
-  }
-
-}
-
-/**
- * @internal
- */
-function defaultNavigationAgent(
-    next: (this: void, target: Navigation.URLTarget) => void,
-    _when: 'pretend' | 'pre-open' | 'pre-replace',
-    _from: Page,
-    to: Page,
-): void {
-  next(to);
-}
-
 export namespace NavigationAgent {
 
   /**
@@ -179,10 +57,97 @@ export namespace NavigationAgent {
 }
 
 /**
- * A key of context value containing an {@link NavigationAgent} instance.
+ * Context value entry containing {@link NavigationAgent} instance.
  *
  * The agent returned combines all registered agents into one. If no agent registered it just performs the navigation.
  */
-export const NavigationAgent: ContextUpRef<NavigationAgent.Combined, NavigationAgent> = (
-    /*#__PURE__*/ new NavigationAgentKey('navigation-agent')
-);
+export const NavigationAgent: CxEntry<NavigationAgent.Combined, NavigationAgent> = {
+  perContext: (/*#__PURE__*/ cxDynamic<NavigationAgent.Combined, NavigationAgent>({
+    create: NavigationAgent$create,
+    byDefault: _target => NavigationAgent$default,
+    assign: ({ get, to }) => {
+
+      const agent: NavigationAgent.Combined = (next, when, from, to) => get()(
+          next,
+          when,
+          from,
+          to,
+      );
+
+      return receiver => to((_, by) => receiver(agent, by));
+    },
+  })),
+  toString: () => '[NavigationAgent]',
+};
+
+function NavigationAgent$create(
+    agents: NavigationAgent[],
+    target: CxEntry.Target<NavigationAgent.Combined, NavigationAgent>,
+): NavigationAgent.Combined {
+
+  const { document } = target.get(BootstrapWindow);
+
+  return NavigationAgent$combined;
+
+  function NavigationAgent$combined(
+      next: (this: void, target: Navigation.URLTarget) => void,
+      when: 'pretend' | 'pre-open' | 'pre-replace',
+      from: Page,
+      to: Page,
+  ): void {
+
+    return navigate(0, to);
+
+    function navigate(agentIdx: number, agentTo: Page): void {
+
+      const agent = agents[agentIdx];
+
+      if (!agent) {
+        return next(agentTo);
+      }
+
+      agent(
+          (
+              {
+                url: nextURL = agentTo.url,
+                title: nextTitle = agentTo.title,
+                // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
+                data: nextData = agentTo.data,
+              }: Navigation.Target = agentTo,
+          ) => navigate(
+              agentIdx + 1,
+              {
+                url: new URL(String(nextURL), document.baseURI),
+                title: nextTitle,
+                // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
+                data: nextData,
+                get visited() {
+                  return agentTo.visited;
+                },
+                get current() {
+                  return agentTo.current;
+                },
+                get<T>(ref: PageParam.Ref<T, unknown>): T | undefined {
+                  return agentTo.get(ref);
+                },
+                put(ref, input) {
+                  agentTo.put(ref, input);
+                },
+              },
+          ),
+          when,
+          from,
+          agentTo,
+      );
+    }
+  }
+}
+
+function NavigationAgent$default(
+    next: (this: void, target: Navigation.URLTarget) => void,
+    _when: 'pretend' | 'pre-open' | 'pre-replace',
+    _from: Page,
+    to: Page,
+): void {
+  next(to);
+}

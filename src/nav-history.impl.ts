@@ -1,55 +1,29 @@
-import { ContextKey, ContextKey__symbol, ContextRegistry, SingleContextKey } from '@proc7ts/context-values';
+import { CxEntry, cxScoped, cxSingle } from '@proc7ts/context-values';
 import { ValueTracker } from '@proc7ts/fun-events';
 import { noop } from '@proc7ts/primitives';
 import { itsEach } from '@proc7ts/push-iterator';
-import { BootstrapContext, bootstrapDefault, BootstrapWindow } from '@wesib/wesib';
+import { BootstrapContext, BootstrapWindow } from '@wesib/wesib';
 import { Navigation } from './navigation';
 import { Page } from './page';
 import { PageParam, PageParam__symbol } from './page-param';
-import { PageParamContext } from './page-param-context';
 
-/**
- * @internal
- */
-const NavHistory__key = (/*#__PURE__*/ new SingleContextKey<NavHistory>(
-    'nav-history',
-    {
-      byDefault: bootstrapDefault(ctx => new NavHistory(ctx)),
-    },
-));
-
-/**
- * @internal
- */
 export const NAV_DATA_KEY = 'wesib:navigation:data' as const;
 
-/**
- * @internal
- */
 export interface PartialNavData {
   readonly uid?: string;
   readonly id?: number;
   readonly data: any;
 }
 
-/**
- * @internal
- */
 export interface NavData extends PartialNavData {
   readonly uid: string;
   readonly id: number;
 }
 
-/**
- * @internal
- */
 export interface NavDataEnvelope {
   readonly [NAV_DATA_KEY]: NavData;
 }
 
-/**
- * @internal
- */
 function extractNavData(state: any): PartialNavData {
   return state == null || typeof state !== 'object'
       // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
@@ -57,13 +31,21 @@ function extractNavData(state: any): PartialNavData {
       : (state as NavDataEnvelope)[NAV_DATA_KEY] as PartialNavData;
 }
 
-/**
- * @internal
- */
+const NavHistory$perContext: CxEntry.Definer<NavHistory> = (/*#__PURE__*/ cxScoped(
+    BootstrapContext,
+    (/*#__PURE__*/ cxSingle({
+      byDefault: target => new NavHistory(target.get(BootstrapContext)),
+    })),
+));
+
 export class NavHistory {
 
-  static get [ContextKey__symbol](): ContextKey<NavHistory> {
-    return NavHistory__key;
+  static perContext(target: CxEntry.Target<NavHistory>): CxEntry.Definition<NavHistory> {
+    return NavHistory$perContext(target);
+  }
+
+  static toString(): string {
+    return '[NavHistory]';
   }
 
   private readonly _document: Document;
@@ -74,6 +56,7 @@ export class NavHistory {
   private _lastId = 0;
 
   constructor(private readonly _context: BootstrapContext) {
+
     const window = _context.get(BootstrapWindow);
 
     this._document = window.document;
@@ -362,7 +345,7 @@ export class PageEntry {
       return handle.get();
     }
 
-    const newHandle = param.byDefault(this.page, this._newContext());
+    const newHandle = param.byDefault(this.page, this._bsContext);
 
     return newHandle && this._init(param, newHandle);
   }
@@ -377,20 +360,7 @@ export class PageEntry {
       return handle.get();
     }
 
-    return this._init(param, param.create(this.page, input, this._newContext()));
-  }
-
-  private _newContext(): PageParamContext {
-
-    const registry = new ContextRegistry<ParamContext>(this._bsContext);
-
-    class ParamContext extends PageParamContext {
-
-      readonly get: PageParamContext['get'] = registry.newValues().get;
-
-    }
-
-    return new ParamContext();
+    return this._init(param, param.create(this.page, input, this._bsContext));
   }
 
   private _init<T, TInput>(param: PageParam<T, TInput>, handle: PageParam.Handle<T, TInput>): T {

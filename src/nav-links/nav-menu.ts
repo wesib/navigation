@@ -1,4 +1,3 @@
-import { Contextual, Contextual__symbol } from '@proc7ts/context-values';
 import { afterAll, AfterEvent, afterThe, isAfterEvent, trackValue, translateAfter_ } from '@proc7ts/fun-events';
 import { noop, valueByRecipe } from '@proc7ts/primitives';
 import { Supply, SupplyPeer } from '@proc7ts/supply';
@@ -16,7 +15,7 @@ const NavMenu$Links__symbol = (/*#__PURE__*/ Symbol('NavMenu.links'));
  * Serves as an {@link NavLink.Owner owner} of navigation links. Activates the links matching {@link Navigation.page
  * current page}.
  */
-export class NavMenu implements Contextual<NavMenu, ComponentContext>, SupplyPeer {
+export class NavMenu implements SupplyPeer {
 
   /**
    * @internal
@@ -62,19 +61,6 @@ export class NavMenu implements Contextual<NavMenu, ComponentContext>, SupplyPee
   bindTo(context: ComponentContext): this {
     this[NavMenu$Links__symbol].bindTo(context);
     return this;
-  }
-
-  /**
-   * Binds this menu to the given context.
-   *
-   * Calls {@link bindTo} method.
-   *
-   * @param context - Owning component context.
-   *
-   * @returns `this` instance.
-   */
-  [Contextual__symbol](context: ComponentContext): this {
-    return this.bindTo(context);
   }
 
 }

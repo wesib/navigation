@@ -1,8 +1,9 @@
 import { afterEach, beforeEach, describe, expect, it, jest } from '@jest/globals';
+import { cxConstAsset } from '@proc7ts/context-builder/src';
 import { onceOn } from '@proc7ts/fun-events';
 import { noop } from '@proc7ts/primitives';
 import { bootstrapComponents, BootstrapContext, BootstrapWindow, Feature } from '@wesib/wesib';
-import { NAV_DATA_KEY, NavDataEnvelope } from './nav-history.impl';
+import { NAV_DATA_KEY, NavDataEnvelope, NavHistory } from './nav-history.impl';
 import { Navigation } from './navigation';
 import { Page } from './page';
 import { PageParam } from './page-param';
@@ -27,7 +28,7 @@ describe('NavHistory', () => {
 
     @Feature({
       setup(setup) {
-        setup.provide({ a: BootstrapWindow, is: locationMock.window });
+        setup.provide(cxConstAsset(BootstrapWindow, locationMock.window));
       },
     })
     class TestFeature {}
@@ -269,6 +270,12 @@ describe('NavHistory', () => {
 
   describe('hash change with `hashchange` event only (IE)', () => {
     testHashChange('hashchange');
+  });
+
+  describe('toString', () => {
+    it('provides string representation', () => {
+      expect(String(NavHistory)).toBe('[NavHistory]');
+    });
   });
 
   function testHashChange(...events: ('hashchange' | 'popstate')[]): void {

@@ -6,24 +6,48 @@ import { pageScriptsAgent } from './page-scripts-agent.impl';
 import { pageStyleAgent } from './page-style-agent.impl';
 import { pageTitleAgent } from './page-title-agent.impl';
 
-/**
- * @internal
- */
 const PageLoadSupport__feature: FeatureDef = {
   setup(setup) {
     setup.provide({
-      a: PageLoadURLModifier,
-      by: (buster: PageCacheBuster) => buster.urlModifier,
-      with: [PageCacheBuster],
+      entry: PageLoadURLModifier,
+      placeAsset(target, collector) {
+
+        const { urlModifier } = target.get(PageCacheBuster);
+
+        if (urlModifier) {
+          collector(urlModifier);
+        }
+      },
     });
     setup.provide({
-      a: PageLoadAgent,
-      by: (buster: PageCacheBuster) => buster.agent,
-      with: [PageCacheBuster],
+      entry: PageLoadAgent,
+      placeAsset(target, collector) {
+
+        const { agent } = target.get(PageCacheBuster);
+
+        if (agent) {
+          collector(agent);
+        }
+      },
     });
-    setup.provide({ a: PageLoadAgent, by: pageScriptsAgent });
-    setup.provide({ a: PageLoadAgent, by: pageStyleAgent });
-    setup.provide({ a: PageLoadAgent, by: pageTitleAgent });
+    setup.provide({
+      entry: PageLoadAgent,
+      placeAsset(target, collector) {
+        collector(pageScriptsAgent(target));
+      },
+    });
+    setup.provide({
+      entry: PageLoadAgent,
+      placeAsset(target, collector) {
+        collector(pageStyleAgent(target));
+      },
+    });
+    setup.provide({
+      entry: PageLoadAgent,
+      placeAsset(target, collector) {
+        collector(pageTitleAgent(target));
+      },
+    });
   },
 };
 

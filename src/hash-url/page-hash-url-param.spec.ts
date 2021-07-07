@@ -1,4 +1,5 @@
 import { afterEach, beforeEach, describe, expect, it } from '@jest/globals';
+import { cxConstAsset } from '@proc7ts/context-builder';
 import { bootstrapComponents, BootstrapContext, BootstrapWindow, Feature } from '@wesib/wesib';
 import { Navigation } from '../navigation';
 import { Page } from '../page';
@@ -26,7 +27,7 @@ describe('PageHashURLParam', () => {
     @Feature({
       needs: PageHashURLSupport,
       setup(setup) {
-        setup.provide({ a: BootstrapWindow, is: locationMock.window });
+        setup.provide(cxConstAsset(BootstrapWindow, locationMock.window));
       },
     })
     class TestFeature {

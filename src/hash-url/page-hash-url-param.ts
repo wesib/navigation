@@ -3,12 +3,12 @@ import { PageParam } from '../page-param';
 import { getHashURL } from './hash-url';
 import { PageHashURLValueParam } from './page-hash-url-param.impl';
 
-/**
- * @internal
- */
 class PageHashURLParam$ extends PageParam<URL, URL | string | null | undefined> {
 
-  create(page: Page, input: URL | string | null | undefined): PageParam.Handle<URL, URL | string | null | undefined> {
+  create(
+      page: Page,
+      input: URL | string | null | undefined,
+  ): PageParam.Handle<URL, URL | string | null | undefined> {
 
     const handle: PageParam.Handle<URL, URL | string | null | undefined> = {
       get() {

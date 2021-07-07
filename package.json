@@ -25,10 +25,9 @@
   "types": "./index.d.ts",
   "exports": "./dist/wesib.navigation.js",
   "peerDependencies": {
-    "@proc7ts/context-values": "^6.2.0",
     "@proc7ts/fun-events": "^10.5.0",
-    "@wesib/generic": "^1.0.0",
-    "@wesib/wesib": "^1.0.0"
+    "@wesib/generic": "^2.0.0-dev.0",
+    "@wesib/wesib": "^2.0.0-dev.0"
   },
   "dependencies": {
     "@frontmeans/dom-events": "^1.2.0",
@@ -38,6 +37,7 @@
     "@frontmeans/render-scheduler": "^1.7.0",
     "@hatsy/http-header-value": "^3.6.0",
     "@proc7ts/amend": "^1.0.0",
+    "@proc7ts/context-values": "^7.0.0-dev.8",
     "@proc7ts/primitives": "^3.0.2",
     "@proc7ts/push-iterator": "^2.6.0",
     "@proc7ts/supply": "^1.2.0"
@@ -45,7 +45,7 @@
   "devDependencies": {
     "@frontmeans/render-scheduler": "^1.5.0",
     "@jest/globals": "^27.0.6",
-    "@proc7ts/context-values": "^6.2.0",
+    "@proc7ts/context-builder": "^7.0.0-dev.8",
     "@proc7ts/fun-events": "^10.5.0",
     "@rollup/plugin-node-resolve": "^13.0.0",
     "@run-z/eslint-config": "^1.3.0",
@@ -53,8 +53,8 @@
     "@types/jsdom": "^16.2.12",
     "@typescript-eslint/eslint-plugin": "^4.28.1",
     "@typescript-eslint/parser": "^4.28.1",
-    "@wesib/generic": "^1.0.0",
-    "@wesib/wesib": "^1.0.0",
+    "@wesib/generic": "^2.0.0-dev.0",
+    "@wesib/wesib": "^2.0.0-dev.0",
     "cross-fetch": "^3.1.4",
     "eslint": "^7.30.0",
     "eslint-plugin-jest": "^24.3.6",

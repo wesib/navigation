@@ -1,5 +1,5 @@
 import { importNodeContent } from '@frontmeans/dom-primitives';
-import { ContextKey, SingleContextKey } from '@proc7ts/context-values';
+import { CxEntry, cxSingle } from '@proc7ts/context-values';
 import { onceAfter, trackValue } from '@proc7ts/fun-events';
 import { valueByRecipe } from '@proc7ts/primitives';
 import { Supply } from '@proc7ts/supply';
@@ -36,16 +36,14 @@ export interface PageRenderCtl {
 }
 
 /**
- * A key of component context value containing {@link PageRenderCtl page render control}.
+ * Component context entry containing {@link PageRenderCtl page render control}.
  */
-export const PageRenderCtl: ContextKey<PageRenderCtl> = (/*#__PURE__*/ new SingleContextKey(
-    'page-render-ctl',
-    {
-      byDefault(context) {
-        return new PageRenderCtl$(context.get(ComponentContext));
-      },
-    },
-));
+export const PageRenderCtl: CxEntry<PageRenderCtl> = {
+  perContext: (/*#__PURE__*/ cxSingle({
+    byDefault: target => new PageRenderCtl$(target.get(ComponentContext)),
+  })),
+  toString: () => '[PageRenderCtl]',
+};
 
 class PageRenderCtl$ implements PageRenderCtl {
 
