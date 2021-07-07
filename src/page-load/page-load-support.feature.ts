@@ -10,42 +10,47 @@ const PageLoadSupport__feature: FeatureDef = {
   setup(setup) {
     setup.provide({
       entry: PageLoadURLModifier,
-      placeAsset(target, collector) {
+      buildAsset(target) {
 
         const { urlModifier } = target.get(PageCacheBuster);
 
-        if (urlModifier) {
-          collector(urlModifier);
-        }
+        return urlModifier && (collector => collector(urlModifier));
       },
     });
     setup.provide({
       entry: PageLoadAgent,
-      placeAsset(target, collector) {
+      buildAsset(target) {
 
         const { agent } = target.get(PageCacheBuster);
 
-        if (agent) {
-          collector(agent);
-        }
+        return agent && (collector => collector(agent));
       },
     });
     setup.provide({
       entry: PageLoadAgent,
-      placeAsset(target, collector) {
-        collector(pageScriptsAgent(target));
+      buildAsset(target) {
+
+        const agent = pageScriptsAgent(target);
+
+        return collector => collector(agent);
       },
     });
     setup.provide({
       entry: PageLoadAgent,
-      placeAsset(target, collector) {
-        collector(pageStyleAgent(target));
+      buildAsset(target) {
+
+        const agent = pageStyleAgent(target);
+
+        return collector => collector(agent);
       },
     });
     setup.provide({
       entry: PageLoadAgent,
-      placeAsset(target, collector) {
-        collector(pageTitleAgent(target));
+      buildAsset(target) {
+
+        const agent = pageTitleAgent(target);
+
+        return collector => collector(agent);
       },
     });
   },
