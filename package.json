@@ -37,7 +37,7 @@
     "@frontmeans/render-scheduler": "^1.7.0",
     "@hatsy/http-header-value": "^3.6.0",
     "@proc7ts/amend": "^1.0.0",
-    "@proc7ts/context-values": "^7.0.0-dev.9",
+    "@proc7ts/context-values": "^7.0.0-dev.10",
     "@proc7ts/primitives": "^3.0.2",
     "@proc7ts/push-iterator": "^2.6.0",
     "@proc7ts/supply": "^1.2.0"
@@ -45,7 +45,7 @@
   "devDependencies": {
     "@frontmeans/render-scheduler": "^1.5.0",
     "@jest/globals": "^27.0.6",
-    "@proc7ts/context-builder": "^7.0.0-dev.9",
+    "@proc7ts/context-builder": "^7.0.0-dev.10",
     "@proc7ts/fun-events": "^10.5.0",
     "@rollup/plugin-node-resolve": "^13.0.0",
     "@run-z/eslint-config": "^1.3.0",
