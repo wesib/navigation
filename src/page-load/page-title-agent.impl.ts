@@ -1,11 +1,9 @@
+import { CxValues } from '@proc7ts/context-values';
 import { mapOn_ } from '@proc7ts/fun-events';
-import { BootstrapContext, BootstrapWindow } from '@wesib/wesib';
+import { BootstrapWindow } from '@wesib/wesib';
 import { PageLoadAgent } from './page-load-agent';
 
-/**
- * @internal
- */
-export function pageTitleAgent(context: BootstrapContext): PageLoadAgent {
+export function pageTitleAgent(context: CxValues): PageLoadAgent {
 
   const doc = context.get(BootstrapWindow).document;
 

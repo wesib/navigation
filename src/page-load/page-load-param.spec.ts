@@ -1,4 +1,5 @@
 import { afterEach, beforeEach, describe, expect, it, jest } from '@jest/globals';
+import { cxConstAsset } from '@proc7ts/context-builder';
 import { afterThe, EventEmitter, onceOn } from '@proc7ts/fun-events';
 import { noop } from '@proc7ts/primitives';
 import { Supply } from '@proc7ts/supply';
@@ -42,8 +43,8 @@ describe('PageLoadParam', () => {
   beforeEach(async () => {
     @Feature({
       setup(setup) {
-        setup.provide({ a: BootstrapWindow, is: locationMock.window });
-        setup.provide({ a: PageLoadAgent, is: mockAgent });
+        setup.provide(cxConstAsset(BootstrapWindow, locationMock.window));
+        setup.provide(cxConstAsset(PageLoadAgent, mockAgent));
       },
     })
     class TestFeature {
@@ -127,10 +128,7 @@ describe('PageLoadParam', () => {
     await new Promise(resolve => {
       @Feature({
         setup(setup) {
-          setup.provide({
-            a: HttpFetch,
-            is: () => afterThe({ ok: true, text: () => reject } as Response),
-          });
+          setup.provide(cxConstAsset(HttpFetch, () => afterThe({ ok: true, text: () => reject } as Response)));
         },
         init(ctx) {
           ctx.whenReady(resolve);
@@ -238,7 +236,7 @@ describe('PageLoadParam', () => {
       await new Promise(resolve => {
         @Feature({
           setup(setup) {
-            setup.provide({ a: HttpFetch, is: mockFetch });
+            setup.provide(cxConstAsset(HttpFetch, mockFetch));
           },
           init(ctx) {
             ctx.whenReady(resolve);

@@ -1,5 +1,6 @@
 import { queuedRenderScheduler } from '@frontmeans/render-scheduler';
 import { afterEach, beforeEach, describe, expect, it, jest } from '@jest/globals';
+import { cxConstAsset } from '@proc7ts/context-builder';
 import { afterThe } from '@proc7ts/fun-events';
 import { noop, valueProvider } from '@proc7ts/primitives';
 import { HttpFetch } from '@wesib/generic';
@@ -231,11 +232,11 @@ describe('@RenderPage', () => {
         {
           feature: {
             setup(setup) {
-              setup.provide({ a: BootstrapWindow, is: locationMock.window });
-              setup.provide({ a: DefaultRenderScheduler, is: queuedRenderScheduler });
-              setup.provide({ a: DefaultPreRenderScheduler, is: queuedRenderScheduler });
-              setup.provide({ a: HttpFetch, is: mockFetch });
-              setup.provide({ a: PageLoadAgent, is: mockAgent });
+              setup.provide(cxConstAsset(BootstrapWindow, locationMock.window));
+              setup.provide(cxConstAsset(DefaultRenderScheduler, queuedRenderScheduler));
+              setup.provide(cxConstAsset(DefaultPreRenderScheduler, queuedRenderScheduler));
+              setup.provide(cxConstAsset(HttpFetch, mockFetch));
+              setup.provide(cxConstAsset(PageLoadAgent, mockAgent));
             },
           },
         },

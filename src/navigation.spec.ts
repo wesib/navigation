@@ -1,4 +1,5 @@
 import { afterEach, beforeEach, describe, expect, it, jest } from '@jest/globals';
+import { cxConstAsset } from '@proc7ts/context-builder';
 import { afterSupplied, onceAfter, onceOn, onSupplied } from '@proc7ts/fun-events';
 import { asis, noop } from '@proc7ts/primitives';
 import { bootstrapComponents, BootstrapContext, BootstrapWindow, Feature } from '@wesib/wesib';
@@ -34,8 +35,8 @@ describe('Navigation', () => {
 
     @Feature({
       setup(setup) {
-        setup.provide({ a: BootstrapWindow, is: locationMock.window });
-        setup.provide({ a: NavigationAgent, is: agent });
+        setup.provide(cxConstAsset(BootstrapWindow, locationMock.window));
+        setup.provide(cxConstAsset(NavigationAgent, agent));
       },
     })
     class TestFeature {
@@ -545,4 +546,11 @@ describe('Navigation', () => {
       expect(location).toEqual({ url: 'http://localhost/revisited', data: 'popped' });
     });
   });
+
+  describe('toString', () => {
+    it('provides string representation', () => {
+      expect(String(Navigation)).toBe('[Navigation]');
+    });
+  });
+
 });

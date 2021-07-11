@@ -1,4 +1,5 @@
 import { afterEach, beforeEach, describe, expect, it, jest } from '@jest/globals';
+import { cxConstAsset } from '@proc7ts/context-builder';
 import { afterThe } from '@proc7ts/fun-events';
 import { noop } from '@proc7ts/primitives';
 import { HttpFetch } from '@wesib/generic';
@@ -44,8 +45,8 @@ describe('pageStyleAgent', () => {
     @Feature({
       needs: PageLoadSupport,
       setup(setup) {
-        setup.provide({ a: BootstrapWindow, is: locationMock.window });
-        setup.provide({ a: HttpFetch, is: mockFetch });
+        setup.provide(cxConstAsset(BootstrapWindow, locationMock.window));
+        setup.provide(cxConstAsset(HttpFetch, mockFetch));
       },
     })
     class TestFeature {}

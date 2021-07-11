@@ -1,15 +1,18 @@
 import { beforeEach, describe, expect, it } from '@jest/globals';
-import { ContextRegistry, ContextValues } from '@proc7ts/context-values';
+import { CxBuilder, cxConstAsset } from '@proc7ts/context-builder';
+import { CxValues } from '@proc7ts/context-values';
+import { BootstrapContext } from '@wesib/wesib';
 import { PageLoadURLModifier } from './page-load-url-modifier';
 
 describe('PageLoadURLModifier', () => {
 
-  let registry: ContextRegistry;
-  let context: ContextValues;
+  let cxBuilder: CxBuilder;
+  let context: CxValues;
 
   beforeEach(() => {
-    registry = new ContextRegistry();
-    context = registry.newValues();
+    cxBuilder = new CxBuilder(get => ({ get }));
+    cxBuilder.provide(cxConstAsset(BootstrapContext, cxBuilder.context as BootstrapContext));
+    context = cxBuilder.context;
   });
 
   let url: URL;
@@ -25,11 +28,14 @@ describe('PageLoadURLModifier', () => {
     expect(url.href).toBe(href);
   });
   it('applies page load URL modifications', () => {
-    registry.provide({
-      a: PageLoadURLModifier,
-      is: (u: URL) => u.pathname = '/other',
-    });
+    cxBuilder.provide(cxConstAsset(PageLoadURLModifier, (u: URL) => u.pathname = '/other'));
     context.get(PageLoadURLModifier)(url);
     expect(url.href).toBe('http://localhost/other?q=v');
+  });
+
+  describe('toString', () => {
+    it('provides string representation', () => {
+      expect(String(PageLoadURLModifier)).toBe('[PageLoadURLModifier]');
+    });
   });
 });

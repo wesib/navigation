@@ -1,5 +1,5 @@
 import { afterEach, beforeEach, describe, expect, it, jest } from '@jest/globals';
-import { Contextual__symbol } from '@proc7ts/context-values';
+import { cxConstAsset } from '@proc7ts/context-builder';
 import { afterThe, trackValue, translateAfter_ } from '@proc7ts/fun-events';
 import { Supply } from '@proc7ts/supply';
 import { BootstrapWindow, Component, ComponentContext, ComponentSlot } from '@wesib/wesib';
@@ -31,7 +31,7 @@ describe('NavMenu', () => {
       extend: { type: MockElement },
       feature: {
         setup(setup) {
-          setup.provide({ a: BootstrapWindow, is: locationMock.window });
+          setup.provide(cxConstAsset(BootstrapWindow, locationMock.window));
         },
       },
     })
@@ -163,7 +163,7 @@ describe('NavMenu', () => {
     });
 
     it('activates nav link with longest matching URL', () => {
-      new NavMenu([link1, link2, link3])[Contextual__symbol](context);
+      new NavMenu([link1, link2, link3]).bindTo(context);
 
       expect(link1.activate).not.toHaveBeenCalled();
       expect(link2.activate).toHaveBeenCalledTimes(1);

@@ -1,4 +1,5 @@
 import { afterEach, beforeEach, describe, expect, it, jest } from '@jest/globals';
+import { cxConstAsset } from '@proc7ts/context-builder';
 import { afterThe } from '@proc7ts/fun-events';
 import { HttpFetch } from '@wesib/generic';
 import { bootstrapComponents, BootstrapContext, BootstrapWindow, Feature } from '@wesib/wesib';
@@ -6,7 +7,7 @@ import { Mock, SpyInstance } from 'jest-mock';
 import { Navigation } from '../navigation';
 import { Page } from '../page';
 import { LocationMock } from '../spec/location-mock';
-import { appRevSearchParam } from './page-cache-buster.impl';
+import { appRevSearchParam, PageCacheBuster } from './page-cache-buster.impl';
 import { PageLoadParam } from './page-load-param';
 import { PageLoadSupport } from './page-load-support.feature';
 
@@ -54,8 +55,8 @@ describe('PageCacheBuster', () => {
     @Feature({
       needs: PageLoadSupport,
       setup(setup) {
-        setup.provide({ a: BootstrapWindow, is: locationMock.window });
-        setup.provide({ a: HttpFetch, is: mockFetch });
+        setup.provide(cxConstAsset(BootstrapWindow, locationMock.window));
+        setup.provide(cxConstAsset(HttpFetch, mockFetch));
       },
     })
     class TestFeature {}
@@ -134,4 +135,11 @@ describe('PageCacheBuster', () => {
         .toBe(`http://localhost/some?q=v&${appRevSearchParam}=${responseRev}`);
     expect(reloadSpy).toHaveBeenCalledTimes(1);
   });
+
+  describe('toString', () => {
+    it('provides string representation', () => {
+      expect(String(PageCacheBuster)).toBe('[PageCacheBuster]');
+    });
+  });
+
 });

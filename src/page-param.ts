@@ -1,5 +1,5 @@
+import { BootstrapContext } from '@wesib/wesib';
 import { Page } from './page';
-import { PageParamContext } from './page-param-context';
 
 /**
  * A key of {@link PageParam.Ref page parameter request} property containing requested page parameter.
@@ -30,11 +30,11 @@ export abstract class PageParam<T, TInput> implements PageParam.Ref<T, TInput> {
    *
    * @param page - A page to assign navigation parameter to.
    * @param input - Parameter input used to construct its initial value.
-   * @param context - Page parameter context.
+   * @param bsContext - Bootstrap context.
    *
    * @returns New page parameter value handle.
    */
-  abstract create(page: Page, input: TInput, context: PageParamContext): PageParam.Handle<T, TInput>;
+  abstract create(page: Page, input: TInput, bsContext: BootstrapContext): PageParam.Handle<T, TInput>;
 
   /**
    * Creates default page parameter handle.
@@ -45,11 +45,11 @@ export abstract class PageParam<T, TInput> implements PageParam.Ref<T, TInput> {
    * Returns nothing by default.
    *
    * @param _page - A page to assign navigation parameter to.
-   * @param _context - Page parameter context.
+   * @param _bsContext - Bootstrap context.
    *
    * @returns New page parameter value handle or nothing if there is no default value.
    */
-  byDefault(_page: Page, _context: PageParamContext): PageParam.Handle<T, TInput> | undefined {
+  byDefault(_page: Page, _bsContext: BootstrapContext): PageParam.Handle<T, TInput> | undefined {
     return;
   }
 
@@ -80,7 +80,7 @@ export namespace PageParam {
    */
   export interface WithDefaults<T, TInput> extends PageParam<T, TInput> {
 
-    byDefault(page: Page, context: PageParamContext): PageParam.Handle<T, TInput>;
+    byDefault(page: Page, bsContext: BootstrapContext): PageParam.Handle<T, TInput>;
 
   }
 

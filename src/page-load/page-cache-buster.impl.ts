@@ -1,66 +1,62 @@
-import { ContextKey__symbol, SingleContextKey } from '@proc7ts/context-values';
-import { AfterEvent, afterThe, mapOn_ } from '@proc7ts/fun-events';
-import { BootstrapContext, bootstrapDefault, BootstrapWindow } from '@wesib/wesib';
+import { CxEntry, cxScoped, cxSingle, CxValues } from '@proc7ts/context-values';
+import { mapOn_ } from '@proc7ts/fun-events';
+import { BootstrapContext, BootstrapWindow } from '@wesib/wesib';
 import { Navigation } from '../navigation';
 import { PageLoadAgent } from './page-load-agent';
 import { PageLoadURLModifier } from './page-load-url-modifier';
 
-const PageCacheBuster__key = (/*#__PURE__*/ new SingleContextKey<PageCacheBuster>(
-    'page-cache-buster',
-    {
-      byDefault: bootstrapDefault(context => new PageCacheBuster(context)),
-    },
+const PageCacheBuster$perContext: CxEntry.Definer<PageCacheBuster> = (/*#__PURE__*/ cxScoped(
+    BootstrapContext,
+    (/*#__PURE__*/ cxSingle({
+      byDefault: target => new PageCacheBuster(target),
+    })),
 ));
 
-/**
- * @internal
- */
 export const appRevSearchParam = '__wesib_app_rev__';
 
-/**
- * @internal
- */
 export class PageCacheBuster {
 
-  static get [ContextKey__symbol](): SingleContextKey<PageCacheBuster> {
-    return PageCacheBuster__key;
+  static perContext(target: CxEntry.Target<PageCacheBuster>): CxEntry.Definition<PageCacheBuster> {
+    return PageCacheBuster$perContext(target);
   }
 
-  readonly urlModifier: AfterEvent<PageLoadURLModifier[]>;
-  readonly agent: AfterEvent<PageLoadAgent[]>;
+  static toString(): string {
+    return '[PageCacheBuster]';
+  }
 
-  constructor(context: BootstrapContext) {
+  readonly urlModifier: PageLoadURLModifier | undefined;
+  readonly agent: PageLoadAgent | undefined;
+
+  constructor(context: CxValues) {
 
     const rev = appRev(context.get(BootstrapWindow).document);
 
     if (!rev) {
-      this.urlModifier = afterThe();
-      this.agent = afterThe();
+      this.urlModifier = undefined;
+      this.agent = undefined;
     } else {
 
       const navigation = context.get(Navigation);
 
-      this.urlModifier = afterThe(url => url.searchParams.set(appRevSearchParam, rev));
-      this.agent = afterThe(
-          (next, request) => next(new Request(request.url, request)).do(
-              mapOn_(response => {
-                    if (response.ok) {
+      this.urlModifier = url => url.searchParams.set(appRevSearchParam, rev);
+      this.agent = (next, request) => next(new Request(request.url, request)).do(
+          mapOn_(response => {
+            if (response.ok) {
 
-                      const newRev = appRev(response.document);
+              const newRev = appRev(response.document);
 
-                      if (newRev && newRev !== rev) {
+              if (newRev && newRev !== rev) {
 
-                        const url = new URL(response.page.url.href);
+                const url = new URL(response.page.url.href);
 
-                        url.searchParams.set(appRevSearchParam, newRev);
-                        navigation.update(url);
-                        navigation.reload();
-                      }
-                    }
+                url.searchParams.set(appRevSearchParam, newRev);
+                navigation.update(url);
+                navigation.reload();
+              }
+            }
 
-                    return response;
-                  }),
-          ),
+            return response;
+          }),
       );
     }
   }

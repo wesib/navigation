@@ -1,6 +1,6 @@
-import { ContextUpRef } from '@proc7ts/context-values/updatable';
+import { CxEntry } from '@proc7ts/context-values';
 import { EventSender, OnEvent } from '@proc7ts/fun-events';
-import { FetchAgentKey } from '@wesib/generic';
+import { cxFetchAgent } from '@wesib/generic';
 import { PageLoadResponse } from './page-load-response';
 
 /**
@@ -50,10 +50,11 @@ export namespace PageLoadAgent {
 }
 
 /**
- * A key of context value containing an {@link PageLoadAgent} instance.
+ * Context value entry containing an {@link PageLoadAgent} instance.
  *
  * The agent returned combines all registered agents into one. If no agent registered it just performs the fetch.
  */
-export const PageLoadAgent: ContextUpRef<PageLoadAgent.Combined, PageLoadAgent> = (
-    /*#__PURE__*/ new FetchAgentKey<[PageLoadResponse]>('page-load-agent')
-);
+export const PageLoadAgent: CxEntry<PageLoadAgent.Combined, PageLoadAgent> = {
+  perContext: (/*#__PURE__*/ cxFetchAgent<[PageLoadResponse]>()),
+  toString: () => '[PageLoadAgent]',
+};

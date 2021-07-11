@@ -1,20 +1,17 @@
+import { BootstrapContext } from '@wesib/wesib';
 import { Navigation } from '../navigation';
 import { Page } from '../page';
 import { PageParam } from '../page-param';
-import { PageParamContext } from '../page-param-context';
 import { cachingPageLoader } from './caching-page-loader.impl';
 import { PageLoadRequest } from './page-load-request';
 import { PageLoadRequests, PageLoadRequestsParam } from './page-load-requests.impl';
 import { PageLoader } from './page-loader.impl';
 
-/**
- * @internal
- */
 class PageLoadParam$ extends PageParam<void, PageLoadRequest> {
 
-  create(page: Page, request: PageLoadRequest, context: PageParamContext): PageParam.Handle<void, PageLoadRequest> {
+  create(page: Page, request: PageLoadRequest, bsContext: BootstrapContext): PageParam.Handle<void, PageLoadRequest> {
 
-    const requests = new PageLoadRequests(context.get(Navigation), cachingPageLoader(context.get(PageLoader)));
+    const requests = new PageLoadRequests(bsContext.get(Navigation), cachingPageLoader(bsContext.get(PageLoader)));
     const handle = requests.handle();
 
     page.put(PageLoadRequestsParam, requests);

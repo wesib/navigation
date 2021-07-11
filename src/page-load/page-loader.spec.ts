@@ -1,4 +1,5 @@
 import { beforeEach, describe, expect, it, jest } from '@jest/globals';
+import { cxConstAsset } from '@proc7ts/context-builder';
 import { EventReceiver, mapOn_, onEventBy, onPromise } from '@proc7ts/fun-events';
 import { noop } from '@proc7ts/primitives';
 import { Supply } from '@proc7ts/supply';
@@ -44,8 +45,8 @@ describe('PageLoader', () => {
 
     @Feature({
       setup(setup) {
-        setup.provide({ a: HttpFetch, is: mockHttpFetch });
-        setup.provide({ a: PageLoadAgent, is: mockAgent });
+        setup.provide(cxConstAsset(HttpFetch, mockHttpFetch));
+        setup.provide(cxConstAsset(PageLoadAgent, mockAgent));
       },
     })
     class TestFeature {}
@@ -67,7 +68,7 @@ describe('PageLoader', () => {
 
     await loadDocument();
 
-    expect(mockHttpFetch).toHaveBeenCalledWith(expect.any(Request));
+    expect(mockHttpFetch).toHaveBeenCalledWith(expect.any(Request), undefined);
 
     const request = mockHttpFetch.mock.calls[0][0] as Request;
 
@@ -228,7 +229,7 @@ describe('PageLoader', () => {
     await new Promise(resolve => {
       @Feature({
         setup(setup) {
-          setup.provide({ a: PageLoadURLModifier, is: (url: URL) => url.searchParams.set('test', 'updated') });
+          setup.provide(cxConstAsset(PageLoadURLModifier, (url: URL) => url.searchParams.set('test', 'updated')));
           setup.whenReady(resolve);
         },
       })
@@ -266,6 +267,12 @@ describe('PageLoader', () => {
 
     expect(receiver).toHaveBeenCalledWith({ ok: undefined, page });
     expect(receiver).toHaveBeenLastCalledWith(newResponse);
+  });
+
+  describe('toString', () => {
+    it('provides string representation', () => {
+      expect(String(PageLoader)).toBe('[PageLoader]');
+    });
   });
 
   function loadDocument(
