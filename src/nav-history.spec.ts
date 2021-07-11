@@ -1,5 +1,5 @@
 import { afterEach, beforeEach, describe, expect, it, jest } from '@jest/globals';
-import { cxConstAsset } from '@proc7ts/context-builder/src';
+import { cxConstAsset } from '@proc7ts/context-builder';
 import { onceOn } from '@proc7ts/fun-events';
 import { noop } from '@proc7ts/primitives';
 import { bootstrapComponents, BootstrapContext, BootstrapWindow, Feature } from '@wesib/wesib';
