@@ -1,8 +1,8 @@
-import { immediateRenderScheduler } from '@frontmeans/render-scheduler';
+import { immediateRenderScheduler, RenderScheduler } from '@frontmeans/render-scheduler';
 import { afterEach, beforeEach, describe, expect, it, jest } from '@jest/globals';
 import { cxConstAsset } from '@proc7ts/context-builder';
 import { mapOn_, trackValue, ValueTracker } from '@proc7ts/fun-events';
-import { bootstrapComponents, Component, ComponentContext, DefaultRenderScheduler, Feature } from '@wesib/wesib';
+import { bootstrapComponents, Component, ComponentContext, Feature } from '@wesib/wesib';
 import { Navigation } from '../navigation';
 import { MockObject } from '../spec';
 import { navAnchor, NavAnchor } from './nav-anchor';
@@ -147,7 +147,7 @@ describe('navAnchor', () => {
     @Feature({
       setup(setup) {
         setup.provide(cxConstAsset(Navigation, mockNavigation));
-        setup.provide(cxConstAsset(DefaultRenderScheduler, immediateRenderScheduler));
+        setup.provide(cxConstAsset(RenderScheduler, immediateRenderScheduler));
       },
     })
     class TestComponent implements NavLink.Owner {

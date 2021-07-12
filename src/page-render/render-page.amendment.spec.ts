@@ -1,17 +1,10 @@
-import { queuedRenderScheduler } from '@frontmeans/render-scheduler';
+import { PreRenderScheduler, queuedRenderScheduler, RenderScheduler } from '@frontmeans/render-scheduler';
 import { afterEach, beforeEach, describe, expect, it, jest } from '@jest/globals';
 import { cxConstAsset } from '@proc7ts/context-builder';
 import { afterThe } from '@proc7ts/fun-events';
 import { noop, valueProvider } from '@proc7ts/primitives';
 import { HttpFetch } from '@wesib/generic';
-import {
-  bootstrapComponents,
-  BootstrapWindow,
-  Component,
-  ComponentContext,
-  DefaultPreRenderScheduler,
-  DefaultRenderScheduler,
-} from '@wesib/wesib';
+import { bootstrapComponents, BootstrapWindow, Component, ComponentContext } from '@wesib/wesib';
 import { Mock } from 'jest-mock';
 import { Navigation } from '../navigation';
 import { PageLoadAgent, PageLoadParam } from '../page-load';
@@ -233,8 +226,8 @@ describe('@RenderPage', () => {
           feature: {
             setup(setup) {
               setup.provide(cxConstAsset(BootstrapWindow, locationMock.window));
-              setup.provide(cxConstAsset(DefaultRenderScheduler, queuedRenderScheduler));
-              setup.provide(cxConstAsset(DefaultPreRenderScheduler, queuedRenderScheduler));
+              setup.provide(cxConstAsset(RenderScheduler, queuedRenderScheduler));
+              setup.provide(cxConstAsset(PreRenderScheduler, queuedRenderScheduler));
               setup.provide(cxConstAsset(HttpFetch, mockFetch));
               setup.provide(cxConstAsset(PageLoadAgent, mockAgent));
             },
