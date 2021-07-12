@@ -1,10 +1,10 @@
 import { DomEventDispatcher } from '@frontmeans/dom-events';
 import { deriveDrekContext, drekContextOf, drekCssClassesOf } from '@frontmeans/drek';
-import { css__naming, QualifiedName } from '@frontmeans/namespace-aliaser';
+import { css__naming, NamespaceAliaser, QualifiedName } from '@frontmeans/namespace-aliaser';
 import { EventReceiver } from '@proc7ts/fun-events';
 import { setOfElements, valueByRecipe } from '@proc7ts/primitives';
 import { Supply } from '@proc7ts/supply';
-import { ComponentRenderScheduler, DefaultNamespaceAliaser, RenderDef, Wesib__NS } from '@wesib/wesib';
+import { ComponentRenderScheduler, RenderDef, Wesib__NS } from '@wesib/wesib';
 import { Navigation } from '../navigation';
 import { NavLink } from './nav-link';
 
@@ -110,7 +110,7 @@ export function navElement<TElement extends Element>(
 
     const { context, supply: ownerSupply = context.supply } = owner;
 
-    activeClass = css__naming.name(active, context.get(DefaultNamespaceAliaser));
+    activeClass = css__naming.name(active, context.get(NamespaceAliaser));
 
     const navigation = context.get(Navigation);
     const scheduler = context.get(ComponentRenderScheduler);
