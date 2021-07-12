@@ -175,7 +175,7 @@ describe('NavigationAgent', () => {
     cxBuilder.supply.off(reason);
     expect(() => agent(mockNavigate, when, from, to)).toThrow(new CxReferenceError(
         NavigationAgent,
-        'The [NavigationAgent] is unavailable',
+        'The [NavigationAgent] is no longer available',
         reason,
     ));
   });
