@@ -33,7 +33,7 @@
     "@frontmeans/dom-events": "^1.2.0",
     "@frontmeans/dom-primitives": "^1.1.0",
     "@frontmeans/drek": "^1.3.0",
-    "@frontmeans/namespace-aliaser": "^2.6.0",
+    "@frontmeans/namespace-aliaser": "^2.6.1",
     "@frontmeans/render-scheduler": "^1.8.0",
     "@hatsy/http-header-value": "^3.6.0",
     "@proc7ts/amend": "^1.0.0",
