@@ -77,7 +77,7 @@ export namespace NavMenu {
      *
      * `true` by default.
      */
-    readonly activate?: boolean;
+    readonly activate?: boolean | undefined;
 
     /**
      * Weighs matching navigation link.

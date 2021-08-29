@@ -29,19 +29,19 @@ export namespace NavAnchor {
      *
      * `click` by default.
      */
-    readonly event?: string | readonly string[];
+    readonly event?: string | readonly string[] | undefined;
 
     /**
      * Qualified name of CSS class to mark the active anchor element with.
      *
      * The `active` class in Wesib namespace is used by default.
      */
-    readonly active?: QualifiedName;
+    readonly active?: QualifiedName | undefined;
 
     /**
      * Rendering definition options to pass to nav links render scheduler.
      */
-    readonly render?: RenderDef.Options;
+    readonly render?: RenderDef.Options | undefined;
 
   }
 

@@ -320,17 +320,17 @@ export namespace Navigation {
     /**
      * An URL to update the browser location string to.
      */
-    readonly url?: string | URL;
+    readonly url?: string | URL | undefined;
 
     /**
      * Opaque data to apply to session history. I.e. either push or replace.
      */
-    readonly data?: any;
+    readonly data?: any | undefined;
 
     /**
      * New window title.
      */
-    readonly title?: string;
+    readonly title?: string | undefined;
 
   }
 

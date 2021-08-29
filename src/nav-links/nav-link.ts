@@ -16,7 +16,7 @@ export interface NavLink {
    *
    * Disables navigation link once cut off.
    */
-  readonly supply?: Supply;
+  readonly supply?: Supply | undefined;
 
   /**
    * Activates this navigation link.
@@ -57,7 +57,7 @@ export namespace NavLink {
      *
      * It is expected that constructed {@link NavLink.supply link supply} depends on this one.
      */
-    readonly supply?: Supply;
+    readonly supply?: Supply | undefined;
 
   }
 

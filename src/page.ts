@@ -15,12 +15,12 @@ export interface Page {
   /**
    * History entry data.
    */
-  readonly data?: any;
+  readonly data?: any | undefined;
 
   /**
    * New window title.
    */
-  readonly title?: string;
+  readonly title?: string | undefined;
 
   /**
    * Whether this page is visited at least one.

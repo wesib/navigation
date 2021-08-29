@@ -10,9 +10,9 @@ import { PageParam, PageParam__symbol } from './page-param';
 export const NAV_DATA_KEY = 'wesib:navigation:data' as const;
 
 export interface PartialNavData {
-  readonly uid?: string;
-  readonly id?: number;
-  readonly data: any;
+  readonly uid?: string | undefined;
+  readonly id?: number | undefined;
+  readonly data: any | undefined;
 }
 
 export interface NavData extends PartialNavData {
@@ -292,8 +292,8 @@ const enum PageStatus {
  */
 export class PageEntry {
 
-  next?: PageEntry;
-  prev?: PageEntry;
+  next?: PageEntry | undefined;
+  prev?: PageEntry | undefined;
   private _status: PageStatus = PageStatus.New;
   readonly page: Page;
   private readonly _params: Map<PageParam<any, any>, PageParam.Handle<any, any>>;

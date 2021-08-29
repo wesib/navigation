@@ -59,7 +59,7 @@ export namespace PageLoadResponse {
      *
      * This is a requested element, if found in the loaded document.
      */
-    readonly fragment?: Element;
+    readonly fragment?: Element | undefined;
 
     /**
      * Page load error. Always `undefined`.
@@ -83,17 +83,17 @@ export namespace PageLoadResponse {
     /**
      * HTTP fetch response.
      */
-    readonly response?: Response;
+    readonly response?: Response | undefined;
 
     /**
      * Error document.
      */
-    readonly document?: Document;
+    readonly document?: Document | undefined;
 
     /**
      * Page load error. Always present.
      */
-    readonly error: any;
+    readonly error: unknown;
 
   }
 

@@ -17,7 +17,7 @@ export interface PageLoadRequest {
    * When omitted in one of the page load requests, the full document will be requested. I.e. `Accept-Fragment` header
    * won't be sent in HTTP request.
    */
-  readonly fragment?: PageFragmentRequest;
+  readonly fragment?: PageFragmentRequest | undefined;
 
   /**
    * Page load events receiver.

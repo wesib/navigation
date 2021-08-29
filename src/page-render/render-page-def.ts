@@ -36,7 +36,7 @@ export namespace RenderPageDef {
      *
      * By default uses custom element identifier if present, or element tag name otherwise.
      */
-    readonly fragment?: PageFragmentRequest;
+    readonly fragment?: PageFragmentRequest | undefined;
 
     /**
      * Builds content key for the given page.

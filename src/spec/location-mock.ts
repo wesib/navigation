@@ -23,8 +23,8 @@ export class LocationMock {
         doc,
         win,
       }: {
-        doc?: Document;
-        win?: BootstrapWindow;
+        doc?: Document | undefined;
+        win?: BootstrapWindow | undefined;
       } = {},
   ) {
 

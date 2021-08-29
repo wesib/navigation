@@ -179,7 +179,7 @@ export class StayOnPageEvent extends Event {
   /**
    * A reason of navigation failure. This is set when navigation failed due to some error.
    */
-  readonly reason?: any;
+  readonly reason?: unknown | undefined;
 
   /**
    * Constructs stay on page event.
@@ -215,6 +215,6 @@ export interface StayOnPageEventInit extends Omit<EventInit, 'cancelable'> {
   /**
    * A reason of navigation failure. This is set when navigation failed due to some error.
    */
-  readonly reason?: any;
+  readonly reason?: unknown | undefined;
 
 }
