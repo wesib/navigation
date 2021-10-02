@@ -491,6 +491,7 @@ describe('Navigation', () => {
         expect(to.url.href).toBe(fromPage.url.href);
         expect(from).not.toBe(to);
         expect(to.get(param)).toBe('other');
+
         return 'cb result';
       });
 

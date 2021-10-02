@@ -103,6 +103,7 @@ describe('@RenderPage', () => {
 <page-content>not included content</page-content>
 <requested-fragment>included content</requested-fragment>
 `;
+
     const context = await bootstrap({ fragment: { tag: 'requested-fragment' } });
     const navigation = context.get(Navigation);
 

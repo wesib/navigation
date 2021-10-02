@@ -149,6 +149,7 @@ describe('NavigationAgent', () => {
     cxBuilder.provide(cxConstAsset(NavigationAgent, next => next()));
     cxBuilder.provide(cxConstAsset(NavigationAgent, (next, _when, _from, toPage) => {
       toPage.get(param);
+
       return next();
     }));
 
@@ -162,6 +163,7 @@ describe('NavigationAgent', () => {
     cxBuilder.provide(cxConstAsset(NavigationAgent, next => next()));
     cxBuilder.provide(cxConstAsset(NavigationAgent, (next, _when, _from, toPage) => {
       toPage.put(param, 'test');
+
       return next();
     }));
 

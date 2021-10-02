@@ -30,6 +30,7 @@ export function testPageParam(
 
     create(_page: Page, initValue: string): PageParam.Handle<string, string> {
       state.value = initValue;
+
       return handle;
     }
 

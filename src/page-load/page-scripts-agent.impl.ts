@@ -29,6 +29,7 @@ export function pageScriptsAgent(context: CxValues): PageLoadAgent {
               },
           );
         }
+
         return response;
       }),
   );

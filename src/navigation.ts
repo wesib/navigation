@@ -489,6 +489,7 @@ function Navigation$byDefault(target: CxEntry.Target<Navigation>): Navigation {
     if (typeof url === 'string') {
       return new URL(url, document.baseURI);
     }
+
     return url || nav.it.page.url;
   }
 
@@ -499,6 +500,7 @@ function Navigation$byDefault(target: CxEntry.Target<Navigation>): Navigation {
     if (target.url instanceof URL) {
       return target as Navigation.URLTarget;
     }
+
     return { ...target, url: toURL(target.url) };
   }
 

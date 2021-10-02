@@ -49,6 +49,7 @@ export class LocationMock {
     }
 
     const self = this;
+
     this.stateData = [[new URL('http://localhost/index'), 'initial']];
 
     this.href = jest.fn(() => this.currentURL.href);
@@ -141,9 +142,11 @@ export class LocationMock {
       switch (event) {
       case 'popstate':
         this.window.dispatchEvent(new PopStateEvent('popstate', { state: null }));
+
         break;
       case 'hashchange':
         this.window.dispatchEvent(new HashChangeEvent('hashchange', { newURL: newURL.href, oldURL: oldURL.href }));
+
         break;
       }
     }

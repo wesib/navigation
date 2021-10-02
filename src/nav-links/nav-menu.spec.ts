@@ -231,6 +231,7 @@ describe('NavMenu', () => {
       new NavMenu(links.read.do(
           translateAfter_((send, links) => send(...links)),
       )).bindTo(context);
+
       const navigation = context.get(Navigation);
 
       await navigation.open('index/path');

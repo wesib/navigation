@@ -60,6 +60,7 @@ export class NavMenu implements SupplyPeer {
    */
   bindTo(context: ComponentContext): this {
     this[NavMenu$Links__symbol].bindTo(context);
+
     return this;
   }
 
@@ -360,6 +361,7 @@ function calcNavLinkWeight(linkURL: URL, pageURL: URL): number {
     if (linkDir !== pageDir) {
       return -1;
     }
+
     return linkURL.pathname.length + searchParamWeight;
   }
 

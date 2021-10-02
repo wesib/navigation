@@ -32,6 +32,7 @@ describe('PageCacheBuster', () => {
     pageRev = 'page-rev';
 
     const meta = doc.createElement('meta');
+
     meta.name = 'wesib-app-rev';
     meta.content = pageRev;
 

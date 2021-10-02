@@ -76,6 +76,7 @@ export class PageLoadRequests {
             return false;
           }
           result.push(request.fragment);
+
           return true;
         },
     )) {

@@ -185,6 +185,7 @@ export class NavHistory {
         // Not a return
         return this._changeHash(tracker);
       }
+
       return; // Already handled by `hashchange` handler
     }
 
@@ -357,6 +358,7 @@ export class PageEntry {
 
     if (handle) {
       handle.put(input);
+
       return handle.get();
     }
 

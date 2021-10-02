@@ -79,7 +79,9 @@ describe('PageLoadParam', () => {
     page.put(PageLoadParam, { receiver });
 
     const [param] = testPageParam();
+
     navigation.with(param, 'test-value').pretend('/other');
+
     const response = { ok: true, page } as PageLoadResponse;
 
     responder.send(response);
@@ -220,6 +222,7 @@ describe('PageLoadParam', () => {
       result = '<body></body>';
       mockFetch = jest.fn((input, _init?) => {
         request = input as Request;
+
         return afterThe(
             {
               ok: true,

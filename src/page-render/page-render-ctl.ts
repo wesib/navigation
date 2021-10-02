@@ -78,6 +78,7 @@ class PageRenderCtl$ implements PageRenderCtl {
 
           if (!responseAndKey) {
             fragExec.retainContent();
+
             return;
           }
 
