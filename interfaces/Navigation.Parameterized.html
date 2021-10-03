@@ -1,503 +1,66 @@
-<!doctype html>
-<html class="default no-js">
-<head>
-	<meta charset="utf-8">
-	<meta http-equiv="X-UA-Compatible" content="IE=edge">
-	<title>Parameterized | Wesib: Navigation Support</title>
-	<meta name="description" content="Documentation for Wesib: Navigation Support">
-	<meta name="viewport" content="width=device-width, initial-scale=1">
-	<link rel="stylesheet" href="../assets/css/main.css">
-	<script async src="../assets/js/search.js" id="search-script"></script>
-</head>
-<body>
-<header>
-	<div class="tsd-page-toolbar">
-		<div class="container">
-			<div class="table-wrap">
-				<div class="table-cell" id="tsd-search" data-index="../assets/js/search.json" data-base="..">
-					<div class="field">
-						<label for="tsd-search-field" class="tsd-widget search no-caption">Search</label>
-						<input id="tsd-search-field" type="text" />
-					</div>
-					<ul class="results">
-						<li class="state loading">Preparing search index...</li>
-						<li class="state failure">The search index is not available</li>
-					</ul>
-					<a href="../index.html" class="title">Wesib: Navigation Support</a>
-				</div>
-				<div class="table-cell" id="tsd-widgets">
-					<div id="tsd-filter">
-						<a href="#" class="tsd-widget options no-caption" data-toggle="options">Options</a>
-						<div class="tsd-filter-group">
-							<div class="tsd-select" id="tsd-filter-visibility">
-								<span class="tsd-select-label">All</span>
-								<ul class="tsd-select-list">
-									<li data-value="public">Public</li>
-									<li data-value="protected">Public/Protected</li>
-									<li data-value="private" class="selected">All</li>
-								</ul>
-							</div>
-							<input type="checkbox" id="tsd-filter-inherited" checked />
-							<label class="tsd-widget" for="tsd-filter-inherited">Inherited</label>
-							<input type="checkbox" id="tsd-filter-externals" checked />
-							<label class="tsd-widget" for="tsd-filter-externals">Externals</label>
-						</div>
-					</div>
-					<a href="#" class="tsd-widget menu no-caption" data-toggle="menu">Menu</a>
-				</div>
-			</div>
-		</div>
-	</div>
-	<div class="tsd-page-title">
-		<div class="container">
-			<ul class="tsd-breadcrumb">
-				<li>
-					<a href="../modules.html">Wesib: Navigation Support</a>
-				</li>
-				<li>
-					<a href="../modules/Navigation.html">Navigation</a>
-				</li>
-				<li>
-					<a href="Navigation.Parameterized.html">Parameterized</a>
-				</li>
-			</ul>
-			<h1>Interface Parameterized</h1>
-		</div>
-	</div>
-</header>
-<div class="container container-main">
-	<div class="row">
-		<div class="col-8 col-content">
-			<section class="tsd-panel tsd-comment">
-				<div class="tsd-comment tsd-typography">
-					<div class="lead">
-						<p>Parameterized navigation.</p>
-					</div>
-					<p>Allows to assign target page parameters prior to navigating to it.</p>
-				</div>
-			</section>
-			<section class="tsd-panel tsd-hierarchy">
-				<h3>Hierarchy</h3>
-				<ul class="tsd-hierarchy">
-					<li>
-						<span class="target">Parameterized</span>
-					</li>
-				</ul>
-			</section>
-			<section class="tsd-panel-group tsd-index-group">
-				<h2>Index</h2>
-				<section class="tsd-panel tsd-index-panel">
-					<div class="tsd-index-content">
-						<section class="tsd-index-section ">
-							<h3>Methods</h3>
-							<ul class="tsd-index-list">
-								<li class="tsd-kind-method tsd-parent-kind-interface"><a href="Navigation.Parameterized.html#open" class="tsd-kind-icon">open</a></li>
-								<li class="tsd-kind-method tsd-parent-kind-interface tsd-has-type-parameter"><a href="Navigation.Parameterized.html#pretend" class="tsd-kind-icon">pretend</a></li>
-								<li class="tsd-kind-method tsd-parent-kind-interface"><a href="Navigation.Parameterized.html#replace" class="tsd-kind-icon">replace</a></li>
-								<li class="tsd-kind-method tsd-parent-kind-interface tsd-has-type-parameter"><a href="Navigation.Parameterized.html#with" class="tsd-kind-icon">with</a></li>
-							</ul>
-						</section>
-					</div>
-				</section>
-			</section>
-			<section class="tsd-panel-group tsd-member-group ">
-				<h2>Methods</h2>
-				<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-interface">
-					<a name="open" class="tsd-anchor"></a>
-					<h3>open</h3>
-					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-interface">
-						<li class="tsd-signature tsd-kind-icon">open<span class="tsd-signature-symbol">(</span>target<span class="tsd-signature-symbol">?: </span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">URL</span><span class="tsd-signature-symbol"> | </span><a href="Navigation.Target.html" class="tsd-signature-type" data-tsd-kind="Interface">Target</a><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">null</span><span class="tsd-signature-symbol"> | </span><a href="Page.html" class="tsd-signature-type" data-tsd-kind="Interface">Page</a><span class="tsd-signature-symbol">&gt;</span></li>
-					</ul>
-					<ul class="tsd-descriptions">
-						<li class="tsd-description">
-							<aside class="tsd-sources">
-								<ul>
-									<li>Defined in <a href="https://github.com/wesib/navigation/blob/552f43e/src/navigation.ts#L239">wesib/navigation/src/navigation.ts:239</a></li>
-								</ul>
-							</aside>
-							<div class="tsd-comment tsd-typography">
-								<div class="lead">
-									<p>Opens a page by navigating to the given <code>target</code> with provided page parameters.</p>
-								</div>
-								<p>Appends an entry to navigation history.</p>
-								<dl class="tsd-comment-tags">
-									<dt>fires</dt>
-									<dd><p>PreNavigateEvent#wesib:preNavigate  On window object prior to actually navigate.
-										Then navigates to the <code>target</code>, unless the event cancelled.</p>
-									</dd>
-									<dt>fires</dt>
-									<dd><p>NavigateEvent@wesib:navigate  On window object when navigation succeed.</p>
-									</dd>
-								</dl>
-							</div>
-							<h4 class="tsd-parameters-title">Parameters</h4>
-							<ul class="tsd-parameters">
-								<li>
-									<h5><span class="tsd-flag ts-flagOptional">Optional</span> target: <span class="tsd-signature-type">string</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">URL</span><span class="tsd-signature-symbol"> | </span><a href="Navigation.Target.html" class="tsd-signature-type" data-tsd-kind="Interface">Target</a></h5>
-									<div class="tsd-comment tsd-typography">
-										<p>Either navigation target or URL to navigate to. Navigates to current page URL when omitted.</p>
-									</div>
-								</li>
-							</ul>
-							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">null</span><span class="tsd-signature-symbol"> | </span><a href="Page.html" class="tsd-signature-type" data-tsd-kind="Interface">Page</a><span class="tsd-signature-symbol">&gt;</span></h4>
-							<p>A promise resolved to navigated page, or to <code>null</code> otherwise.</p>
-						</li>
-					</ul>
-				</section>
-				<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-interface tsd-has-type-parameter">
-					<a name="pretend" class="tsd-anchor"></a>
-					<h3>pretend</h3>
-					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-interface tsd-has-type-parameter">
-						<li class="tsd-signature tsd-kind-icon">pretend&lt;T&gt;<span class="tsd-signature-symbol">(</span>target<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">URL</span><span class="tsd-signature-symbol"> | </span><a href="Navigation.Target.html" class="tsd-signature-type" data-tsd-kind="Interface">Target</a>, callback<span class="tsd-signature-symbol">: </span><span class="tsd-signature-symbol">(</span>from<span class="tsd-signature-symbol">: </span><a href="Page.html" class="tsd-signature-type" data-tsd-kind="Interface">Page</a>, to<span class="tsd-signature-symbol">: </span><a href="Page.html" class="tsd-signature-type" data-tsd-kind="Interface">Page</a><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol"> =&gt; </span><span class="tsd-signature-type">T</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">undefined</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">T</span></li>
-						<li class="tsd-signature tsd-kind-icon">pretend&lt;T&gt;<span class="tsd-signature-symbol">(</span>callback<span class="tsd-signature-symbol">: </span><span class="tsd-signature-symbol">(</span>from<span class="tsd-signature-symbol">: </span><a href="Page.html" class="tsd-signature-type" data-tsd-kind="Interface">Page</a>, to<span class="tsd-signature-symbol">: </span><a href="Page.html" class="tsd-signature-type" data-tsd-kind="Interface">Page</a><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol"> =&gt; </span><span class="tsd-signature-type">T</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">undefined</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">T</span></li>
-						<li class="tsd-signature tsd-kind-icon">pretend<span class="tsd-signature-symbol">(</span>target<span class="tsd-signature-symbol">?: </span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">URL</span><span class="tsd-signature-symbol"> | </span><a href="Navigation.Target.html" class="tsd-signature-type" data-tsd-kind="Interface">Target</a><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">undefined</span><span class="tsd-signature-symbol"> | </span><a href="Navigation.URLTarget.html" class="tsd-signature-type" data-tsd-kind="Interface">URLTarget</a></li>
-					</ul>
-					<ul class="tsd-descriptions">
-						<li class="tsd-description">
-							<aside class="tsd-sources">
-								<ul>
-									<li>Defined in <a href="https://github.com/wesib/navigation/blob/552f43e/src/navigation.ts#L270">wesib/navigation/src/navigation.ts:270</a></li>
-								</ul>
-							</aside>
-							<div class="tsd-comment tsd-typography">
-								<div class="lead">
-									<p>Pretends navigation.</p>
-								</div>
-								<p>Prepares navigation and parameters, but does not actually navigate. Instead it calls the provided callback
-								function.</p>
-								<p>This is useful e.g. to build target URL or evaluate target page parameter.</p>
-							</div>
-							<h4 class="tsd-type-parameters-title">Type parameters</h4>
-							<ul class="tsd-type-parameters">
-								<li>
-									<h4>T</h4>
-								</li>
-							</ul>
-							<h4 class="tsd-parameters-title">Parameters</h4>
-							<ul class="tsd-parameters">
-								<li>
-									<h5>target: <span class="tsd-signature-type">string</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">URL</span><span class="tsd-signature-symbol"> | </span><a href="Navigation.Target.html" class="tsd-signature-type" data-tsd-kind="Interface">Target</a></h5>
-									<div class="tsd-comment tsd-typography">
-										<p>Either navigation target or URL to pretend navigation to.</p>
-									</div>
-								</li>
-								<li>
-									<h5>callback: <span class="tsd-signature-symbol">(</span>from<span class="tsd-signature-symbol">: </span><a href="Page.html" class="tsd-signature-type" data-tsd-kind="Interface">Page</a>, to<span class="tsd-signature-symbol">: </span><a href="Page.html" class="tsd-signature-type" data-tsd-kind="Interface">Page</a><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol"> =&gt; </span><span class="tsd-signature-type">T</span></h5>
-									<div class="tsd-comment tsd-typography">
-										<p>A callback function receiving two pages as parameters: the page to leave, and the page to open.
-											The latter one is valid only inside callback, as its parameters will be cleaned up right after callback returns.
-											The value returned from callback is then returned from this method call. It may be used to collect some data
-										from target page.</p>
-									</div>
-									<ul class="tsd-parameters">
-										<li class="tsd-parameter-signature">
-											<ul class="tsd-signatures tsd-kind-type-literal">
-												<li class="tsd-signature tsd-kind-icon"><span class="tsd-signature-symbol">(</span>from<span class="tsd-signature-symbol">: </span><a href="Page.html" class="tsd-signature-type" data-tsd-kind="Interface">Page</a>, to<span class="tsd-signature-symbol">: </span><a href="Page.html" class="tsd-signature-type" data-tsd-kind="Interface">Page</a><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">T</span></li>
-											</ul>
-											<ul class="tsd-descriptions">
-												<li class="tsd-description">
-													<h4 class="tsd-parameters-title">Parameters</h4>
-													<ul class="tsd-parameters">
-														<li>
-															<h5>from: <a href="Page.html" class="tsd-signature-type" data-tsd-kind="Interface">Page</a></h5>
-														</li>
-														<li>
-															<h5>to: <a href="Page.html" class="tsd-signature-type" data-tsd-kind="Interface">Page</a></h5>
-														</li>
-													</ul>
-													<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">T</span></h4>
-												</li>
-											</ul>
-										</li>
-									</ul>
-								</li>
-							</ul>
-							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">undefined</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">T</span></h4>
-							<p>Either the value returned by callback, or <code>undefined</code> when navigation failed.</p>
-						</li>
-						<li class="tsd-description">
-							<aside class="tsd-sources">
-								<ul>
-									<li>Defined in <a href="https://github.com/wesib/navigation/blob/552f43e/src/navigation.ts#L290">wesib/navigation/src/navigation.ts:290</a></li>
-								</ul>
-							</aside>
-							<div class="tsd-comment tsd-typography">
-								<div class="lead">
-									<p>Pretends navigation to the same page.</p>
-								</div>
-								<p>Prepares navigation and parameters, but does not actually navigate. Instead it calls the provided callback
-								function.</p>
-								<p>This is useful e.g. to build target URL or evaluate target page parameter.</p>
-							</div>
-							<h4 class="tsd-type-parameters-title">Type parameters</h4>
-							<ul class="tsd-type-parameters">
-								<li>
-									<h4>T</h4>
-								</li>
-							</ul>
-							<h4 class="tsd-parameters-title">Parameters</h4>
-							<ul class="tsd-parameters">
-								<li>
-									<h5>callback: <span class="tsd-signature-symbol">(</span>from<span class="tsd-signature-symbol">: </span><a href="Page.html" class="tsd-signature-type" data-tsd-kind="Interface">Page</a>, to<span class="tsd-signature-symbol">: </span><a href="Page.html" class="tsd-signature-type" data-tsd-kind="Interface">Page</a><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol"> =&gt; </span><span class="tsd-signature-type">T</span></h5>
-									<div class="tsd-comment tsd-typography">
-										<p>A callback function receiving two pages as parameters: the page to leave, and the page to open.
-											The latter one is valid only inside callback, as its parameters will be cleaned up right after callback returns.
-											The value returned from callback is then returned from this method call. It may be used to collect some data
-										from target page.</p>
-									</div>
-									<ul class="tsd-parameters">
-										<li class="tsd-parameter-signature">
-											<ul class="tsd-signatures tsd-kind-type-literal">
-												<li class="tsd-signature tsd-kind-icon"><span class="tsd-signature-symbol">(</span>from<span class="tsd-signature-symbol">: </span><a href="Page.html" class="tsd-signature-type" data-tsd-kind="Interface">Page</a>, to<span class="tsd-signature-symbol">: </span><a href="Page.html" class="tsd-signature-type" data-tsd-kind="Interface">Page</a><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">T</span></li>
-											</ul>
-											<ul class="tsd-descriptions">
-												<li class="tsd-description">
-													<h4 class="tsd-parameters-title">Parameters</h4>
-													<ul class="tsd-parameters">
-														<li>
-															<h5>from: <a href="Page.html" class="tsd-signature-type" data-tsd-kind="Interface">Page</a></h5>
-														</li>
-														<li>
-															<h5>to: <a href="Page.html" class="tsd-signature-type" data-tsd-kind="Interface">Page</a></h5>
-														</li>
-													</ul>
-													<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">T</span></h4>
-												</li>
-											</ul>
-										</li>
-									</ul>
-								</li>
-							</ul>
-							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">undefined</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">T</span></h4>
-							<p>Either the value returned by callback, or <code>undefined</code> when navigation failed.</p>
-						</li>
-						<li class="tsd-description">
-							<aside class="tsd-sources">
-								<ul>
-									<li>Defined in <a href="https://github.com/wesib/navigation/blob/552f43e/src/navigation.ts#L307">wesib/navigation/src/navigation.ts:307</a></li>
-								</ul>
-							</aside>
-							<div class="tsd-comment tsd-typography">
-								<div class="lead">
-									<p>Pretends navigation and builds navigation target.</p>
-								</div>
-								<p>Prepares navigation and parameters, but does not actually navigate. Instead it calls the provided callback
-								function.</p>
-								<p>This is useful e.g. to build target URL or evaluate target page parameter.</p>
-							</div>
-							<h4 class="tsd-parameters-title">Parameters</h4>
-							<ul class="tsd-parameters">
-								<li>
-									<h5><span class="tsd-flag ts-flagOptional">Optional</span> target: <span class="tsd-signature-type">string</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">URL</span><span class="tsd-signature-symbol"> | </span><a href="Navigation.Target.html" class="tsd-signature-type" data-tsd-kind="Interface">Target</a></h5>
-									<div class="tsd-comment tsd-typography">
-										<p>Either navigation target or URL to pretend navigation to. Prepends navigation to current page
-										when omitted.</p>
-									</div>
-								</li>
-							</ul>
-							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">undefined</span><span class="tsd-signature-symbol"> | </span><a href="Navigation.URLTarget.html" class="tsd-signature-type" data-tsd-kind="Interface">URLTarget</a></h4>
-							<p>Either Navigation target with URL value, or <code>undefined</code> when navigation failed.</p>
-						</li>
-					</ul>
-				</section>
-				<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-interface">
-					<a name="replace" class="tsd-anchor"></a>
-					<h3>replace</h3>
-					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-interface">
-						<li class="tsd-signature tsd-kind-icon">replace<span class="tsd-signature-symbol">(</span>target<span class="tsd-signature-symbol">?: </span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">URL</span><span class="tsd-signature-symbol"> | </span><a href="Navigation.Target.html" class="tsd-signature-type" data-tsd-kind="Interface">Target</a><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">null</span><span class="tsd-signature-symbol"> | </span><a href="Page.html" class="tsd-signature-type" data-tsd-kind="Interface">Page</a><span class="tsd-signature-symbol">&gt;</span></li>
-					</ul>
-					<ul class="tsd-descriptions">
-						<li class="tsd-description">
-							<aside class="tsd-sources">
-								<ul>
-									<li>Defined in <a href="https://github.com/wesib/navigation/blob/552f43e/src/navigation.ts#L252">wesib/navigation/src/navigation.ts:252</a></li>
-								</ul>
-							</aside>
-							<div class="tsd-comment tsd-typography">
-								<div class="lead">
-									<p>Replaces the most recent entry in navigation history with the given <code>target</code> and provided page parameters.</p>
-								</div>
-								<dl class="tsd-comment-tags">
-									<dt>fires</dt>
-									<dd><p>PreNavigateEvent#wesib:preNavigate  On window object prior to actually update the history.
-										Then navigates to the <code>target</code>, unless the event cancelled.</p>
-									</dd>
-									<dt>fires</dt>
-									<dd><p>NavigateEvent@wesib:navigate  On window object when history updated.</p>
-									</dd>
-								</dl>
-							</div>
-							<h4 class="tsd-parameters-title">Parameters</h4>
-							<ul class="tsd-parameters">
-								<li>
-									<h5><span class="tsd-flag ts-flagOptional">Optional</span> target: <span class="tsd-signature-type">string</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">URL</span><span class="tsd-signature-symbol"> | </span><a href="Navigation.Target.html" class="tsd-signature-type" data-tsd-kind="Interface">Target</a></h5>
-									<div class="tsd-comment tsd-typography">
-										<p>Either navigation target or URL to replace the latest history entry with. Navigates to current
-										page URL when omitted.</p>
-									</div>
-								</li>
-							</ul>
-							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">null</span><span class="tsd-signature-symbol"> | </span><a href="Page.html" class="tsd-signature-type" data-tsd-kind="Interface">Page</a><span class="tsd-signature-symbol">&gt;</span></h4>
-							<p>A promise resolved to navigated page, or to <code>null</code> otherwise.</p>
-						</li>
-					</ul>
-				</section>
-				<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-interface tsd-has-type-parameter">
-					<a name="with" class="tsd-anchor"></a>
-					<h3>with</h3>
-					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-interface tsd-has-type-parameter">
-						<li class="tsd-signature tsd-kind-icon">with&lt;T, TInput&gt;<span class="tsd-signature-symbol">(</span>ref<span class="tsd-signature-symbol">: </span><a href="PageParam.Ref.html" class="tsd-signature-type" data-tsd-kind="Interface">Ref</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">T</span><span class="tsd-signature-symbol">, </span><span class="tsd-signature-type">TInput</span><span class="tsd-signature-symbol">&gt;</span>, input<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">TInput</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><a href="Navigation.Parameterized.html" class="tsd-signature-type" data-tsd-kind="Interface">Parameterized</a></li>
-					</ul>
-					<ul class="tsd-descriptions">
-						<li class="tsd-description">
-							<aside class="tsd-sources">
-								<ul>
-									<li>Defined in <a href="https://github.com/wesib/navigation/blob/552f43e/src/navigation.ts#L225">wesib/navigation/src/navigation.ts:225</a></li>
-								</ul>
-							</aside>
-							<div class="tsd-comment tsd-typography">
-								<div class="lead">
-									<p>Applies parameter to navigation target page.</p>
-								</div>
-							</div>
-							<h4 class="tsd-type-parameters-title">Type parameters</h4>
-							<ul class="tsd-type-parameters">
-								<li>
-									<h4>T</h4>
-									<div class="tsd-comment tsd-typography">
-										<p>Parameter value type.</p>
-									</div>
-								</li>
-								<li>
-									<h4>TInput</h4>
-									<div class="tsd-comment tsd-typography">
-										<p>Parameter input type.</p>
-									</div>
-								</li>
-							</ul>
-							<h4 class="tsd-parameters-title">Parameters</h4>
-							<ul class="tsd-parameters">
-								<li>
-									<h5>ref: <a href="PageParam.Ref.html" class="tsd-signature-type" data-tsd-kind="Interface">Ref</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">T</span><span class="tsd-signature-symbol">, </span><span class="tsd-signature-type">TInput</span><span class="tsd-signature-symbol">&gt;</span></h5>
-									<div class="tsd-comment tsd-typography">
-										<p>A reference to page navigation parameter to apply.</p>
-									</div>
-								</li>
-								<li>
-									<h5>input: <span class="tsd-signature-type">TInput</span></h5>
-									<div class="tsd-comment tsd-typography">
-										<p>Parameter input to use when constructing its value.</p>
-									</div>
-								</li>
-							</ul>
-							<h4 class="tsd-returns-title">Returns <a href="Navigation.Parameterized.html" class="tsd-signature-type" data-tsd-kind="Interface">Parameterized</a></h4>
-							<p>New parameterized navigation instance.</p>
-						</li>
-					</ul>
-				</section>
-			</section>
-		</div>
-		<div class="col-4 col-menu menu-sticky-wrap menu-highlight">
-			<nav class="tsd-navigation primary">
-				<ul>
-					<li class=" ">
-						<a href="../modules.html">Exports</a>
-					</li>
-					<li class=" tsd-kind-namespace">
-						<a href="../modules/NavAnchor.html">Nav<wbr>Anchor</a>
-					</li>
-					<li class=" tsd-kind-namespace">
-						<a href="../modules/NavElement.html">Nav<wbr>Element</a>
-					</li>
-					<li class=" tsd-kind-namespace">
-						<a href="../modules/NavLink.html">Nav<wbr>Link</a>
-					</li>
-					<li class=" tsd-kind-namespace">
-						<a href="../modules/NavMenu.html">Nav<wbr>Menu</a>
-					</li>
-					<li class="current tsd-kind-namespace">
-						<a href="../modules/Navigation.html">Navigation</a>
-					</li>
-					<li class=" tsd-kind-namespace">
-						<a href="../modules/NavigationAgent.html">Navigation<wbr>Agent</a>
-					</li>
-					<li class=" tsd-kind-namespace">
-						<a href="../modules/PageFragmentRequest.html">Page<wbr>Fragment<wbr>Request</a>
-					</li>
-					<li class=" tsd-kind-namespace">
-						<a href="../modules/PageLoadAgent.html">Page<wbr>Load<wbr>Agent</a>
-					</li>
-					<li class=" tsd-kind-namespace">
-						<a href="../modules/PageLoadResponse.html">Page<wbr>Load<wbr>Response</a>
-					</li>
-					<li class=" tsd-kind-namespace">
-						<a href="../modules/PageParam.html">Page<wbr>Param</a>
-					</li>
-					<li class=" tsd-kind-namespace">
-						<a href="../modules/RenderPageDef.html">Render<wbr>Page<wbr>Def</a>
-					</li>
-				</ul>
-			</nav>
-			<nav class="tsd-navigation secondary menu-sticky">
-				<ul class="before-current">
-				</ul>
-				<ul class="current">
-					<li class="current tsd-kind-interface tsd-parent-kind-namespace">
-						<a href="Navigation.Parameterized.html" class="tsd-kind-icon">Parameterized</a>
-						<ul>
-							<li class=" tsd-kind-method tsd-parent-kind-interface">
-								<a href="Navigation.Parameterized.html#open" class="tsd-kind-icon">open</a>
-							</li>
-							<li class=" tsd-kind-method tsd-parent-kind-interface tsd-has-type-parameter">
-								<a href="Navigation.Parameterized.html#pretend" class="tsd-kind-icon">pretend</a>
-							</li>
-							<li class=" tsd-kind-method tsd-parent-kind-interface">
-								<a href="Navigation.Parameterized.html#replace" class="tsd-kind-icon">replace</a>
-							</li>
-							<li class=" tsd-kind-method tsd-parent-kind-interface tsd-has-type-parameter">
-								<a href="Navigation.Parameterized.html#with" class="tsd-kind-icon">with</a>
-							</li>
-						</ul>
-					</li>
-				</ul>
-				<ul class="after-current">
-					<li class=" tsd-kind-interface tsd-parent-kind-namespace">
-						<a href="Navigation.Target.html" class="tsd-kind-icon">Target</a>
-					</li>
-					<li class=" tsd-kind-interface tsd-parent-kind-namespace">
-						<a href="Navigation.URLTarget.html" class="tsd-kind-icon">URLTarget</a>
-					</li>
-				</ul>
-			</nav>
-		</div>
-	</div>
-</div>
-<footer class="with-border-bottom">
-	<div class="container">
-		<h2>Legend</h2>
-		<div class="tsd-legend-group">
-			<ul class="tsd-legend">
-				<li class="tsd-kind-constructor tsd-parent-kind-class"><span class="tsd-kind-icon">Constructor</span></li>
-				<li class="tsd-kind-property tsd-parent-kind-class"><span class="tsd-kind-icon">Property</span></li>
-				<li class="tsd-kind-method tsd-parent-kind-class"><span class="tsd-kind-icon">Method</span></li>
-			</ul>
-			<ul class="tsd-legend">
-				<li class="tsd-kind-property tsd-parent-kind-interface"><span class="tsd-kind-icon">Property</span></li>
-				<li class="tsd-kind-method tsd-parent-kind-interface"><span class="tsd-kind-icon">Method</span></li>
-			</ul>
-			<ul class="tsd-legend">
-				<li class="tsd-kind-property tsd-parent-kind-class tsd-is-private"><span class="tsd-kind-icon">Private property</span></li>
-			</ul>
-			<ul class="tsd-legend">
-				<li class="tsd-kind-method tsd-parent-kind-class tsd-is-static"><span class="tsd-kind-icon">Static method</span></li>
-			</ul>
-		</div>
-	</div>
-</footer>
-<div class="container tsd-generator">
-	<p>Generated using <a href="https://typedoc.org/" target="_blank">TypeDoc</a></p>
-</div>
-<div class="overlay"></div>
-<script src="../assets/js/main.js"></script>
-</body>
-</html>
+<!DOCTYPE html><html class="default no-js"><head><meta charSet="utf-8"/><meta http-equiv="X-UA-Compatible" content="IE=edge"/><title>Parameterized | Wesib: Navigation Support</title><meta name="description" content="Documentation for Wesib: Navigation Support"/><meta name="viewport" content="width=device-width, initial-scale=1"/><link rel="stylesheet" href="../assets/style.css"/><link rel="stylesheet" href="../assets/highlight.css"/><script async src="../assets/search.js" id="search-script"></script></head><body><header><div class="tsd-page-toolbar"><div class="container"><div class="table-wrap"><div class="table-cell" id="tsd-search" data-base=".."><div class="field"><label for="tsd-search-field" class="tsd-widget search no-caption">Search</label><input type="text" id="tsd-search-field"/></div><ul class="results"><li class="state loading">Preparing search index...</li><li class="state failure">The search index is not available</li></ul><a href="../index.html" class="title">Wesib: Navigation Support</a></div><div class="table-cell" id="tsd-widgets"><div id="tsd-filter"><a href="#" class="tsd-widget options no-caption" data-toggle="options">Options</a><div class="tsd-filter-group"><div class="tsd-select" id="tsd-filter-visibility"><span class="tsd-select-label">All</span><ul class="tsd-select-list"><li data-value="public">Public</li><li data-value="protected">Public/Protected</li><li data-value="private" class="selected">All</li></ul></div> <input type="checkbox" id="tsd-filter-inherited" checked/><label class="tsd-widget" for="tsd-filter-inherited">Inherited</label><input type="checkbox" id="tsd-filter-externals" checked/><label class="tsd-widget" for="tsd-filter-externals">Externals</label></div></div><a href="#" class="tsd-widget menu no-caption" data-toggle="menu">Menu</a></div></div></div></div><div class="tsd-page-title"><div class="container"><ul class="tsd-breadcrumb"><li><a href="../modules.html">Wesib: Navigation Support</a></li><li><a href="../modules/Navigation.html">Navigation</a></li><li><a href="Navigation.Parameterized.html">Parameterized</a></li></ul><h1>Interface Parameterized</h1></div></div></header><div class="container container-main"><div class="row"><div class="col-8 col-content"><section class="tsd-panel tsd-comment"><div class="tsd-comment tsd-typography"><div class="lead">
+<p>Parameterized navigation.</p>
+</div><div><p>Allows to assign target page parameters prior to navigating to it.</p>
+</div></div></section><section class="tsd-panel tsd-hierarchy"><h3>Hierarchy</h3><ul class="tsd-hierarchy"><li><span class="target">Parameterized</span></li></ul></section><section class="tsd-panel-group tsd-index-group"><h2>Index</h2><section class="tsd-panel tsd-index-panel"><div class="tsd-index-content"><section class="tsd-index-section "><h3>Methods</h3><ul class="tsd-index-list"><li class="tsd-kind-method tsd-parent-kind-interface"><a href="Navigation.Parameterized.html#open" class="tsd-kind-icon">open</a></li><li class="tsd-kind-method tsd-parent-kind-interface tsd-has-type-parameter"><a href="Navigation.Parameterized.html#pretend" class="tsd-kind-icon">pretend</a></li><li class="tsd-kind-method tsd-parent-kind-interface"><a href="Navigation.Parameterized.html#replace" class="tsd-kind-icon">replace</a></li><li class="tsd-kind-method tsd-parent-kind-interface tsd-has-type-parameter"><a href="Navigation.Parameterized.html#with" class="tsd-kind-icon">with</a></li></ul></section></div></section></section><section class="tsd-panel-group tsd-member-group "><h2>Methods</h2><section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-interface"><a name="open" class="tsd-anchor"></a><h3>open</h3><ul class="tsd-signatures tsd-kind-method tsd-parent-kind-interface"><li class="tsd-signature tsd-kind-icon">open<span class="tsd-signature-symbol">(</span>target<span class="tsd-signature-symbol">?: </span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">URL</span><span class="tsd-signature-symbol"> | </span><a href="Navigation.Target.html" class="tsd-signature-type" data-tsd-kind="Interface">Target</a><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">null</span><span class="tsd-signature-symbol"> | </span><a href="Page.html" class="tsd-signature-type" data-tsd-kind="Interface">Page</a><span class="tsd-signature-symbol">&gt;</span></li></ul><ul class="tsd-descriptions"><li class="tsd-description"><aside class="tsd-sources"><ul><li>Defined in <a href="https://github.com/wesib/navigation/blob/ec17932/src/navigation.ts#L239">wesib/navigation/src/navigation.ts:239</a></li></ul></aside><div class="tsd-comment tsd-typography"><div class="lead">
+<p>Opens a page by navigating to the given <code>target</code> with provided page parameters.</p>
+</div><div><p>Appends an entry to navigation history.</p>
+</div><dl class="tsd-comment-tags"><dt>fires</dt><dd><p>PreNavigateEvent#wesib:preNavigate  On window object prior to actually navigate.
+Then navigates to the <code>target</code>, unless the event cancelled.</p>
+</dd><dt>fires</dt><dd><p>NavigateEvent@wesib:navigate  On window object when navigation succeed.</p>
+</dd></dl></div><h4 class="tsd-parameters-title">Parameters</h4><ul class="tsd-parameters"><li><h5><span class="tsd-flag ts-flagOptional">Optional</span> target: <span class="tsd-signature-type">string</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">URL</span><span class="tsd-signature-symbol"> | </span><a href="Navigation.Target.html" class="tsd-signature-type" data-tsd-kind="Interface">Target</a></h5><div class="tsd-comment tsd-typography"><div class="lead">
+<p>Either navigation target or URL to navigate to. Navigates to current page URL when omitted.</p>
+</div></div></li></ul><h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">null</span><span class="tsd-signature-symbol"> | </span><a href="Page.html" class="tsd-signature-type" data-tsd-kind="Interface">Page</a><span class="tsd-signature-symbol">&gt;</span></h4><div><p>A promise resolved to navigated page, or to <code>null</code> otherwise.</p>
+</div></li></ul></section><section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-interface tsd-has-type-parameter"><a name="pretend" class="tsd-anchor"></a><h3>pretend</h3><ul class="tsd-signatures tsd-kind-method tsd-parent-kind-interface tsd-has-type-parameter"><li class="tsd-signature tsd-kind-icon">pretend&lt;T&gt;<span class="tsd-signature-symbol">(</span>target<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">URL</span><span class="tsd-signature-symbol"> | </span><a href="Navigation.Target.html" class="tsd-signature-type" data-tsd-kind="Interface">Target</a>, callback<span class="tsd-signature-symbol">: </span><span class="tsd-signature-symbol">(</span>from<span class="tsd-signature-symbol">: </span><a href="Page.html" class="tsd-signature-type" data-tsd-kind="Interface">Page</a>, to<span class="tsd-signature-symbol">: </span><a href="Page.html" class="tsd-signature-type" data-tsd-kind="Interface">Page</a><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol"> =&gt; </span><span class="tsd-signature-type" data-tsd-kind="Type parameter">T</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">undefined</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type" data-tsd-kind="Type parameter">T</span></li><li class="tsd-signature tsd-kind-icon">pretend&lt;T&gt;<span class="tsd-signature-symbol">(</span>callback<span class="tsd-signature-symbol">: </span><span class="tsd-signature-symbol">(</span>from<span class="tsd-signature-symbol">: </span><a href="Page.html" class="tsd-signature-type" data-tsd-kind="Interface">Page</a>, to<span class="tsd-signature-symbol">: </span><a href="Page.html" class="tsd-signature-type" data-tsd-kind="Interface">Page</a><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol"> =&gt; </span><span class="tsd-signature-type" data-tsd-kind="Type parameter">T</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">undefined</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type" data-tsd-kind="Type parameter">T</span></li><li class="tsd-signature tsd-kind-icon">pretend<span class="tsd-signature-symbol">(</span>target<span class="tsd-signature-symbol">?: </span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">URL</span><span class="tsd-signature-symbol"> | </span><a href="Navigation.Target.html" class="tsd-signature-type" data-tsd-kind="Interface">Target</a><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">undefined</span><span class="tsd-signature-symbol"> | </span><a href="Navigation.URLTarget.html" class="tsd-signature-type" data-tsd-kind="Interface">URLTarget</a></li></ul><ul class="tsd-descriptions"><li class="tsd-description"><aside class="tsd-sources"><ul><li>Defined in <a href="https://github.com/wesib/navigation/blob/ec17932/src/navigation.ts#L270">wesib/navigation/src/navigation.ts:270</a></li></ul></aside><div class="tsd-comment tsd-typography"><div class="lead">
+<p>Pretends navigation.</p>
+</div><div><p>Prepares navigation and parameters, but does not actually navigate. Instead it calls the provided callback
+function.</p>
+<p>This is useful e.g. to build target URL or evaluate target page parameter.</p>
+</div></div><h4 class="tsd-type-parameters-title">Type parameters</h4><ul class="tsd-type-parameters"><li><h4>T</h4></li></ul><h4 class="tsd-parameters-title">Parameters</h4><ul class="tsd-parameters"><li><h5>target: <span class="tsd-signature-type">string</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">URL</span><span class="tsd-signature-symbol"> | </span><a href="Navigation.Target.html" class="tsd-signature-type" data-tsd-kind="Interface">Target</a></h5><div class="tsd-comment tsd-typography"><div class="lead">
+<p>Either navigation target or URL to pretend navigation to.</p>
+</div></div></li><li><h5>callback: <span class="tsd-signature-symbol">(</span>from<span class="tsd-signature-symbol">: </span><a href="Page.html" class="tsd-signature-type" data-tsd-kind="Interface">Page</a>, to<span class="tsd-signature-symbol">: </span><a href="Page.html" class="tsd-signature-type" data-tsd-kind="Interface">Page</a><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol"> =&gt; </span><span class="tsd-signature-type" data-tsd-kind="Type parameter">T</span></h5><div class="tsd-comment tsd-typography"><div class="lead">
+<p>A callback function receiving two pages as parameters: the page to leave, and the page to open.
+The latter one is valid only inside callback, as its parameters will be cleaned up right after callback returns.
+The value returned from callback is then returned from this method call. It may be used to collect some data
+from target page.</p>
+</div></div><ul class="tsd-parameters"><li class="tsd-parameter-signature"><ul class="tsd-signatures tsd-kind-type-literal"><li class="tsd-signature tsd-kind-icon"><span class="tsd-signature-symbol">(</span>from<span class="tsd-signature-symbol">: </span><a href="Page.html" class="tsd-signature-type" data-tsd-kind="Interface">Page</a>, to<span class="tsd-signature-symbol">: </span><a href="Page.html" class="tsd-signature-type" data-tsd-kind="Interface">Page</a><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type" data-tsd-kind="Type parameter">T</span></li></ul><ul class="tsd-descriptions"><li class="tsd-description"><h4 class="tsd-parameters-title">Parameters</h4><ul class="tsd-parameters"><li><h5>from: <a href="Page.html" class="tsd-signature-type" data-tsd-kind="Interface">Page</a></h5></li><li><h5>to: <a href="Page.html" class="tsd-signature-type" data-tsd-kind="Interface">Page</a></h5></li></ul><h4 class="tsd-returns-title">Returns <span class="tsd-signature-type" data-tsd-kind="Type parameter">T</span></h4></li></ul></li></ul></li></ul><h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">undefined</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type" data-tsd-kind="Type parameter">T</span></h4><div><p>Either the value returned by callback, or <code>undefined</code> when navigation failed.</p>
+</div></li><li class="tsd-description"><aside class="tsd-sources"><ul><li>Defined in <a href="https://github.com/wesib/navigation/blob/ec17932/src/navigation.ts#L290">wesib/navigation/src/navigation.ts:290</a></li></ul></aside><div class="tsd-comment tsd-typography"><div class="lead">
+<p>Pretends navigation to the same page.</p>
+</div><div><p>Prepares navigation and parameters, but does not actually navigate. Instead it calls the provided callback
+function.</p>
+<p>This is useful e.g. to build target URL or evaluate target page parameter.</p>
+</div></div><h4 class="tsd-type-parameters-title">Type parameters</h4><ul class="tsd-type-parameters"><li><h4>T</h4></li></ul><h4 class="tsd-parameters-title">Parameters</h4><ul class="tsd-parameters"><li><h5>callback: <span class="tsd-signature-symbol">(</span>from<span class="tsd-signature-symbol">: </span><a href="Page.html" class="tsd-signature-type" data-tsd-kind="Interface">Page</a>, to<span class="tsd-signature-symbol">: </span><a href="Page.html" class="tsd-signature-type" data-tsd-kind="Interface">Page</a><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol"> =&gt; </span><span class="tsd-signature-type" data-tsd-kind="Type parameter">T</span></h5><div class="tsd-comment tsd-typography"><div class="lead">
+<p>A callback function receiving two pages as parameters: the page to leave, and the page to open.
+The latter one is valid only inside callback, as its parameters will be cleaned up right after callback returns.
+The value returned from callback is then returned from this method call. It may be used to collect some data
+from target page.</p>
+</div></div><ul class="tsd-parameters"><li class="tsd-parameter-signature"><ul class="tsd-signatures tsd-kind-type-literal"><li class="tsd-signature tsd-kind-icon"><span class="tsd-signature-symbol">(</span>from<span class="tsd-signature-symbol">: </span><a href="Page.html" class="tsd-signature-type" data-tsd-kind="Interface">Page</a>, to<span class="tsd-signature-symbol">: </span><a href="Page.html" class="tsd-signature-type" data-tsd-kind="Interface">Page</a><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type" data-tsd-kind="Type parameter">T</span></li></ul><ul class="tsd-descriptions"><li class="tsd-description"><h4 class="tsd-parameters-title">Parameters</h4><ul class="tsd-parameters"><li><h5>from: <a href="Page.html" class="tsd-signature-type" data-tsd-kind="Interface">Page</a></h5></li><li><h5>to: <a href="Page.html" class="tsd-signature-type" data-tsd-kind="Interface">Page</a></h5></li></ul><h4 class="tsd-returns-title">Returns <span class="tsd-signature-type" data-tsd-kind="Type parameter">T</span></h4></li></ul></li></ul></li></ul><h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">undefined</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type" data-tsd-kind="Type parameter">T</span></h4><div><p>Either the value returned by callback, or <code>undefined</code> when navigation failed.</p>
+</div></li><li class="tsd-description"><aside class="tsd-sources"><ul><li>Defined in <a href="https://github.com/wesib/navigation/blob/ec17932/src/navigation.ts#L307">wesib/navigation/src/navigation.ts:307</a></li></ul></aside><div class="tsd-comment tsd-typography"><div class="lead">
+<p>Pretends navigation and builds navigation target.</p>
+</div><div><p>Prepares navigation and parameters, but does not actually navigate. Instead it calls the provided callback
+function.</p>
+<p>This is useful e.g. to build target URL or evaluate target page parameter.</p>
+</div></div><h4 class="tsd-parameters-title">Parameters</h4><ul class="tsd-parameters"><li><h5><span class="tsd-flag ts-flagOptional">Optional</span> target: <span class="tsd-signature-type">string</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">URL</span><span class="tsd-signature-symbol"> | </span><a href="Navigation.Target.html" class="tsd-signature-type" data-tsd-kind="Interface">Target</a></h5><div class="tsd-comment tsd-typography"><div class="lead">
+<p>Either navigation target or URL to pretend navigation to. Prepends navigation to current page
+when omitted.</p>
+</div></div></li></ul><h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">undefined</span><span class="tsd-signature-symbol"> | </span><a href="Navigation.URLTarget.html" class="tsd-signature-type" data-tsd-kind="Interface">URLTarget</a></h4><div><p>Either Navigation target with URL value, or <code>undefined</code> when navigation failed.</p>
+</div></li></ul></section><section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-interface"><a name="replace" class="tsd-anchor"></a><h3>replace</h3><ul class="tsd-signatures tsd-kind-method tsd-parent-kind-interface"><li class="tsd-signature tsd-kind-icon">replace<span class="tsd-signature-symbol">(</span>target<span class="tsd-signature-symbol">?: </span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">URL</span><span class="tsd-signature-symbol"> | </span><a href="Navigation.Target.html" class="tsd-signature-type" data-tsd-kind="Interface">Target</a><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">null</span><span class="tsd-signature-symbol"> | </span><a href="Page.html" class="tsd-signature-type" data-tsd-kind="Interface">Page</a><span class="tsd-signature-symbol">&gt;</span></li></ul><ul class="tsd-descriptions"><li class="tsd-description"><aside class="tsd-sources"><ul><li>Defined in <a href="https://github.com/wesib/navigation/blob/ec17932/src/navigation.ts#L252">wesib/navigation/src/navigation.ts:252</a></li></ul></aside><div class="tsd-comment tsd-typography"><div class="lead">
+<p>Replaces the most recent entry in navigation history with the given <code>target</code> and provided page parameters.</p>
+</div><dl class="tsd-comment-tags"><dt>fires</dt><dd><p>PreNavigateEvent#wesib:preNavigate  On window object prior to actually update the history.
+Then navigates to the <code>target</code>, unless the event cancelled.</p>
+</dd><dt>fires</dt><dd><p>NavigateEvent@wesib:navigate  On window object when history updated.</p>
+</dd></dl></div><h4 class="tsd-parameters-title">Parameters</h4><ul class="tsd-parameters"><li><h5><span class="tsd-flag ts-flagOptional">Optional</span> target: <span class="tsd-signature-type">string</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">URL</span><span class="tsd-signature-symbol"> | </span><a href="Navigation.Target.html" class="tsd-signature-type" data-tsd-kind="Interface">Target</a></h5><div class="tsd-comment tsd-typography"><div class="lead">
+<p>Either navigation target or URL to replace the latest history entry with. Navigates to current
+page URL when omitted.</p>
+</div></div></li></ul><h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">null</span><span class="tsd-signature-symbol"> | </span><a href="Page.html" class="tsd-signature-type" data-tsd-kind="Interface">Page</a><span class="tsd-signature-symbol">&gt;</span></h4><div><p>A promise resolved to navigated page, or to <code>null</code> otherwise.</p>
+</div></li></ul></section><section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-interface tsd-has-type-parameter"><a name="with" class="tsd-anchor"></a><h3>with</h3><ul class="tsd-signatures tsd-kind-method tsd-parent-kind-interface tsd-has-type-parameter"><li class="tsd-signature tsd-kind-icon">with&lt;T, TInput&gt;<span class="tsd-signature-symbol">(</span>ref<span class="tsd-signature-symbol">: </span><a href="PageParam.Ref.html" class="tsd-signature-type" data-tsd-kind="Interface">Ref</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type" data-tsd-kind="Type parameter">T</span><span class="tsd-signature-symbol">, </span><span class="tsd-signature-type" data-tsd-kind="Type parameter">TInput</span><span class="tsd-signature-symbol">&gt;</span>, input<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type" data-tsd-kind="Type parameter">TInput</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><a href="Navigation.Parameterized.html" class="tsd-signature-type" data-tsd-kind="Interface">Parameterized</a></li></ul><ul class="tsd-descriptions"><li class="tsd-description"><aside class="tsd-sources"><ul><li>Defined in <a href="https://github.com/wesib/navigation/blob/ec17932/src/navigation.ts#L225">wesib/navigation/src/navigation.ts:225</a></li></ul></aside><div class="tsd-comment tsd-typography"><div class="lead">
+<p>Applies parameter to navigation target page.</p>
+</div></div><h4 class="tsd-type-parameters-title">Type parameters</h4><ul class="tsd-type-parameters"><li><h4>T</h4><div class="tsd-comment tsd-typography"><div class="lead">
+<p>Parameter value type.</p>
+</div></div></li><li><h4>TInput</h4><div class="tsd-comment tsd-typography"><div class="lead">
+<p>Parameter input type.</p>
+</div></div></li></ul><h4 class="tsd-parameters-title">Parameters</h4><ul class="tsd-parameters"><li><h5>ref: <a href="PageParam.Ref.html" class="tsd-signature-type" data-tsd-kind="Interface">Ref</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type" data-tsd-kind="Type parameter">T</span><span class="tsd-signature-symbol">, </span><span class="tsd-signature-type" data-tsd-kind="Type parameter">TInput</span><span class="tsd-signature-symbol">&gt;</span></h5><div class="tsd-comment tsd-typography"><div class="lead">
+<p>A reference to page navigation parameter to apply.</p>
+</div></div></li><li><h5>input: <span class="tsd-signature-type" data-tsd-kind="Type parameter">TInput</span></h5><div class="tsd-comment tsd-typography"><div class="lead">
+<p>Parameter input to use when constructing its value.</p>
+</div></div></li></ul><h4 class="tsd-returns-title">Returns <a href="Navigation.Parameterized.html" class="tsd-signature-type" data-tsd-kind="Interface">Parameterized</a></h4><div><p>New parameterized navigation instance.</p>
+</div></li></ul></section></section></div><div class="col-4 col-menu menu-sticky-wrap menu-highlight"><nav class="tsd-navigation primary"><ul><li class=""><a href="../modules.html">Exports</a></li><li class=" tsd-kind-namespace"><a href="../modules/NavAnchor.html">Nav<wbr/>Anchor</a></li><li class=" tsd-kind-namespace"><a href="../modules/NavElement.html">Nav<wbr/>Element</a></li><li class=" tsd-kind-namespace"><a href="../modules/NavLink.html">Nav<wbr/>Link</a></li><li class=" tsd-kind-namespace"><a href="../modules/NavMenu.html">Nav<wbr/>Menu</a></li><li class="current tsd-kind-namespace"><a href="../modules/Navigation.html">Navigation</a></li><li class=" tsd-kind-namespace"><a href="../modules/NavigationAgent.html">Navigation<wbr/>Agent</a></li><li class=" tsd-kind-namespace"><a href="../modules/PageFragmentRequest.html">Page<wbr/>Fragment<wbr/>Request</a></li><li class=" tsd-kind-namespace"><a href="../modules/PageLoadAgent.html">Page<wbr/>Load<wbr/>Agent</a></li><li class=" tsd-kind-namespace"><a href="../modules/PageLoadResponse.html">Page<wbr/>Load<wbr/>Response</a></li><li class=" tsd-kind-namespace"><a href="../modules/PageParam.html">Page<wbr/>Param</a></li><li class=" tsd-kind-namespace"><a href="../modules/RenderPageDef.html">Render<wbr/>Page<wbr/>Def</a></li></ul></nav><nav class="tsd-navigation secondary menu-sticky"><ul><li class="current tsd-kind-interface tsd-parent-kind-namespace"><a href="Navigation.Parameterized.html" class="tsd-kind-icon">Parameterized</a><ul><li class="tsd-kind-method tsd-parent-kind-interface"><a href="Navigation.Parameterized.html#open" class="tsd-kind-icon">open</a></li><li class="tsd-kind-method tsd-parent-kind-interface tsd-has-type-parameter"><a href="Navigation.Parameterized.html#pretend" class="tsd-kind-icon">pretend</a></li><li class="tsd-kind-method tsd-parent-kind-interface"><a href="Navigation.Parameterized.html#replace" class="tsd-kind-icon">replace</a></li><li class="tsd-kind-method tsd-parent-kind-interface tsd-has-type-parameter"><a href="Navigation.Parameterized.html#with" class="tsd-kind-icon">with</a></li></ul></li></ul></nav></div></div></div><footer class="with-border-bottom"><div class="container"><h2>Legend</h2><div class="tsd-legend-group"><ul class="tsd-legend"><li class="tsd-kind-constructor tsd-parent-kind-class"><span class="tsd-kind-icon">Constructor</span></li><li class="tsd-kind-property tsd-parent-kind-class"><span class="tsd-kind-icon">Property</span></li><li class="tsd-kind-method tsd-parent-kind-class"><span class="tsd-kind-icon">Method</span></li></ul><ul class="tsd-legend"><li class="tsd-kind-property tsd-parent-kind-interface"><span class="tsd-kind-icon">Property</span></li><li class="tsd-kind-method tsd-parent-kind-interface"><span class="tsd-kind-icon">Method</span></li></ul><ul class="tsd-legend"><li class="tsd-kind-property tsd-parent-kind-class tsd-is-private"><span class="tsd-kind-icon">Private property</span></li></ul><ul class="tsd-legend"><li class="tsd-kind-method tsd-parent-kind-class tsd-is-static"><span class="tsd-kind-icon">Static method</span></li></ul></div><h2>Settings</h2><p>Theme <select id="theme"><option value="os">OS</option><option value="light">Light</option><option value="dark">Dark</option></select></p></div></footer><div class="container tsd-generator"><p>Generated using <a href="https://typedoc.org/" target="_blank">TypeDoc</a></p></div><div class="overlay"></div><script src="../assets/main.js"></script></body></html>

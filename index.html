@@ -1,282 +1,34 @@
-<!doctype html>
-<html class="default no-js">
-<head>
-	<meta charset="utf-8">
-	<meta http-equiv="X-UA-Compatible" content="IE=edge">
-	<title>Wesib: Navigation Support</title>
-	<meta name="description" content="Documentation for Wesib: Navigation Support">
-	<meta name="viewport" content="width=device-width, initial-scale=1">
-	<link rel="stylesheet" href="assets/css/main.css">
-	<script async src="assets/js/search.js" id="search-script"></script>
-</head>
-<body>
-<header>
-	<div class="tsd-page-toolbar">
-		<div class="container">
-			<div class="table-wrap">
-				<div class="table-cell" id="tsd-search" data-index="assets/js/search.json" data-base=".">
-					<div class="field">
-						<label for="tsd-search-field" class="tsd-widget search no-caption">Search</label>
-						<input id="tsd-search-field" type="text" />
-					</div>
-					<ul class="results">
-						<li class="state loading">Preparing search index...</li>
-						<li class="state failure">The search index is not available</li>
-					</ul>
-					<a href="index.html" class="title">Wesib: Navigation Support</a>
-				</div>
-				<div class="table-cell" id="tsd-widgets">
-					<div id="tsd-filter">
-						<a href="#" class="tsd-widget options no-caption" data-toggle="options">Options</a>
-						<div class="tsd-filter-group">
-							<div class="tsd-select" id="tsd-filter-visibility">
-								<span class="tsd-select-label">All</span>
-								<ul class="tsd-select-list">
-									<li data-value="public">Public</li>
-									<li data-value="protected">Public/Protected</li>
-									<li data-value="private" class="selected">All</li>
-								</ul>
-							</div>
-							<input type="checkbox" id="tsd-filter-inherited" checked />
-							<label class="tsd-widget" for="tsd-filter-inherited">Inherited</label>
-							<input type="checkbox" id="tsd-filter-externals" checked />
-							<label class="tsd-widget" for="tsd-filter-externals">Externals</label>
-						</div>
-					</div>
-					<a href="#" class="tsd-widget menu no-caption" data-toggle="menu">Menu</a>
-				</div>
-			</div>
-		</div>
-	</div>
-	<div class="tsd-page-title">
-		<div class="container">
-			<h1>Wesib: Navigation Support</h1>
-		</div>
-	</div>
-</header>
-<div class="container container-main">
-	<div class="row">
-		<div class="col-8 col-content">
-			<div class="tsd-panel tsd-typography">
-				<a href="#wesib-navigation-support" id="wesib-navigation-support" style="color: inherit; text-decoration: none;">
-					<h1>Wesib: Navigation Support</h1>
-				</a>
-				<p><a href="https://www.npmjs.com/package/@wesib/navigation"><img src="https://img.shields.io/npm/v/@wesib/navigation.svg?logo=npm" alt="NPM"></a>
-					<a href="https://github.com/wesib/navigation/actions?query=workflow:Build"><img src="https://github.com/wesib/navigation/workflows/Build/badge.svg" alt="Build Status"></a>
-					<a href="https://www.codacy.com/gh/wesib/navigation/dashboard?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=wesib/navigation&amp;utm_campaign=Badge_Grade"><img src="https://app.codacy.com/project/badge/Grade/a89af5e6c7f2437f8ca9ef68d930babc" alt="Code Quality"></a>
-					<a href="https://www.codacy.com/gh/wesib/navigation/dashboard?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=wesib/navigation&amp;utm_campaign=Badge_Coverage"><img src="https://app.codacy.com/project/badge/Coverage/a89af5e6c7f2437f8ca9ef68d930babc" alt="Coverage"></a>
-					<a href="https://github.com/wesib/navigation"><img src="https://img.shields.io/static/v1?logo=github&label=GitHub&message=project&color=informational" alt="GitHub Project"></a>
-				<a href="https://wesib.github.io/navigation/"><img src="https://img.shields.io/static/v1?logo=typescript&label=API&message=docs&color=informational" alt="API Documentation"></a></p>
-				<p>This module supports navigation utilizing browser <a href="https://developer.mozilla.org/en-US/docs/Web/API/History">History API</a>.</p>
-				<p>A <code>Navigation</code> instance available in bootstrap context tracks current <code>Page</code> and navigation event. It should be
-				used for navigation to another page.</p>
-				<p>A <code>NavigationAgent</code> provided for bootstrap context alters navigation processing or prevents it.</p>
-				<p>A <code>@RenderPage()</code>-decorated method is called when new page loaded and pre-rendered. The page is loaded when navigating
-					to another URL. The page (or only requested part of it) is loaded from the same URL. The decorated method may alter the
-				loaded page contents.</p>
-				<p>A <code>PageLoadAgent</code> provided for context can be used to alter document processing of the loaded document. E.g. the agents
-				provided by default:</p>
-				<ul>
-					<li><p>Add scripts from the loaded document if not present yet.</p>
-					</li>
-					<li><p>Add styles from the loaded document, and removes the ones not present.</p>
-					</li>
-					<li><p>Update window title.</p>
-					</li>
-					<li><p>Reload the page if the loaded page revision differs from previously loaded one.</p>
-						<p>The page revision is specified by <code>&lt;meta name=&quot;wesib-app-rev&quot; value=&quot;${rev}&quot;/&gt;</code> meta-tag.</p>
-					</li>
-				</ul>
-				<p>A <code>NavLink</code>, <code>NavElement</code>, and <code>NavAnchor</code> instances can be used to make elements (such as <code>&lt;a href=&quot;${url}&quot;&gt;...&lt;/a&gt;</code>)
-				navigate to target URL with <code>Nsvigation</code> API.</p>
-				<p>A <code>NavMenu</code> instance serves as an owner of navigation links and activates the links matching current page.</p>
-			</div>
-		</div>
-		<div class="col-4 col-menu menu-sticky-wrap menu-highlight">
-			<nav class="tsd-navigation primary">
-				<ul>
-					<li class=" ">
-						<a href="modules.html">Exports</a>
-					</li>
-					<li class=" tsd-kind-namespace">
-						<a href="modules/NavAnchor.html">Nav<wbr>Anchor</a>
-					</li>
-					<li class=" tsd-kind-namespace">
-						<a href="modules/NavElement.html">Nav<wbr>Element</a>
-					</li>
-					<li class=" tsd-kind-namespace">
-						<a href="modules/NavLink.html">Nav<wbr>Link</a>
-					</li>
-					<li class=" tsd-kind-namespace">
-						<a href="modules/NavMenu.html">Nav<wbr>Menu</a>
-					</li>
-					<li class=" tsd-kind-namespace">
-						<a href="modules/Navigation.html">Navigation</a>
-					</li>
-					<li class=" tsd-kind-namespace">
-						<a href="modules/NavigationAgent.html">Navigation<wbr>Agent</a>
-					</li>
-					<li class=" tsd-kind-namespace">
-						<a href="modules/PageFragmentRequest.html">Page<wbr>Fragment<wbr>Request</a>
-					</li>
-					<li class=" tsd-kind-namespace">
-						<a href="modules/PageLoadAgent.html">Page<wbr>Load<wbr>Agent</a>
-					</li>
-					<li class=" tsd-kind-namespace">
-						<a href="modules/PageLoadResponse.html">Page<wbr>Load<wbr>Response</a>
-					</li>
-					<li class=" tsd-kind-namespace">
-						<a href="modules/PageParam.html">Page<wbr>Param</a>
-					</li>
-					<li class=" tsd-kind-namespace">
-						<a href="modules/RenderPageDef.html">Render<wbr>Page<wbr>Def</a>
-					</li>
-				</ul>
-			</nav>
-			<nav class="tsd-navigation secondary menu-sticky">
-				<ul class="before-current">
-					<li class=" tsd-kind-enum">
-						<a href="enums/NavigationEventType.html" class="tsd-kind-icon">Navigation<wbr>Event<wbr>Type</a>
-					</li>
-					<li class=" tsd-kind-class">
-						<a href="classes/NavMenu.html" class="tsd-kind-icon">Nav<wbr>Menu</a>
-					</li>
-					<li class=" tsd-kind-class">
-						<a href="classes/Navigation.html" class="tsd-kind-icon">Navigation</a>
-					</li>
-					<li class=" tsd-kind-class">
-						<a href="classes/PageHashURLSupport.html" class="tsd-kind-icon">Page<wbr>HashURLSupport</a>
-					</li>
-					<li class=" tsd-kind-class">
-						<a href="classes/PageLoadSupport.html" class="tsd-kind-icon">Page<wbr>Load<wbr>Support</a>
-					</li>
-					<li class=" tsd-kind-class tsd-has-type-parameter">
-						<a href="classes/PageParam.html" class="tsd-kind-icon">Page<wbr>Param</a>
-					</li>
-					<li class=" tsd-kind-interface">
-						<a href="interfaces/EnterPageEventInit.html" class="tsd-kind-icon">Enter<wbr>Page<wbr>Event<wbr>Init</a>
-					</li>
-					<li class=" tsd-kind-interface">
-						<a href="interfaces/LeavePageEventInit.html" class="tsd-kind-icon">Leave<wbr>Page<wbr>Event<wbr>Init</a>
-					</li>
-					<li class=" tsd-kind-interface">
-						<a href="interfaces/NavLink.html" class="tsd-kind-icon">Nav<wbr>Link</a>
-					</li>
-					<li class=" tsd-kind-interface">
-						<a href="interfaces/Page.html" class="tsd-kind-icon">Page</a>
-					</li>
-					<li class=" tsd-kind-interface">
-						<a href="interfaces/PageLoadRequest.html" class="tsd-kind-icon">Page<wbr>Load<wbr>Request</a>
-					</li>
-					<li class=" tsd-kind-interface">
-						<a href="interfaces/PageRenderCtl.html" class="tsd-kind-icon">Page<wbr>Render<wbr>Ctl</a>
-					</li>
-					<li class=" tsd-kind-interface">
-						<a href="interfaces/PageRendererExecution.html" class="tsd-kind-icon">Page<wbr>Renderer<wbr>Execution</a>
-					</li>
-					<li class=" tsd-kind-interface">
-						<a href="interfaces/StayOnPageEventInit.html" class="tsd-kind-icon">Stay<wbr>OnPage<wbr>Event<wbr>Init</a>
-					</li>
-					<li class=" tsd-kind-type-alias">
-						<a href="modules.html#NavigationAgent" class="tsd-kind-icon">Navigation<wbr>Agent</a>
-					</li>
-					<li class=" tsd-kind-type-alias">
-						<a href="modules.html#NavigationEvent" class="tsd-kind-icon">Navigation<wbr>Event</a>
-					</li>
-					<li class=" tsd-kind-type-alias">
-						<a href="modules.html#PageFragmentRequest" class="tsd-kind-icon">Page<wbr>Fragment<wbr>Request</a>
-					</li>
-					<li class=" tsd-kind-type-alias">
-						<a href="modules.html#PageLoadAgent" class="tsd-kind-icon">Page<wbr>Load<wbr>Agent</a>
-					</li>
-					<li class=" tsd-kind-type-alias">
-						<a href="modules.html#PageLoadResponse" class="tsd-kind-icon">Page<wbr>Load<wbr>Response</a>
-					</li>
-					<li class=" tsd-kind-type-alias">
-						<a href="modules.html#PageLoadURLModifier" class="tsd-kind-icon">Page<wbr>LoadURLModifier</a>
-					</li>
-					<li class=" tsd-kind-type-alias tsd-has-type-parameter">
-						<a href="modules.html#PageRenderer" class="tsd-kind-icon">Page<wbr>Renderer</a>
-					</li>
-					<li class=" tsd-kind-type-alias">
-						<a href="modules.html#RenderPageDef" class="tsd-kind-icon">Render<wbr>Page<wbr>Def</a>
-					</li>
-					<li class=" tsd-kind-event">
-						<a href="modules.html#EnterPageEvent" class="tsd-kind-icon">Enter<wbr>Page<wbr>Event</a>
-					</li>
-					<li class=" tsd-kind-event">
-						<a href="modules.html#LeavePageEvent" class="tsd-kind-icon">Leave<wbr>Page<wbr>Event</a>
-					</li>
-					<li class=" tsd-kind-event">
-						<a href="modules.html#StayOnPageEvent" class="tsd-kind-icon">Stay<wbr>OnPage<wbr>Event</a>
-					</li>
-					<li class=" tsd-kind-variable">
-						<a href="modules.html#NavigationAgent" class="tsd-kind-icon">Navigation<wbr>Agent</a>
-					</li>
-					<li class=" tsd-kind-variable">
-						<a href="modules.html#PageHashURLParam" class="tsd-kind-icon">Page<wbr>HashURLParam</a>
-					</li>
-					<li class=" tsd-kind-variable">
-						<a href="modules.html#PageLoadAgent" class="tsd-kind-icon">Page<wbr>Load<wbr>Agent</a>
-					</li>
-					<li class=" tsd-kind-variable">
-						<a href="modules.html#PageLoadParam" class="tsd-kind-icon">Page<wbr>Load<wbr>Param</a>
-					</li>
-					<li class=" tsd-kind-variable">
-						<a href="modules.html#PageLoadURLModifier" class="tsd-kind-icon">Page<wbr>LoadURLModifier</a>
-					</li>
-					<li class=" tsd-kind-variable">
-						<a href="modules.html#PageParam__symbol" class="tsd-kind-icon">Page<wbr>Param__symbol</a>
-					</li>
-					<li class=" tsd-kind-variable">
-						<a href="modules.html#PageRenderCtl" class="tsd-kind-icon">Page<wbr>Render<wbr>Ctl</a>
-					</li>
-					<li class=" tsd-kind-function tsd-has-type-parameter">
-						<a href="modules.html#RenderPage" class="tsd-kind-icon">Render<wbr>Page</a>
-					</li>
-					<li class=" tsd-kind-function">
-						<a href="modules.html#getHashURL" class="tsd-kind-icon">get<wbr>HashURL</a>
-					</li>
-					<li class=" tsd-kind-function">
-						<a href="modules.html#navAnchor" class="tsd-kind-icon">nav<wbr>Anchor</a>
-					</li>
-					<li class=" tsd-kind-function tsd-has-type-parameter">
-						<a href="modules.html#navElement" class="tsd-kind-icon">nav<wbr>Element</a>
-					</li>
-					<li class=" tsd-kind-function">
-						<a href="modules.html#setHashURL" class="tsd-kind-icon">set<wbr>HashURL</a>
-					</li>
-				</ul>
-			</nav>
-		</div>
-	</div>
-</div>
-<footer class="with-border-bottom">
-	<div class="container">
-		<h2>Legend</h2>
-		<div class="tsd-legend-group">
-			<ul class="tsd-legend">
-				<li class="tsd-kind-constructor tsd-parent-kind-class"><span class="tsd-kind-icon">Constructor</span></li>
-				<li class="tsd-kind-property tsd-parent-kind-class"><span class="tsd-kind-icon">Property</span></li>
-				<li class="tsd-kind-method tsd-parent-kind-class"><span class="tsd-kind-icon">Method</span></li>
-			</ul>
-			<ul class="tsd-legend">
-				<li class="tsd-kind-property tsd-parent-kind-interface"><span class="tsd-kind-icon">Property</span></li>
-				<li class="tsd-kind-method tsd-parent-kind-interface"><span class="tsd-kind-icon">Method</span></li>
-			</ul>
-			<ul class="tsd-legend">
-				<li class="tsd-kind-property tsd-parent-kind-class tsd-is-private"><span class="tsd-kind-icon">Private property</span></li>
-			</ul>
-			<ul class="tsd-legend">
-				<li class="tsd-kind-method tsd-parent-kind-class tsd-is-static"><span class="tsd-kind-icon">Static method</span></li>
-			</ul>
-		</div>
-	</div>
-</footer>
-<div class="container tsd-generator">
-	<p>Generated using <a href="https://typedoc.org/" target="_blank">TypeDoc</a></p>
-</div>
-<div class="overlay"></div>
-<script src="assets/js/main.js"></script>
-</body>
-</html>
+<!DOCTYPE html><html class="default no-js"><head><meta charSet="utf-8"/><meta http-equiv="X-UA-Compatible" content="IE=edge"/><title>Wesib: Navigation Support</title><meta name="description" content="Documentation for Wesib: Navigation Support"/><meta name="viewport" content="width=device-width, initial-scale=1"/><link rel="stylesheet" href="assets/style.css"/><link rel="stylesheet" href="assets/highlight.css"/><script async src="assets/search.js" id="search-script"></script></head><body><header><div class="tsd-page-toolbar"><div class="container"><div class="table-wrap"><div class="table-cell" id="tsd-search" data-base="."><div class="field"><label for="tsd-search-field" class="tsd-widget search no-caption">Search</label><input type="text" id="tsd-search-field"/></div><ul class="results"><li class="state loading">Preparing search index...</li><li class="state failure">The search index is not available</li></ul><a href="index.html" class="title">Wesib: Navigation Support</a></div><div class="table-cell" id="tsd-widgets"><div id="tsd-filter"><a href="#" class="tsd-widget options no-caption" data-toggle="options">Options</a><div class="tsd-filter-group"><div class="tsd-select" id="tsd-filter-visibility"><span class="tsd-select-label">All</span><ul class="tsd-select-list"><li data-value="public">Public</li><li data-value="protected">Public/Protected</li><li data-value="private" class="selected">All</li></ul></div> <input type="checkbox" id="tsd-filter-inherited" checked/><label class="tsd-widget" for="tsd-filter-inherited">Inherited</label><input type="checkbox" id="tsd-filter-externals" checked/><label class="tsd-widget" for="tsd-filter-externals">Externals</label></div></div><a href="#" class="tsd-widget menu no-caption" data-toggle="menu">Menu</a></div></div></div></div><div class="tsd-page-title"><div class="container"><h1>Wesib: Navigation Support</h1></div></div></header><div class="container container-main"><div class="row"><div class="col-8 col-content"><div class="tsd-panel tsd-typography">
+<a href="#wesib-navigation-support" id="wesib-navigation-support" style="color: inherit; text-decoration: none;">
+  <h1>Wesib: Navigation Support</h1>
+</a>
+<p><a href="https://www.npmjs.com/package/@wesib/navigation"><img src="https://img.shields.io/npm/v/@wesib/navigation.svg?logo=npm" alt="NPM"></a>
+<a href="https://github.com/wesib/navigation/actions?query=workflow:Build"><img src="https://github.com/wesib/navigation/workflows/Build/badge.svg" alt="Build Status"></a>
+<a href="https://www.codacy.com/gh/wesib/navigation/dashboard?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=wesib/navigation&amp;utm_campaign=Badge_Grade"><img src="https://app.codacy.com/project/badge/Grade/a89af5e6c7f2437f8ca9ef68d930babc" alt="Code Quality"></a>
+<a href="https://www.codacy.com/gh/wesib/navigation/dashboard?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=wesib/navigation&amp;utm_campaign=Badge_Coverage"><img src="https://app.codacy.com/project/badge/Coverage/a89af5e6c7f2437f8ca9ef68d930babc" alt="Coverage"></a>
+<a href="https://github.com/wesib/navigation"><img src="https://img.shields.io/static/v1?logo=github&label=GitHub&message=project&color=informational" alt="GitHub Project"></a>
+<a href="https://wesib.github.io/navigation/"><img src="https://img.shields.io/static/v1?logo=typescript&label=API&message=docs&color=informational" alt="API Documentation"></a></p>
+<p>This module supports navigation utilizing browser <a href="https://developer.mozilla.org/en-US/docs/Web/API/History">History API</a>.</p>
+<p>A <code>Navigation</code> instance available in bootstrap context tracks current <code>Page</code> and navigation event. It should be
+used for navigation to another page.</p>
+<p>A <code>NavigationAgent</code> provided for bootstrap context alters navigation processing or prevents it.</p>
+<p>A <code>@RenderPage()</code>-decorated method is called when new page loaded and pre-rendered. The page is loaded when navigating
+to another URL. The page (or only requested part of it) is loaded from the same URL. The decorated method may alter the
+loaded page contents.</p>
+<p>A <code>PageLoadAgent</code> provided for context can be used to alter document processing of the loaded document. E.g. the agents
+provided by default:</p>
+<ul>
+<li><p>Add scripts from the loaded document if not present yet.</p>
+</li>
+<li><p>Add styles from the loaded document, and removes the ones not present.</p>
+</li>
+<li><p>Update window title.</p>
+</li>
+<li><p>Reload the page if the loaded page revision differs from previously loaded one.</p>
+<p>The page revision is specified by <code>&lt;meta name=&quot;wesib-app-rev&quot; value=&quot;${rev}&quot;/&gt;</code> meta-tag.</p>
+</li>
+</ul>
+<p>A <code>NavLink</code>, <code>NavElement</code>, and <code>NavAnchor</code> instances can be used to make elements (such as <code>&lt;a href=&quot;${url}&quot;&gt;...&lt;/a&gt;</code>)
+navigate to target URL with <code>Nsvigation</code> API.</p>
+<p>A <code>NavMenu</code> instance serves as an owner of navigation links and activates the links matching current page.</p>
+</div></div><div class="col-4 col-menu menu-sticky-wrap menu-highlight"><nav class="tsd-navigation primary"><ul><li class="current"><a href="modules.html">Exports</a></li><li class=" tsd-kind-namespace"><a href="modules/NavAnchor.html">Nav<wbr/>Anchor</a></li><li class=" tsd-kind-namespace"><a href="modules/NavElement.html">Nav<wbr/>Element</a></li><li class=" tsd-kind-namespace"><a href="modules/NavLink.html">Nav<wbr/>Link</a></li><li class=" tsd-kind-namespace"><a href="modules/NavMenu.html">Nav<wbr/>Menu</a></li><li class=" tsd-kind-namespace"><a href="modules/Navigation.html">Navigation</a></li><li class=" tsd-kind-namespace"><a href="modules/NavigationAgent.html">Navigation<wbr/>Agent</a></li><li class=" tsd-kind-namespace"><a href="modules/PageFragmentRequest.html">Page<wbr/>Fragment<wbr/>Request</a></li><li class=" tsd-kind-namespace"><a href="modules/PageLoadAgent.html">Page<wbr/>Load<wbr/>Agent</a></li><li class=" tsd-kind-namespace"><a href="modules/PageLoadResponse.html">Page<wbr/>Load<wbr/>Response</a></li><li class=" tsd-kind-namespace"><a href="modules/PageParam.html">Page<wbr/>Param</a></li><li class=" tsd-kind-namespace"><a href="modules/RenderPageDef.html">Render<wbr/>Page<wbr/>Def</a></li></ul></nav><nav class="tsd-navigation secondary menu-sticky"><ul><li class="tsd-kind-enum"><a href="enums/NavigationEventType.html" class="tsd-kind-icon">Navigation<wbr/>Event<wbr/>Type</a></li><li class="tsd-kind-class"><a href="classes/NavMenu.html" class="tsd-kind-icon">Nav<wbr/>Menu</a></li><li class="tsd-kind-class"><a href="classes/Navigation.html" class="tsd-kind-icon">Navigation</a></li><li class="tsd-kind-class"><a href="classes/PageHashURLSupport.html" class="tsd-kind-icon">Page<wbr/>HashURLSupport</a></li><li class="tsd-kind-class"><a href="classes/PageLoadSupport.html" class="tsd-kind-icon">Page<wbr/>Load<wbr/>Support</a></li><li class="tsd-kind-class tsd-has-type-parameter"><a href="classes/PageParam.html" class="tsd-kind-icon">Page<wbr/>Param</a></li><li class="tsd-kind-interface"><a href="interfaces/EnterPageEventInit.html" class="tsd-kind-icon">Enter<wbr/>Page<wbr/>Event<wbr/>Init</a></li><li class="tsd-kind-interface"><a href="interfaces/LeavePageEventInit.html" class="tsd-kind-icon">Leave<wbr/>Page<wbr/>Event<wbr/>Init</a></li><li class="tsd-kind-interface"><a href="interfaces/NavLink.html" class="tsd-kind-icon">Nav<wbr/>Link</a></li><li class="tsd-kind-interface"><a href="interfaces/Page.html" class="tsd-kind-icon">Page</a></li><li class="tsd-kind-interface"><a href="interfaces/PageLoadRequest.html" class="tsd-kind-icon">Page<wbr/>Load<wbr/>Request</a></li><li class="tsd-kind-interface"><a href="interfaces/PageRenderCtl.html" class="tsd-kind-icon">Page<wbr/>Render<wbr/>Ctl</a></li><li class="tsd-kind-interface"><a href="interfaces/PageRendererExecution.html" class="tsd-kind-icon">Page<wbr/>Renderer<wbr/>Execution</a></li><li class="tsd-kind-interface"><a href="interfaces/StayOnPageEventInit.html" class="tsd-kind-icon">Stay<wbr/>On<wbr/>Page<wbr/>Event<wbr/>Init</a></li><li class="tsd-kind-type-alias"><a href="modules.html#NavigationAgent" class="tsd-kind-icon">Navigation<wbr/>Agent</a></li><li class="tsd-kind-type-alias"><a href="modules.html#NavigationEvent" class="tsd-kind-icon">Navigation<wbr/>Event</a></li><li class="tsd-kind-type-alias"><a href="modules.html#PageFragmentRequest" class="tsd-kind-icon">Page<wbr/>Fragment<wbr/>Request</a></li><li class="tsd-kind-type-alias"><a href="modules.html#PageLoadAgent" class="tsd-kind-icon">Page<wbr/>Load<wbr/>Agent</a></li><li class="tsd-kind-type-alias"><a href="modules.html#PageLoadResponse" class="tsd-kind-icon">Page<wbr/>Load<wbr/>Response</a></li><li class="tsd-kind-type-alias"><a href="modules.html#PageLoadURLModifier" class="tsd-kind-icon">Page<wbr/>LoadURLModifier</a></li><li class="tsd-kind-type-alias tsd-has-type-parameter"><a href="modules.html#PageRenderer" class="tsd-kind-icon">Page<wbr/>Renderer</a></li><li class="tsd-kind-type-alias"><a href="modules.html#RenderPageDef" class="tsd-kind-icon">Render<wbr/>Page<wbr/>Def</a></li><li class="tsd-kind-event"><a href="modules.html#EnterPageEvent" class="tsd-kind-icon">Enter<wbr/>Page<wbr/>Event</a></li><li class="tsd-kind-event"><a href="modules.html#LeavePageEvent" class="tsd-kind-icon">Leave<wbr/>Page<wbr/>Event</a></li><li class="tsd-kind-event"><a href="modules.html#StayOnPageEvent" class="tsd-kind-icon">Stay<wbr/>On<wbr/>Page<wbr/>Event</a></li><li class="tsd-kind-variable"><a href="modules.html#NavigationAgent" class="tsd-kind-icon">Navigation<wbr/>Agent</a></li><li class="tsd-kind-variable"><a href="modules.html#PageHashURLParam" class="tsd-kind-icon">Page<wbr/>HashURLParam</a></li><li class="tsd-kind-variable"><a href="modules.html#PageLoadAgent" class="tsd-kind-icon">Page<wbr/>Load<wbr/>Agent</a></li><li class="tsd-kind-variable"><a href="modules.html#PageLoadParam" class="tsd-kind-icon">Page<wbr/>Load<wbr/>Param</a></li><li class="tsd-kind-variable"><a href="modules.html#PageLoadURLModifier" class="tsd-kind-icon">Page<wbr/>LoadURLModifier</a></li><li class="tsd-kind-variable"><a href="modules.html#PageParam__symbol" class="tsd-kind-icon">Page<wbr/>Param__symbol</a></li><li class="tsd-kind-variable"><a href="modules.html#PageRenderCtl" class="tsd-kind-icon">Page<wbr/>Render<wbr/>Ctl</a></li><li class="tsd-kind-function tsd-has-type-parameter"><a href="modules.html#RenderPage" class="tsd-kind-icon">Render<wbr/>Page</a></li><li class="tsd-kind-function"><a href="modules.html#getHashURL" class="tsd-kind-icon">get<wbr/>HashURL</a></li><li class="tsd-kind-function"><a href="modules.html#navAnchor" class="tsd-kind-icon">nav<wbr/>Anchor</a></li><li class="tsd-kind-function tsd-has-type-parameter"><a href="modules.html#navElement" class="tsd-kind-icon">nav<wbr/>Element</a></li><li class="tsd-kind-function"><a href="modules.html#setHashURL" class="tsd-kind-icon">set<wbr/>HashURL</a></li></ul></nav></div></div></div><footer class="with-border-bottom"><div class="container"><h2>Legend</h2><div class="tsd-legend-group"><ul class="tsd-legend"><li class="tsd-kind-constructor tsd-parent-kind-class"><span class="tsd-kind-icon">Constructor</span></li><li class="tsd-kind-property tsd-parent-kind-class"><span class="tsd-kind-icon">Property</span></li><li class="tsd-kind-method tsd-parent-kind-class"><span class="tsd-kind-icon">Method</span></li></ul><ul class="tsd-legend"><li class="tsd-kind-property tsd-parent-kind-interface"><span class="tsd-kind-icon">Property</span></li><li class="tsd-kind-method tsd-parent-kind-interface"><span class="tsd-kind-icon">Method</span></li></ul><ul class="tsd-legend"><li class="tsd-kind-property tsd-parent-kind-class tsd-is-private"><span class="tsd-kind-icon">Private property</span></li></ul><ul class="tsd-legend"><li class="tsd-kind-method tsd-parent-kind-class tsd-is-static"><span class="tsd-kind-icon">Static method</span></li></ul></div><h2>Settings</h2><p>Theme <select id="theme"><option value="os">OS</option><option value="light">Light</option><option value="dark">Dark</option></select></p></div></footer><div class="container tsd-generator"><p>Generated using <a href="https://typedoc.org/" target="_blank">TypeDoc</a></p></div><div class="overlay"></div><script src="assets/main.js"></script></body></html>
