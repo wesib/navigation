@@ -1,6 +1,6 @@
 /**
  * @packageDocumentation
- * @module Module @wesib/navigation
+ * @module @wesib/navigation
  */
 export * from './hash-url';
 export * from './nav-links';
