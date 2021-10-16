@@ -1,3 +1,4 @@
+import { CustomHTMLElement } from '@frontmeans/dom-primitives';
 import { afterEach, beforeEach, describe, expect, it, jest } from '@jest/globals';
 import { cxConstAsset } from '@proc7ts/context-builder';
 import { afterThe, trackValue, translateAfter_ } from '@proc7ts/fun-events';
@@ -37,10 +38,10 @@ describe('NavMenu', () => {
     })
     class TestComponent {}
 
-    const element = new (await testElement(TestComponent))();
+    const element: CustomHTMLElement = new (await testElement(TestComponent))();
 
     context = await ComponentSlot.of(element).whenReady;
-    element.connectedCallback();
+    element.connectedCallback!();
   });
 
   it('is constructed by links provider function', () => {

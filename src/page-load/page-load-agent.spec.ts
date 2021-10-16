@@ -39,8 +39,8 @@ describe('PageLoadAgent', () => {
 
     cxBuilder.provide(cxConstAsset(PageLoadAgent, mockAgent));
 
-    const response1 = { name: 'document1' } as any;
-    const response2 = { name: 'document2' } as any;
+    const response1 = { name: 'document1' } as unknown as PageLoadResponse;
+    const response2 = { name: 'document2' } as unknown as PageLoadResponse;
     const response = await new Promise<PageLoadResponse>(resolve => {
       onSupplied(agent(mockLoad, request)).do(onceOn)(resolve);
       emitter.send(response1);

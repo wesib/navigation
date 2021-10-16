@@ -265,7 +265,7 @@ describe('PageLoadParam', () => {
         ).open('/other').catch(reject);
       });
 
-      expect(request.headers.get('Accept-Fragment')).toEqual('id=test-fragment');
+      expect(request.headers.get('Accept-Fragment')).toBe('id=test-fragment');
       expect(response).toMatchObject({
         ok: true,
         fragment: expect.objectContaining({ id: 'test-fragment' }),
@@ -284,7 +284,7 @@ describe('PageLoadParam', () => {
         ).open('/other').catch(reject);
       });
 
-      expect(request.headers.get('Accept-Fragment')).toEqual('tag=test-fragment');
+      expect(request.headers.get('Accept-Fragment')).toBe('tag=test-fragment');
       expect(response).toMatchObject({
         ok: true,
         fragment: expect.objectContaining({ tagName: 'TEST-FRAGMENT' }),
@@ -303,7 +303,7 @@ describe('PageLoadParam', () => {
         ).open('/other').catch(reject);
       });
 
-      expect(request.headers.get('Accept-Fragment')).toEqual('id=wrong-fragment');
+      expect(request.headers.get('Accept-Fragment')).toBe('id=wrong-fragment');
       expect(response).toMatchObject({ ok: true, fragment: undefined });
     });
     it('loads multiple fragments', async () => {
@@ -331,7 +331,7 @@ describe('PageLoadParam', () => {
       const response1 = await promise1;
       const response2 = await promise2;
 
-      expect(request.headers.get('Accept-Fragment')).toEqual('id=test-fragment, tag=test-fragment-2');
+      expect(request.headers.get('Accept-Fragment')).toBe('id=test-fragment, tag=test-fragment-2');
       expect(response1).toMatchObject({
         ok: true,
         fragment: expect.objectContaining({ id: 'test-fragment' }),

@@ -2,8 +2,10 @@ import {
   AeComponentMember,
   AeComponentMemberTarget,
   ComponentClass,
+  ComponentContext,
   ComponentMember,
   ComponentMemberAmendment,
+  DefinitionContext,
 } from '@wesib/wesib';
 import { PageLoadSupport } from '../page-load';
 import { PageRenderCtl } from './page-render-ctl';
@@ -37,8 +39,8 @@ export function RenderPage<
       feature: {
         needs: [PageLoadSupport],
       },
-      define(defContext) {
-        defContext.whenComponent(context => {
+      define(defContext: DefinitionContext<InstanceType<TClass>>) {
+        defContext.whenComponent((context: ComponentContext<InstanceType<TClass>>) => {
           context.whenReady(context => {
 
             const { component } = context;
