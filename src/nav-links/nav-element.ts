@@ -154,7 +154,7 @@ export function navElement<TElement extends Element>(
     return ({
 
       get href(): string {
-        return getHref(anchor!);
+        return getHref(anchor);
       },
 
       supply,
