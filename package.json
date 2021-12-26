@@ -48,7 +48,7 @@
     "@proc7ts/fun-events": "^10.5.1",
     "@rollup/plugin-node-resolve": "^13.1.1",
     "@run-z/eslint-config": "^2.0.0",
-    "@run-z/rollup-helpers": "^1.1.1",
+    "@run-z/rollup-helpers": "^2.0.0",
     "@types/jsdom": "^16.2.14",
     "@typescript-eslint/eslint-plugin": "^5.8.0",
     "@typescript-eslint/parser": "^5.8.0",
