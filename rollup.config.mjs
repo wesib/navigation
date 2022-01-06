@@ -1,4 +1,3 @@
-import nodeResolve from '@rollup/plugin-node-resolve';
 import { externalModules } from '@run-z/rollup-helpers';
 import { defineConfig } from 'rollup';
 import flatDts from 'rollup-plugin-flat-dts';
@@ -17,7 +16,6 @@ export default defineConfig({
       cacheRoot: 'target/.rts2_cache',
       useTsconfigDeclarationDir: true,
     }),
-    nodeResolve(),
     sourcemaps(),
   ],
   external: externalModules(),
