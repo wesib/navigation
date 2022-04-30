@@ -1,5 +1,4 @@
-Wesib: Navigation Support
-=========================
+# Wesib: Navigation Support
 
 [![NPM][npm-image]][npm-url]
 [![Build Status][build-status-img]][build-status-link]
@@ -48,5 +47,5 @@ A `NavMenu` instance serves as an owner of navigation links and activates the li
 [github-image]: https://img.shields.io/static/v1?logo=github&label=GitHub&message=project&color=informational
 [github-url]: https://github.com/wesib/navigation
 [api-docs-image]: https://img.shields.io/static/v1?logo=typescript&label=API&message=docs&color=informational
-[api-docs-url]: https://wesib.github.io/navigation/ 
-[History API]: https://developer.mozilla.org/en-US/docs/Web/API/History
+[api-docs-url]: https://wesib.github.io/navigation/
+[history api]: https://developer.mozilla.org/en-US/docs/Web/API/History
