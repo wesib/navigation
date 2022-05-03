@@ -11,7 +11,7 @@ export function testPageParamHandle(
     put: jest.fn(newValue => {
       state.value = newValue;
     }),
-    transfer: jest.fn(),
+    transfer: jest.fn<Required<PageParam.Handle<string, string>>['transfer']>(),
     enter: jest.fn(),
     stay: jest.fn(),
     leave: jest.fn(),

@@ -6,7 +6,7 @@ import { HttpFetch } from '@wesib/generic';
 import { bootstrapComponents, BootstrapContext, BootstrapWindow, Feature } from '@wesib/wesib';
 import { Mock } from 'jest-mock';
 import { Navigation } from '../navigation';
-import { LocationMock } from '../spec/location-mock';
+import { LocationMock } from '../spec';
 import { PageLoadParam } from './page-load-param';
 import { PageLoadSupport } from './page-load-support.feature';
 
@@ -31,7 +31,7 @@ describe('pageStyleAgent', () => {
   });
 
   let responseHtml: string;
-  let mockFetch: Mock<ReturnType<HttpFetch>, Parameters<HttpFetch>>;
+  let mockFetch: Mock<HttpFetch>;
   let context: BootstrapContext;
 
   beforeEach(async () => {

@@ -9,12 +9,12 @@ import { PageLoader } from './page-loader.impl';
 describe('cachingPageLoader', () => {
 
   let responder: EventEmitter<[PageLoadResponse]>;
-  let mockLoader: Mock<ReturnType<PageLoader>, Parameters<PageLoader>>;
+  let mockLoader: Mock<PageLoader>;
   let caching: PageLoader;
   let page: Page;
   let page2: Page;
-  let mockReceiver: Mock<void, [PageLoadResponse]>;
-  let mockReceiver2: Mock<void, [PageLoadResponse]>;
+  let mockReceiver: Mock<(response: PageLoadResponse) => void>;
+  let mockReceiver2: Mock<(response: PageLoadResponse) => void>;
   let received: PageLoadResponse;
 
   beforeEach(() => {

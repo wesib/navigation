@@ -8,8 +8,7 @@ import { bootstrapComponents, BootstrapContext, BootstrapWindow, Feature } from 
 import { Mock } from 'jest-mock';
 import { Navigation } from '../navigation';
 import { Page } from '../page';
-import { LocationMock } from '../spec/location-mock';
-import { testPageParam } from '../spec/test-page-param';
+import { LocationMock, testPageParam } from '../spec';
 import { PageLoadAgent } from './page-load-agent';
 import { PageLoadParam } from './page-load-param';
 import { PageLoadResponse } from './page-load-response';
@@ -27,8 +26,8 @@ describe('PageLoadParam', () => {
   });
 
   let responder: EventEmitter<[PageLoadResponse]>;
-  let mockAgent: Mock<ReturnType<PageLoadAgent>, Parameters<PageLoadAgent>>;
-  let receiver: Mock<void, [PageLoadResponse]>;
+  let mockAgent: Mock<PageLoadAgent>;
+  let receiver: Mock<(response: PageLoadResponse) => void>;
 
   beforeEach(() => {
     responder = new EventEmitter();
@@ -216,7 +215,7 @@ describe('PageLoadParam', () => {
 
     let request: Request;
     let result: string;
-    let mockFetch: Mock<ReturnType<HttpFetch>, Parameters<HttpFetch>>;
+    let mockFetch: Mock<HttpFetch>;
 
     beforeEach(() => {
       result = '<body></body>';

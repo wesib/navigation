@@ -477,9 +477,7 @@ describe('NavMenu', () => {
     let link1: MockObject<Required<NavLink>>;
     let link2: MockObject<Required<NavLink>>;
     let link3: MockObject<Required<NavLink>>;
-    let weigh: Mock<
-        number,
-        [{ link: NavLink; menu: NavMenu; page: Page }]>;
+    let weigh: Mock<(link: { link: NavLink; menu: NavMenu; page: Page }) => number>;
 
     beforeEach(() => {
       link1 = testLink('1');

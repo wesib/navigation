@@ -6,7 +6,7 @@ import { bootstrapComponents, BootstrapContext, BootstrapWindow, Feature } from 
 import { Mock, SpyInstance } from 'jest-mock';
 import { Navigation } from '../navigation';
 import { Page } from '../page';
-import { LocationMock } from '../spec/location-mock';
+import { LocationMock } from '../spec';
 import { appRevSearchParam, PageCacheBuster } from './page-cache-buster.impl';
 import { PageLoadParam } from './page-load-param';
 import { PageLoadSupport } from './page-load-support.feature';
@@ -41,7 +41,7 @@ describe('PageCacheBuster', () => {
 
   let responseRev: string;
   let responseHtml: () => string;
-  let mockFetch: Mock<ReturnType<HttpFetch>, Parameters<HttpFetch>>;
+  let mockFetch: Mock<HttpFetch>;
   let context: BootstrapContext;
 
   beforeEach(async () => {
@@ -66,8 +66,8 @@ describe('PageCacheBuster', () => {
   });
 
   let navigation: Navigation;
-  let updateSpy: SpyInstance<Page, [string | URL]>;
-  let reloadSpy: SpyInstance<void, []>;
+  let updateSpy: SpyInstance<(url: string | URL) => Page>;
+  let reloadSpy: SpyInstance<() => void>;
 
   beforeEach(() => {
     navigation = context.get(Navigation);

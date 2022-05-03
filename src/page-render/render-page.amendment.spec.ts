@@ -8,7 +8,7 @@ import { bootstrapComponents, BootstrapWindow, Component, ComponentContext } fro
 import { Mock } from 'jest-mock';
 import { Navigation } from '../navigation';
 import { PageLoadAgent, PageLoadParam } from '../page-load';
-import { LocationMock } from '../spec/location-mock';
+import { LocationMock } from '../spec';
 import { PageRenderer, PageRendererExecution } from './page-renderer';
 import { RenderPageDef } from './render-page-def';
 import { RenderPage } from './render-page.amendment';
@@ -38,8 +38,8 @@ describe('@RenderPage', () => {
   });
 
   let html: string;
-  let mockFetch: Mock<ReturnType<HttpFetch>, Parameters<HttpFetch>>;
-  let mockAgent: Mock<ReturnType<PageLoadAgent>, Parameters<PageLoadAgent>>;
+  let mockFetch: Mock<HttpFetch>;
+  let mockAgent: Mock<PageLoadAgent>;
 
   beforeEach(() => {
     html = '<page-content></page-content>';

@@ -16,7 +16,7 @@ describe('PageLoadAgent', () => {
   });
 
   let request: Request;
-  let mockLoad: Mock<OnEvent<[PageLoadResponse]>, [Request?]>;
+  let mockLoad: Mock<(request?: Request) => OnEvent<[PageLoadResponse]>>;
   let emitter: EventEmitter<[PageLoadResponse]>;
 
   beforeEach(() => {
@@ -57,7 +57,7 @@ describe('PageLoadAgent', () => {
   });
   it('calls the next agent in chain by calling `next`', () => {
 
-    const mockAgent: Mock<ReturnType<PageLoadAgent>, Parameters<PageLoadAgent>> = jest.fn(
+    const mockAgent: Mock<PageLoadAgent> = jest.fn(
         (next, _request) => next(),
     );
 

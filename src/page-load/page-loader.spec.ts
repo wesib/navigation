@@ -15,7 +15,7 @@ import { PageLoader } from './page-loader.impl';
 
 describe('PageLoader', () => {
 
-  let mockHttpFetch: Mock<ReturnType<HttpFetch>, Parameters<HttpFetch>>;
+  let mockHttpFetch: Mock<HttpFetch>;
   let page: Page;
   let mockResponse: MockObject<Response>;
   let mockResponseHeaders: MockObject<Headers>;
@@ -38,7 +38,7 @@ describe('PageLoader', () => {
   });
 
   let bsContext: BootstrapContext;
-  let mockAgent: Mock<ReturnType<PageLoadAgent>, Parameters<PageLoadAgent>>;
+  let mockAgent: Mock<PageLoadAgent>;
 
   beforeEach(async () => {
     mockAgent = jest.fn((next, _request) => next());
@@ -80,8 +80,8 @@ describe('PageLoader', () => {
   it('reports document load progress', async () => {
     mockResponse.text.mockImplementation(() => Promise.resolve('<div>test</div>'));
 
-    const receiver = jest.fn<void, [PageLoadResponse]>();
-    const done = jest.fn<void, [unknown?]>();
+    const receiver = jest.fn<(response: PageLoadResponse) => void>();
+    const done = jest.fn<(reason?: unknown) => void>();
     const supply = await loadDocument(receiver, done);
 
     expect(receiver).toHaveBeenCalledWith({ ok: undefined, page });
@@ -105,8 +105,8 @@ describe('PageLoader', () => {
   it('parses the response as HTML by default', async () => {
     mockResponse.text.mockImplementation(() => Promise.resolve('<div>test</div>'));
 
-    const receiver = jest.fn<void, [PageLoadResponse]>();
-    const done = jest.fn<void, [unknown?]>();
+    const receiver = jest.fn<(response: PageLoadResponse) => void>();
+    const done = jest.fn<(reason?: unknown) => void>();
     const supply = await loadDocument(receiver, done);
 
     expect(receiver).toHaveBeenLastCalledWith(expect.objectContaining({ ok: true, page }));
@@ -123,7 +123,7 @@ describe('PageLoader', () => {
   it('sets base URI to page URL by default', async () => {
     mockResponse.text.mockImplementation(() => Promise.resolve('<div>test</div>'));
 
-    const receiver = jest.fn<void, [PageLoadResponse]>();
+    const receiver = jest.fn<(response: PageLoadResponse) => void>();
 
     await loadDocument(receiver);
 
@@ -135,7 +135,7 @@ describe('PageLoader', () => {
     (page as any).url = new URL('http://localhost/test/page/index.html');
     mockResponse.text.mockImplementation(() => Promise.resolve('<html><head><base href=".."></head></html>'));
 
-    const receiver = jest.fn<void, [PageLoadResponse]>();
+    const receiver = jest.fn<(response: PageLoadResponse) => void>();
 
     await loadDocument(receiver);
 
@@ -149,8 +149,8 @@ describe('PageLoader', () => {
         () => Promise.resolve('<?xml version="1.0"?><content>test</content>'),
     );
 
-    const receiver = jest.fn<void, [PageLoadResponse]>();
-    const done = jest.fn<void, [unknown?]>();
+    const receiver = jest.fn<(response: PageLoadResponse) => void>();
+    const done = jest.fn<(reason?: unknown) => void>();
     const supply = await loadDocument(receiver, done);
 
     expect(receiver).toHaveBeenLastCalledWith(expect.objectContaining({ ok: true, page }));

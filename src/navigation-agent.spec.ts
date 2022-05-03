@@ -7,7 +7,7 @@ import { Mock } from 'jest-mock';
 import { Navigation } from './navigation';
 import { NavigationAgent } from './navigation-agent';
 import { Page } from './page';
-import { testPageParam } from './spec/test-page-param';
+import { testPageParam } from './spec';
 
 describe('NavigationAgent', () => {
 
@@ -19,7 +19,7 @@ describe('NavigationAgent', () => {
     agent = cxBuilder.get(NavigationAgent);
   });
 
-  let mockNavigate: Mock<void, [Navigation.Target?]>;
+  let mockNavigate: Mock<(target?: Navigation.Target) => void>;
   let when: 'pre-open' | 'pre-replace';
   let from: Page;
   let to: Page;

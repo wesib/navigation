@@ -9,9 +9,7 @@ import { NavigationAgent } from './navigation-agent';
 import { EnterPageEvent, LeavePageEvent, NavigationEventType, StayOnPageEvent } from './navigation.event';
 import { Page } from './page';
 import { PageParam } from './page-param';
-import { MockObject } from './spec';
-import { LocationMock, navHistoryState } from './spec/location-mock';
-import { testPageParam } from './spec/test-page-param';
+import { LocationMock, MockObject, navHistoryState, testPageParam } from './spec';
 
 describe('Navigation', () => {
 
@@ -25,7 +23,7 @@ describe('Navigation', () => {
   });
 
   let navigation: Navigation;
-  let agent: Mock<ReturnType<NavigationAgent>, Parameters<NavigationAgent>>;
+  let agent: Mock<NavigationAgent>;
 
   beforeEach(async () => {
 

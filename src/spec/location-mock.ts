@@ -8,11 +8,11 @@ import { MockObject } from './mock-object';
 export class LocationMock {
 
   readonly location: MockObject<Location>;
-  readonly href: Mock<string, []>;
+  readonly href: Mock<() => string>;
   readonly history: MockObject<History>;
-  readonly historyLength: Mock<number, []>;
-  readonly state: Mock<string, []>;
-  readonly baseURI: Mock<string, []>;
+  readonly historyLength: Mock<() => number>;
+  readonly state: Mock<() => string>;
+  readonly baseURI: Mock<() => string>;
   readonly window: MockObject<BootstrapWindow>;
   readonly down: () => void;
   private _index = 0;
