@@ -123,11 +123,11 @@ export class LocationMock {
     return this.getState(this._index);
   }
 
-  getState(index: number): any {
+  getState<TState>(index: number): TState {
     return this.stateData[index][1];
   }
 
-  setState(index: number, state: any): void {
+  setState(index: number, state: unknown): void {
     this.stateData[index][1] = state;
   }
 
