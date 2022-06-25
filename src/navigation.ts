@@ -318,14 +318,14 @@ export namespace Navigation {
   export interface Target {
 
     /**
-     * An URL to update the browser location string to.
+     * A URL to update the browser location string to.
      */
     readonly url?: string | URL | undefined;
 
     /**
      * Opaque data to apply to session history. I.e. either push or replace.
      */
-    readonly data?: any | undefined;
+    readonly data?: unknown | undefined;
 
     /**
      * New window title.
@@ -570,7 +570,7 @@ function Navigation$byDefault(target: CxEntry.Target<Navigation>): Navigation {
       return toEntry;
     }
 
-    function stay(toEntry?: PageEntry, reason?: any): null {
+    function stay(toEntry?: PageEntry, reason?: unknown): null {
       if (toEntry) {
         toEntry.stay(nav.it.page);
       }

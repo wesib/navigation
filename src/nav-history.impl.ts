@@ -12,7 +12,7 @@ export const NAV_DATA_KEY = 'wesib:navigation:data' as const;
 export interface PartialNavData {
   readonly uid?: string | undefined;
   readonly id?: number | undefined;
-  readonly data: any | undefined;
+  readonly data: unknown | undefined;
 }
 
 export interface NavData extends PartialNavData {
@@ -24,7 +24,7 @@ export interface NavDataEnvelope {
   readonly [NAV_DATA_KEY]: NavData;
 }
 
-function extractNavData(state: any): PartialNavData {
+function extractNavData(state: unknown): PartialNavData {
   return state == null || typeof state !== 'object'
       // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
       ? { data: state }
@@ -317,9 +317,7 @@ export class PageEntry {
       get title() {
         return target.title;
       },
-      // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
-      get data(): any {
-        // eslint-disable-next-line @typescript-eslint/no-unsafe-return
+      get data(): unknown {
         return target.data;
       },
       get visited() {

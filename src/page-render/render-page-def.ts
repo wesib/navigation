@@ -17,12 +17,10 @@ export namespace RenderPageDef {
 
   /**
    * Page rendering method signature.
-   */
-  export type Method =
-  /**
+   *
    * @param execution - Page renderer execution context.
    */
-      (execution: PageRendererExecution) => void;
+  export type Method = (execution: PageRendererExecution) => void;
 
   /**
    * Page rendering specifier.
@@ -43,13 +41,13 @@ export namespace RenderPageDef {
      *
      * The loaded content will replace already included one only when their content key differ.
      *
-     * By default uses page URL without hash part as a key. This prevents content refresh when only URL hash changes.
+     * By default, uses page URL without hash part as a key. This prevents content refresh when only URL hash changes.
      *
      * @param page - Target page. Either loaded or not.
      *
      * @returns Content key.
      */
-    contentKey?(this: void, page: Page): any;
+    contentKey?(this: void, page: Page): unknown;
 
   }
 

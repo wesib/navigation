@@ -44,7 +44,7 @@ describe('Navigation', () => {
     navigation = context.get(Navigation);
   });
 
-  let location: { url: string; data: any };
+  let location: { url: string; data: unknown };
 
   beforeEach(() => {
     navigation.read(({ url, data }) => location = { url: url.href, data });

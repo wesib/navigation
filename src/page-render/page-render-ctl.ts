@@ -63,7 +63,7 @@ class PageRenderCtl$ implements PageRenderCtl {
     const responseTracker = trackValue<[PageLoadResponse, string]>();
     const handleResponse = (response: PageLoadResponse): void => {
 
-      const pageKey = contentKey(response.page);
+      const pageKey = contentKey(response.page) as string;
 
       if (pageKey === lastPageKey) {
         return;// Only hash changed? Do not refresh the page.
@@ -111,7 +111,7 @@ class PageRenderCtl$ implements PageRenderCtl {
     );
 
     this._context.whenConnected(context => {
-      lastPageKey = contentKey(navigation.page);
+      lastPageKey = contentKey(navigation.page) as string;
       navigation.read.do(onceAfter)(page => {
         page.put(
             PageLoadParam,

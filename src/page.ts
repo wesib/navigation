@@ -15,7 +15,7 @@ export interface Page {
   /**
    * History entry data.
    */
-  readonly data?: any | undefined;
+  readonly data?: unknown | undefined;
 
   /**
    * New window title.

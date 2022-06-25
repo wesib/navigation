@@ -58,7 +58,7 @@ export class LocationMock {
         return self.href();
       },
     } as any;
-    this.state = jest.fn(() => this.currentState);
+    this.state = jest.fn(() => this.currentState as string);
     this.historyLength = jest.fn(() => this.stateData.length);
     this.history = {
       get length() {
@@ -119,7 +119,7 @@ export class LocationMock {
     return this.stateData[this._index][0];
   }
 
-  get currentState(): any {
+  get currentState(): unknown {
     return this.getState(this._index);
   }
 
