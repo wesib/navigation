@@ -13,7 +13,7 @@ import { PageLoadResponse } from '../page-load';
  * @typeParam TExecution - A type of supported page renderer execution.
  */
 export type PageRenderer<TExecution extends PageRendererExecution = PageRendererExecution> =
-    ComponentRenderer<TExecution>;
+  ComponentRenderer<TExecution>;
 
 /**
  * Page renderer execution context.
@@ -21,10 +21,8 @@ export type PageRenderer<TExecution extends PageRendererExecution = PageRenderer
  * This is passed to {@link PageRenderer page renderer} when the latter executed on page load event.
  */
 export interface PageRendererExecution extends FragmentRendererExecution {
-
   /**
    * A page load response.
    */
   readonly response: PageLoadResponse;
-
 }

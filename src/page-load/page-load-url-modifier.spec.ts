@@ -5,7 +5,6 @@ import { BootstrapContext } from '@wesib/wesib';
 import { PageLoadURLModifier } from './page-load-url-modifier';
 
 describe('PageLoadURLModifier', () => {
-
   let cxBuilder: CxBuilder;
   let context: CxValues;
 
@@ -28,7 +27,7 @@ describe('PageLoadURLModifier', () => {
     expect(url.href).toBe(href);
   });
   it('applies page load URL modifications', () => {
-    cxBuilder.provide(cxConstAsset(PageLoadURLModifier, (u: URL) => u.pathname = '/other'));
+    cxBuilder.provide(cxConstAsset(PageLoadURLModifier, (u: URL) => (u.pathname = '/other')));
     context.get(PageLoadURLModifier)(url);
     expect(url.href).toBe('http://localhost/other?q=v');
   });

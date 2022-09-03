@@ -11,7 +11,6 @@ const PageLoadSupport__feature: FeatureDef = {
     setup.provide({
       entry: PageLoadURLModifier,
       buildAsset(target) {
-
         const { urlModifier } = target.get(PageCacheBuster);
 
         return urlModifier && (collector => collector(urlModifier));
@@ -20,7 +19,6 @@ const PageLoadSupport__feature: FeatureDef = {
     setup.provide({
       entry: PageLoadAgent,
       buildAsset(target) {
-
         const { agent } = target.get(PageCacheBuster);
 
         return agent && (collector => collector(agent));
@@ -29,7 +27,6 @@ const PageLoadSupport__feature: FeatureDef = {
     setup.provide({
       entry: PageLoadAgent,
       buildAsset(target) {
-
         const agent = pageScriptsAgent(target);
 
         return collector => collector(agent);
@@ -38,7 +35,6 @@ const PageLoadSupport__feature: FeatureDef = {
     setup.provide({
       entry: PageLoadAgent,
       buildAsset(target) {
-
         const agent = pageStyleAgent(target);
 
         return collector => collector(agent);
@@ -47,7 +43,6 @@ const PageLoadSupport__feature: FeatureDef = {
     setup.provide({
       entry: PageLoadAgent,
       buildAsset(target) {
-
         const agent = pageTitleAgent(target);
 
         return collector => collector(agent);

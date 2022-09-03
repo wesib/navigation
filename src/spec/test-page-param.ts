@@ -4,7 +4,7 @@ import { PageParam } from '../page-param';
 import { MockObject } from './mock-object';
 
 export function testPageParamHandle(
-    state: { value: string } = { value: '' },
+  state: { value: string } = { value: '' },
 ): MockObject<PageParam.Handle<string, string>> {
   return {
     get: jest.fn(() => state.value),
@@ -20,9 +20,8 @@ export function testPageParamHandle(
 }
 
 export function testPageParam(
-    value = '',
+  value = '',
 ): [PageParam<string, string>, MockObject<PageParam.Handle<string, string>>] {
-
   const state = { value };
   const handle = testPageParamHandle(state);
 
@@ -34,7 +33,7 @@ export function testPageParam(
       return handle;
     }
 
-  }
+}
 
   return [new TestParam(), handle];
 }

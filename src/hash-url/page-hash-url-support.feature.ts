@@ -26,12 +26,11 @@ export class PageHashURLSupport {
 }
 
 function PageHashURL$agent(
-    next: (this: void, target?: Navigation.Target) => void,
-    _when: 'pretend' | 'pre-open' | 'pre-replace',
-    _from: Page,
-    to: Page,
+  next: (this: void, target?: Navigation.Target) => void,
+  _when: 'pretend' | 'pre-open' | 'pre-replace',
+  _from: Page,
+  to: Page,
 ): void {
-
   const hashURL = to.get(PageHashURLValueParam);
 
   if (hashURL) {

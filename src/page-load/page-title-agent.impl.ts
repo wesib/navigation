@@ -4,19 +4,19 @@ import { BootstrapWindow } from '@wesib/wesib';
 import { PageLoadAgent } from './page-load-agent';
 
 export function pageTitleAgent(context: CxValues): PageLoadAgent {
-
   const doc = context.get(BootstrapWindow).document;
 
-  return next => next().do(mapOn_(response => {
-    if (response.ok) {
+  return next => next().do(
+      mapOn_(response => {
+        if (response.ok) {
+          const title = response.document.getElementsByTagName('title').item(0);
 
-      const title = response.document.getElementsByTagName('title').item(0);
+          if (title && title.textContent) {
+            doc.title = title.textContent;
+          }
+        }
 
-      if (title && title.textContent) {
-        doc.title = title.textContent;
-      }
-    }
-
-    return response;
-  }));
+        return response;
+      }),
+    );
 }

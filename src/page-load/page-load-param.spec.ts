@@ -14,7 +14,6 @@ import { PageLoadParam } from './page-load-param';
 import { PageLoadResponse } from './page-load-response';
 
 describe('PageLoadParam', () => {
-
   let locationMock: LocationMock;
 
   beforeEach(() => {
@@ -46,12 +45,11 @@ describe('PageLoadParam', () => {
         setup.provide(cxConstAsset(PageLoadAgent, mockAgent));
       },
     })
-    class TestFeature {
-    }
+    class TestFeature {}
 
     context = await bootstrapComponents(TestFeature).whenReady;
     navigation = context.get(Navigation);
-    navigation.read(p => page = p);
+    navigation.read(p => (page = p));
   });
 
   it('does not load initial page', () => {
@@ -129,14 +127,15 @@ describe('PageLoadParam', () => {
     await new Promise(resolve => {
       @Feature({
         setup(setup) {
-          setup.provide(cxConstAsset(HttpFetch, () => afterThe({ ok: true, text: () => reject } as Response)));
+          setup.provide(
+            cxConstAsset(HttpFetch, () => afterThe({ ok: true, text: () => reject } as Response)),
+          );
         },
         init(ctx) {
           ctx.whenReady(resolve);
         },
       })
-      class MockFetchFeature {
-      }
+      class MockFetchFeature {}
 
       context.load(MockFetchFeature);
     });
@@ -154,7 +153,6 @@ describe('PageLoadParam', () => {
     });
   });
   it('reports loaded page to all receivers', async () => {
-
     const receiver2 = jest.fn();
 
     page.put(PageLoadParam, { receiver });
@@ -183,7 +181,6 @@ describe('PageLoadParam', () => {
     expect(receiver2).not.toHaveBeenCalled();
   });
   it('does not report to unregistered receivers', async () => {
-
     const supply = new Supply();
     const receiver2 = jest.fn();
 
@@ -212,7 +209,6 @@ describe('PageLoadParam', () => {
   });
 
   describe('fragments', () => {
-
     let request: Request;
     let result: string;
     let mockFetch: Mock<HttpFetch>;
@@ -222,13 +218,11 @@ describe('PageLoadParam', () => {
       mockFetch = jest.fn((input, _init?) => {
         request = input as Request;
 
-        return afterThe(
-            {
-              ok: true,
-              headers: new Headers(),
-              text: () => Promise.resolve(result),
-            } as Response,
-        );
+        return afterThe({
+          ok: true,
+          headers: new Headers(),
+          text: () => Promise.resolve(result),
+        } as Response);
       });
     });
 
@@ -244,8 +238,7 @@ describe('PageLoadParam', () => {
             ctx.whenReady(resolve);
           },
         })
-        class MockFetchFeature {
-        }
+        class MockFetchFeature {}
 
         context.load(MockFetchFeature);
       });
@@ -255,13 +248,13 @@ describe('PageLoadParam', () => {
       result = `<div id="test-fragment">fragment content</div>`;
 
       const response = await new Promise<PageLoadResponse>((resolve, reject) => {
-        navigation.with(
-            PageLoadParam,
-            {
-              receiver: r => r.ok && resolve(r),
-              fragment: { id: 'test-fragment' },
-            },
-        ).open('/other').catch(reject);
+        navigation
+          .with(PageLoadParam, {
+            receiver: r => r.ok && resolve(r),
+            fragment: { id: 'test-fragment' },
+          })
+          .open('/other')
+          .catch(reject);
       });
 
       expect(request.headers.get('Accept-Fragment')).toBe('id=test-fragment');
@@ -274,13 +267,13 @@ describe('PageLoadParam', () => {
       result = `<test-fragment>fragment content</test-fragment>`;
 
       const response = await new Promise<PageLoadResponse>((resolve, reject) => {
-        navigation.with(
-            PageLoadParam,
-            {
-              receiver: r => r.ok && resolve(r),
-              fragment: { tag: 'test-fragment' },
-            },
-        ).open('/other').catch(reject);
+        navigation
+          .with(PageLoadParam, {
+            receiver: r => r.ok && resolve(r),
+            fragment: { tag: 'test-fragment' },
+          })
+          .open('/other')
+          .catch(reject);
       });
 
       expect(request.headers.get('Accept-Fragment')).toBe('tag=test-fragment');
@@ -293,13 +286,13 @@ describe('PageLoadParam', () => {
       result = `<div id="test-fragment">fragment content</div>`;
 
       const response = await new Promise<PageLoadResponse>((resolve, reject) => {
-        navigation.with(
-            PageLoadParam,
-            {
-              receiver: r => r.ok && resolve(r),
-              fragment: { id: 'wrong-fragment' },
-            },
-        ).open('/other').catch(reject);
+        navigation
+          .with(PageLoadParam, {
+            receiver: r => r.ok && resolve(r),
+            fragment: { id: 'wrong-fragment' },
+          })
+          .open('/other')
+          .catch(reject);
       });
 
       expect(request.headers.get('Accept-Fragment')).toBe('id=wrong-fragment');
@@ -310,22 +303,19 @@ describe('PageLoadParam', () => {
 
       let resolve1: (response: PageLoadResponse) => void;
       let resolve2: (response: PageLoadResponse) => void;
-      const promise1 = new Promise<PageLoadResponse>(resolve => resolve1 = resolve);
-      const promise2 = new Promise<PageLoadResponse>(resolve => resolve2 = resolve);
+      const promise1 = new Promise<PageLoadResponse>(resolve => (resolve1 = resolve));
+      const promise2 = new Promise<PageLoadResponse>(resolve => (resolve2 = resolve));
 
-      await navigation.with(
-          PageLoadParam,
-          {
-            receiver: r => r.ok && resolve1(r),
-            fragment: { id: 'test-fragment' },
-          },
-      ).with(
-          PageLoadParam,
-          {
-            receiver: r => r.ok && resolve2(r),
-            fragment: { tag: 'test-fragment-2' },
-          },
-      ).open('/other');
+      await navigation
+        .with(PageLoadParam, {
+          receiver: r => r.ok && resolve1(r),
+          fragment: { id: 'test-fragment' },
+        })
+        .with(PageLoadParam, {
+          receiver: r => r.ok && resolve2(r),
+          fragment: { tag: 'test-fragment-2' },
+        })
+        .open('/other');
 
       const response1 = await promise1;
       const response2 = await promise2;
@@ -345,45 +335,44 @@ describe('PageLoadParam', () => {
 
       let resolve1: (response: PageLoadResponse) => void;
       let resolve2: (response: PageLoadResponse) => void;
-      const promise1 = new Promise<PageLoadResponse>(resolve => resolve1 = resolve);
-      const promise2 = new Promise<PageLoadResponse>(resolve => resolve2 = resolve);
+      const promise1 = new Promise<PageLoadResponse>(resolve => (resolve1 = resolve));
+      const promise2 = new Promise<PageLoadResponse>(resolve => (resolve2 = resolve));
 
-      await navigation.with(
-          PageLoadParam,
-          {
-            receiver: r => r.ok && resolve1(r),
-            fragment: { id: 'test-fragment' },
-          },
-      ).with(
-          PageLoadParam,
-          {
-            receiver: r => r.ok && resolve2(r),
-          },
-      ).open('/other');
+      await navigation
+        .with(PageLoadParam, {
+          receiver: r => r.ok && resolve1(r),
+          fragment: { id: 'test-fragment' },
+        })
+        .with(PageLoadParam, {
+          receiver: r => r.ok && resolve2(r),
+        })
+        .open('/other');
 
       const response1 = await promise1;
       const response2 = await promise2;
 
       expect(request.headers.get('Accept-Fragment')).toBeNull();
-      expect(response1).toMatchObject({ ok: true, fragment: expect.objectContaining({ id: 'test-fragment' }) });
+      expect(response1).toMatchObject({
+        ok: true,
+        fragment: expect.objectContaining({ id: 'test-fragment' }),
+      });
       expect(response2).toMatchObject({ ok: true });
       expect((response2 as PageLoadResponse.Ok).fragment).toBeUndefined();
     });
     it('reports error', async () => {
-
       const error = new Error('reason');
       const reject = Promise.reject<string>(error);
 
       mockFetch.mockImplementation(() => afterThe({ ok: true, text: () => reject } as Response));
 
       const response = await new Promise<PageLoadResponse>((resolve, reject) => {
-        navigation.with(
-            PageLoadParam,
-            {
-              receiver: r => r.ok === false && resolve(r),
-              fragment: { id: 'test-fragment' },
-            },
-        ).open('/other').catch(reject);
+        navigation
+          .with(PageLoadParam, {
+            receiver: r => r.ok === false && resolve(r),
+            fragment: { id: 'test-fragment' },
+          })
+          .open('/other')
+          .catch(reject);
       });
 
       expect(response).toMatchObject({ ok: false, error });

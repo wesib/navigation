@@ -10,10 +10,10 @@ import { BootstrapContext } from '@wesib/wesib';
  * the page.
  */
 export type PageLoadURLModifier =
-/**
- * @param url - An URL of page to load.
- */
-    (this: void, url: URL) => void;
+  /**
+   * @param url - An URL of page to load.
+   */
+  (this: void, url: URL) => void;
 
 /**
  * Bootstrap context entry containing a page load URL modifier.
@@ -21,18 +21,17 @@ export type PageLoadURLModifier =
  * Does not modify URL by default.
  */
 export const PageLoadURLModifier: CxEntry<PageLoadURLModifier, PageLoadURLModifier> = {
-  perContext: (/*#__PURE__*/ cxScoped(
-      BootstrapContext,
-      (/*#__PURE__*/ cxRecent<PageLoadURLModifier>({
-        create: asis,
-        byDefault: valueProvider(noop),
-        assign: ({ get, to }) => {
+  perContext: /*#__PURE__*/ cxScoped(
+    BootstrapContext,
+    /*#__PURE__*/ cxRecent<PageLoadURLModifier>({
+      create: asis,
+      byDefault: valueProvider(noop),
+      assign: ({ get, to }) => {
+        const modifier: PageLoadURLModifier = url => get()(url);
 
-          const modifier: PageLoadURLModifier = url => get()(url);
-
-          return receiver => to((_, by) => receiver(modifier, by));
-        },
-      })),
-  )),
+        return receiver => to((_, by) => receiver(modifier, by));
+      },
+    }),
+  ),
   toString: () => '[PageLoadURLModifier]',
 };

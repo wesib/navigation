@@ -9,9 +9,15 @@ import { PageLoader } from './page-loader.impl';
 
 class PageLoadParam$ extends PageParam<void, PageLoadRequest> {
 
-  create(page: Page, request: PageLoadRequest, bsContext: BootstrapContext): PageParam.Handle<void, PageLoadRequest> {
-
-    const requests = new PageLoadRequests(bsContext.get(Navigation), cachingPageLoader(bsContext.get(PageLoader)));
+  create(
+    page: Page,
+    request: PageLoadRequest,
+    bsContext: BootstrapContext,
+  ): PageParam.Handle<void, PageLoadRequest> {
+    const requests = new PageLoadRequests(
+      bsContext.get(Navigation),
+      cachingPageLoader(bsContext.get(PageLoader)),
+    );
     const handle = requests.handle();
 
     page.put(PageLoadRequestsParam, requests);
@@ -34,4 +40,4 @@ class PageLoadParam$ extends PageParam<void, PageLoadRequest> {
  * - all added {@link PageLoadRequest.receiver response receiver}s supplies are cut off, or
  * - the entered page address is the the same one as previous one, except the hash,
  */
-export const PageLoadParam: PageParam<void, PageLoadRequest> = (/*#__PURE__*/ new PageLoadParam$());
+export const PageLoadParam: PageParam<void, PageLoadRequest> = /*#__PURE__*/ new PageLoadParam$();

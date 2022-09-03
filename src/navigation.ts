@@ -26,12 +26,12 @@ import {
 import { Page } from './page';
 import { PageParam } from './page-param';
 
-const Navigation$perContext: CxEntry.Definer<Navigation> = (/*#__PURE__*/ cxScoped(
-    BootstrapContext,
-    (/*#__PURE__*/ cxSingle({
-      byDefault: Navigation$byDefault,
-    })),
-));
+const Navigation$perContext: CxEntry.Definer<Navigation> = /*#__PURE__*/ cxScoped(
+  BootstrapContext,
+  /*#__PURE__*/ cxSingle({
+    byDefault: Navigation$byDefault,
+  }),
+);
 
 /**
  * Browser navigation service.
@@ -204,14 +204,12 @@ export abstract class Navigation implements EventSender<[NavigationEvent]>, Even
 }
 
 export namespace Navigation {
-
   /**
    * Parameterized navigation.
    *
    * Allows to assign target page parameters prior to navigating to it.
    */
   export interface Parameterized {
-
     /**
      * Applies parameter to navigation target page.
      *
@@ -268,8 +266,8 @@ export namespace Navigation {
      * @returns Either the value returned by callback, or `undefined` when navigation failed.
      */
     pretend<T>(
-        target: Navigation.Target | string | URL,
-        callback: (this: void, from: Page, to: Page) => T,
+      target: Navigation.Target | string | URL,
+      callback: (this: void, from: Page, to: Page) => T,
     ): T | undefined;
 
     /**
@@ -287,9 +285,7 @@ export namespace Navigation {
      *
      * @returns Either the value returned by callback, or `undefined` when navigation failed.
      */
-    pretend<T>(
-        callback: (this: void, from: Page, to: Page) => T,
-    ): T | undefined;
+    pretend<T>(callback: (this: void, from: Page, to: Page) => T): T | undefined;
 
     /**
      * Pretends navigation and builds navigation target.
@@ -304,10 +300,7 @@ export namespace Navigation {
      *
      * @returns Either Navigation target with URL value, or `undefined` when navigation failed.
      */
-    pretend(
-        target?: Navigation.Target | string | URL,
-    ): URLTarget | undefined;
-
+    pretend(target?: Navigation.Target | string | URL): URLTarget | undefined;
   }
 
   /**
@@ -316,7 +309,6 @@ export namespace Navigation {
    * This is passed to {@link Navigation.open} and {@link Navigation.replace} methods.
    */
   export interface Target {
-
     /**
      * A URL to update the browser location string to.
      */
@@ -331,22 +323,17 @@ export namespace Navigation {
      * New window title.
      */
     readonly title?: string | undefined;
-
   }
 
   /**
    * Navigation target with URL value.
    */
   export interface URLTarget extends Target {
-
     readonly url: URL;
-
   }
-
 }
 
 function Navigation$byDefault(target: CxEntry.Target<Navigation>): Navigation {
-
   const window = target.get(BootstrapWindow);
   const { document, history } = window;
   const dispatcher = new DomEventDispatcher(window);
@@ -359,32 +346,28 @@ function Navigation$byDefault(target: CxEntry.Target<Navigation>): Navigation {
   let next: Promise<any> = Promise.resolve();
 
   dispatcher.on<PopStateEvent>('popstate')(popState => {
-
     const entry = navHistory.popState(popState, nav);
 
     if (entry) {
-      dispatcher.dispatch(new EnterPageEvent(
-          NavigationEventType.EnterPage,
-          {
-            when: popState.state != null ? 'return' : 'enter',
-            to: entry.page,
-          },
-      ));
+      dispatcher.dispatch(
+        new EnterPageEvent(NavigationEventType.EnterPage, {
+          when: popState.state != null ? 'return' : 'enter',
+          to: entry.page,
+        }),
+      );
     }
   });
 
   dispatcher.on('hashchange')(() => {
-
     const entry = navHistory.hashChange(nav);
 
     if (entry) {
-      dispatcher.dispatch(new EnterPageEvent(
-          NavigationEventType.EnterPage,
-          {
-            when: 'enter',
-            to: entry.page,
-          },
-      ));
+      dispatcher.dispatch(
+        new EnterPageEvent(NavigationEventType.EnterPage, {
+          when: 'enter',
+          to: entry.page,
+        }),
+      );
     }
   });
 
@@ -404,13 +387,11 @@ function Navigation$byDefault(target: CxEntry.Target<Navigation>): Navigation {
       this.onLeave = dispatcher.on<LeavePageEvent>(NavigationEventType.LeavePage);
       this.onStay = dispatcher.on<StayOnPageEvent>(NavigationEventType.StayOnPage);
       this.on = onAny<[NavigationEvent]>(
-          onSupplied(this.onEnter),
-          onSupplied(this.onLeave),
-          onSupplied(this.onStay),
+        onSupplied(this.onEnter),
+        onSupplied(this.onLeave),
+        onSupplied(this.onStay),
       );
-      this.read = nav.read.do(
-          mapAfter(({ page }) => page),
-      );
+      this.read = nav.read.do(mapAfter(({ page }) => page));
     }
 
     get page(): Page {
@@ -441,7 +422,7 @@ function Navigation$byDefault(target: CxEntry.Target<Navigation>): Navigation {
       return withParam(page => page.put(ref, input));
     }
 
-  }
+}
 
   return new Navigation$();
 
@@ -457,10 +438,13 @@ function Navigation$byDefault(target: CxEntry.Target<Navigation>): Navigation {
         return navigate('pre-replace', 'replace', target, applyParams);
       },
       pretend<T>(
-          targetOrCallback?: Navigation.Target | string | URL | ((this: void, from: Page, to: Page) => T),
-          callback: (this: void, from: Page, to: Page) => T = (_from, to) => to as unknown as T,
+        targetOrCallback?:
+          | Navigation.Target
+          | string
+          | URL
+          | ((this: void, from: Page, to: Page) => T),
+        callback: (this: void, from: Page, to: Page) => T = (_from, to) => to as unknown as T,
       ): T | undefined {
-
         let target: Navigation.Target | string | URL | undefined;
 
         if (typeof targetOrCallback === 'function') {
@@ -476,8 +460,8 @@ function Navigation$byDefault(target: CxEntry.Target<Navigation>): Navigation {
 
         try {
           return applyAgent('pretend', fromEntry, navTarget, toEntry)
-              ? callback(fromEntry.page, toEntry.page)
-              : undefined;
+            ? callback(fromEntry.page, toEntry.page)
+            : undefined;
         } finally {
           toEntry.stay(nav.it.page);
         }
@@ -505,23 +489,20 @@ function Navigation$byDefault(target: CxEntry.Target<Navigation>): Navigation {
   }
 
   function navigate(
-      whenLeave: 'pre-open' | 'pre-replace',
-      when: 'open' | 'replace',
-      target?: Navigation.Target | string | URL,
-      applyParams: (page: Page) => void = noop,
+    whenLeave: 'pre-open' | 'pre-replace',
+    when: 'open' | 'replace',
+    target?: Navigation.Target | string | URL,
+    applyParams: (page: Page) => void = noop,
   ): Promise<Page | null> {
-
     const navTarget = navTargetOf(target);
-    const promise = next = next.then(doNavigate, doNavigate);
+    const promise = (next = next.then(doNavigate, doNavigate));
 
     return promise;
 
     function doNavigate(): Page | null {
-
       let toEntry: PageEntry | undefined = undefined;
 
       try {
-
         const prepared = prepare();
 
         if (!prepared) {
@@ -530,13 +511,12 @@ function Navigation$byDefault(target: CxEntry.Target<Navigation>): Navigation {
 
         toEntry = prepared;
         navHistory[when](toEntry, nav);
-        dispatcher.dispatch(new EnterPageEvent(
-            NavigationEventType.EnterPage,
-            {
-              when,
-              to: toEntry.page,
-            },
-        ));
+        dispatcher.dispatch(
+          new EnterPageEvent(NavigationEventType.EnterPage, {
+            when,
+            to: toEntry.page,
+          }),
+        );
 
         return toEntry.page;
       } catch (e) {
@@ -552,18 +532,17 @@ function Navigation$byDefault(target: CxEntry.Target<Navigation>): Navigation {
 
       const fromEntry = nav.it;
       const toEntry = newEntry(whenLeave, fromEntry, navTarget, applyParams);
-      const leavePage = new LeavePageEvent(
-          NavigationEventType.LeavePage,
-          {
-            when: whenLeave,
-            from: fromEntry.page,
-            to: toEntry.page,
-          },
-      );
+      const leavePage = new LeavePageEvent(NavigationEventType.LeavePage, {
+        when: whenLeave,
+        from: fromEntry.page,
+        to: toEntry.page,
+      });
 
-      if (!dispatcher.dispatch(leavePage)
-          || next !== promise
-          || !applyAgent(whenLeave, fromEntry, navTarget, toEntry)) {
+      if (
+        !dispatcher.dispatch(leavePage)
+        || next !== promise
+        || !applyAgent(whenLeave, fromEntry, navTarget, toEntry)
+      ) {
         return stay(toEntry);
       }
 
@@ -575,28 +554,25 @@ function Navigation$byDefault(target: CxEntry.Target<Navigation>): Navigation {
         toEntry.stay(nav.it.page);
       }
 
-      dispatcher.dispatch(new StayOnPageEvent(
-          NavigationEventType.StayOnPage,
-          {
-            from: nav.it.page,
-            to: navTarget,
-            // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
-            reason,
-          },
-      ));
+      dispatcher.dispatch(
+        new StayOnPageEvent(NavigationEventType.StayOnPage, {
+          from: nav.it.page,
+          to: navTarget,
+          // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
+          reason,
+        }),
+      );
 
       return null;
     }
-
   }
 
   function newEntry(
-      whenLeave: 'pretend' | 'pre-open' | 'pre-replace',
-      fromEntry: PageEntry,
-      navTarget: NavTarget,
-      applyParams: (page: Page) => void,
+    whenLeave: 'pretend' | 'pre-open' | 'pre-replace',
+    fromEntry: PageEntry,
+    navTarget: NavTarget,
+    applyParams: (page: Page) => void,
   ): PageEntry {
-
     const toEntry = navHistory.newEntry(navTarget);
 
     try {
@@ -611,28 +587,26 @@ function Navigation$byDefault(target: CxEntry.Target<Navigation>): Navigation {
   }
 
   function applyAgent(
-      whenLeave: 'pretend' | 'pre-open' | 'pre-replace',
-      fromEntry: PageEntry,
-      navTarget: NavTarget,
-      toEntry: PageEntry,
+    whenLeave: 'pretend' | 'pre-open' | 'pre-replace',
+    fromEntry: PageEntry,
+    navTarget: NavTarget,
+    toEntry: PageEntry,
   ): boolean {
-
     let navigated = false;
 
     agent(
-        ({ url, data, title }) => {
-          navigated = true;
-          navTarget.url = url;
-          // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
-          navTarget.data = data;
-          navTarget.title = title;
-        },
-        whenLeave,
-        fromEntry.page,
-        toEntry.page,
+      ({ url, data, title }) => {
+        navigated = true;
+        navTarget.url = url;
+        // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
+        navTarget.data = data;
+        navTarget.title = title;
+      },
+      whenLeave,
+      fromEntry.page,
+      toEntry.page,
     );
 
     return navigated;
   }
-
 }

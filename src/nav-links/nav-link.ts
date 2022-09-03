@@ -5,7 +5,6 @@ import { ComponentContext } from '@wesib/wesib';
  * Navigation link.
  */
 export interface NavLink {
-
   /**
    * An URI this navigation link refers to.
    */
@@ -26,27 +25,24 @@ export interface NavLink {
    * @returns Activation supply that deactivates the link once cut off.
    */
   activate?(): Supply;
-
 }
 
 export namespace NavLink {
-
   /**
    * Navigation link provider.
    */
   export type Provider =
-  /**
-   * @param owner - Navigation link owner.
-   *
-   * @returns Either navigation link instance, or `null`/`undefined` if there is no one.
-   */
-      (this: void, owner: Owner) => NavLink | null | undefined;
+    /**
+     * @param owner - Navigation link owner.
+     *
+     * @returns Either navigation link instance, or `null`/`undefined` if there is no one.
+     */
+    (this: void, owner: Owner) => NavLink | null | undefined;
 
   /**
    * Navigation link owner.
    */
   export interface Owner {
-
     /**
      * Owning component context.
      */
@@ -58,7 +54,5 @@ export namespace NavLink {
      * It is expected that constructed {@link NavLink.supply link supply} depends on this one.
      */
     readonly supply?: Supply | undefined;
-
   }
-
 }

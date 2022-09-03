@@ -9,12 +9,9 @@ import { PageRendererExecution } from './page-renderer';
  *
  * This is either a {@link RenderPageDef.Spec rendering specifier}, or its provider function.
  */
-export type RenderPageDef =
-    | RenderPageDef.Spec
-    | RenderDef.Provider<RenderPageDef.Spec>;
+export type RenderPageDef = RenderPageDef.Spec | RenderDef.Provider<RenderPageDef.Spec>;
 
 export namespace RenderPageDef {
-
   /**
    * Page rendering method signature.
    *
@@ -28,7 +25,6 @@ export namespace RenderPageDef {
    * Configures {@link RenderPage @RenderPage} decorator.
    */
   export interface Spec extends Omit<RenderFragmentDef.Spec, 'when' | 'on'> {
-
     /**
      * Page fragment to include.
      *
@@ -48,7 +44,5 @@ export namespace RenderPageDef {
      * @returns Content key.
      */
     contentKey?(this: void, page: Page): unknown;
-
   }
-
 }

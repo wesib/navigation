@@ -18,21 +18,17 @@ export class LocationMock {
   private _index = 0;
   private readonly stateData: [URL, any][];
 
-  constructor(
-      {
-        doc,
-        win,
-      }: {
-        doc?: Document | undefined;
-        win?: BootstrapWindow | undefined;
-      } = {},
-  ) {
-
+  constructor({
+    doc,
+    win,
+  }: {
+    doc?: Document | undefined;
+    win?: BootstrapWindow | undefined;
+  } = {}) {
     let mockWindow: MockObject<Window> | undefined;
     let down: () => void = noop;
 
     if (!win) {
-
       const eventTarget = document.body.appendChild(document.createElement('div'));
 
       mockWindow = win = {
@@ -68,7 +64,6 @@ export class LocationMock {
         return self.state();
       },
       go: jest.fn((delta: number = 1 - 1) => {
-
         const oldIndex = this._index;
 
         // eslint-disable-next-line @typescript-eslint/restrict-plus-operands
@@ -78,11 +73,17 @@ export class LocationMock {
         }
       }),
       pushState: jest.fn((newState, _title, url?: string) => {
-        this.stateData[++this._index] = [url != null ? new URL(url, this.baseURI()) : this.currentURL, newState];
+        this.stateData[++this._index] = [
+          url != null ? new URL(url, this.baseURI()) : this.currentURL,
+          newState,
+        ];
         this.stateData.length = this._index + 1;
       }),
       replaceState: jest.fn((newState, _title, url?: string) => {
-        this.stateData[this._index] = [url != null ? new URL(url, this.baseURI()) : this.currentURL, newState];
+        this.stateData[this._index] = [
+          url != null ? new URL(url, this.baseURI()) : this.currentURL,
+          newState,
+        ];
       }),
     } as any;
     this.baseURI = jest.fn(() => 'http://localhost');
@@ -103,8 +104,12 @@ export class LocationMock {
     } else {
       this.window = win as MockObject<BootstrapWindow>;
 
-      const locationSpy = jest.spyOn(this.window, 'location', 'get').mockImplementation(() => this.location);
-      const historySpy = jest.spyOn(this.window, 'history', 'get').mockImplementation(() => this.history);
+      const locationSpy = jest
+        .spyOn(this.window, 'location', 'get')
+        .mockImplementation(() => this.location);
+      const historySpy = jest
+        .spyOn(this.window, 'history', 'get')
+        .mockImplementation(() => this.history);
 
       down = () => {
         locationSpy.mockReset();
@@ -131,8 +136,10 @@ export class LocationMock {
     this.stateData[index][1] = state;
   }
 
-  enter(hash: string, events: readonly ('hashchange' | 'popstate')[] = ['hashchange', 'popstate']): void {
-
+  enter(
+    hash: string,
+    events: readonly ('hashchange' | 'popstate')[] = ['hashchange', 'popstate'],
+  ): void {
     const oldURL = this.currentURL;
     const newURL = new URL(hash, oldURL);
 
@@ -140,27 +147,27 @@ export class LocationMock {
     this.stateData.length = this._index + 1;
     for (const event of events) {
       switch (event) {
-      case 'popstate':
-        this.window.dispatchEvent(new PopStateEvent('popstate', { state: null }));
+        case 'popstate':
+          this.window.dispatchEvent(new PopStateEvent('popstate', { state: null }));
 
-        break;
-      case 'hashchange':
-        this.window.dispatchEvent(new HashChangeEvent('hashchange', { newURL: newURL.href, oldURL: oldURL.href }));
+          break;
+        case 'hashchange':
+          this.window.dispatchEvent(
+            new HashChangeEvent('hashchange', { newURL: newURL.href, oldURL: oldURL.href }),
+          );
 
-        break;
+          break;
       }
     }
   }
 
 }
 
-export function navHistoryState(
-    {
-      id = expect.anything() as any,
-      uid = expect.anything() as any,
-      data,
-    }: Partial<PartialNavData>,
-): NavDataEnvelope {
+export function navHistoryState({
+  id = expect.anything() as any,
+  uid = expect.anything() as any,
+  data,
+}: Partial<PartialNavData>): NavDataEnvelope {
   return {
     [NAV_DATA_KEY]: {
       uid,

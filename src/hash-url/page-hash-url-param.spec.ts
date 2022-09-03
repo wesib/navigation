@@ -8,7 +8,6 @@ import { PageHashURLParam } from './page-hash-url-param';
 import { PageHashURLSupport } from './page-hash-url-support.feature';
 
 describe('PageHashURLParam', () => {
-
   let locationMock: LocationMock;
 
   beforeEach(() => {
@@ -30,33 +29,29 @@ describe('PageHashURLParam', () => {
         setup.provide(cxConstAsset(BootstrapWindow, locationMock.window));
       },
     })
-    class TestFeature {
-    }
+    class TestFeature {}
 
     context = await bootstrapComponents(TestFeature).whenReady;
     navigation = context.get(Navigation);
-    navigation.read(p => page = p);
+    navigation.read(p => (page = p));
   });
 
   it('is equal to page URL initially', () => {
     expect(page.get(PageHashURLParam).href).toBe(new URL(page.url.origin).href);
   });
   it('replaces target page URL hash', async () => {
-
     const target = await navigation.with(PageHashURLParam, '/hash-path').open('/other#hash');
 
     expect(target!.url.href).toBe('http://localhost/other#/hash-path');
     expect(target!.get(PageHashURLParam).href).toBe(new URL('/hash-path', page.url.origin).href);
   });
   it('does not alter target page URL', async () => {
-
     const target = await navigation.open('/other#hash');
 
     expect(target!.url.href).toBe('http://localhost/other#hash');
     expect(target!.get(PageHashURLParam).href).toBe(new URL('/hash', page.url.origin).href);
   });
   it('does not alter target page URL when set to `null`', async () => {
-
     const target = await navigation.with(PageHashURLParam, null).open('/other#hash');
 
     expect(target!.url.href).toBe('http://localhost/other#hash');

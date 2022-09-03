@@ -11,7 +11,6 @@ import { PageLoadParam } from './page-load-param';
 import { PageLoadSupport } from './page-load-support.feature';
 
 describe('pageStyleAgent', () => {
-
   let doc: Document;
   let locationMock: LocationMock;
 
@@ -37,10 +36,10 @@ describe('pageStyleAgent', () => {
   beforeEach(async () => {
     responseHtml = '<html></html>';
     mockFetch = jest.fn((_input, _init?) => afterThe({
-      ok: true,
-      headers: new Headers(),
-      text: () => Promise.resolve(responseHtml),
-    } as Response));
+        ok: true,
+        headers: new Headers(),
+        text: () => Promise.resolve(responseHtml),
+      } as Response));
 
     @Feature({
       needs: PageLoadSupport,
@@ -175,7 +174,6 @@ describe('pageStyleAgent', () => {
   });
 
   function appendStyle(href: string, parent: Node = doc.head): void {
-
     const link = doc.createElement('link');
 
     link.href = href;

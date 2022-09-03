@@ -9,14 +9,12 @@ import { Navigation } from '../navigation';
 import { NavLink } from './nav-link';
 
 export namespace NavElement {
-
   /**
    * Navigation element construction options.
    *
    * @typeParam TElement - Navigation element type.
    */
   export interface Options<TElement extends Element> {
-
     /**
      * Type or types of events to handle.
      *
@@ -44,9 +42,7 @@ export namespace NavElement {
      * @returns Navigation URI.
      */
     href(element: TElement): string;
-
   }
-
 }
 
 const NavElement$activeClass: QualifiedName = ['active', Wesib__NS];
@@ -61,10 +57,8 @@ const NavElement$activeClass: QualifiedName = ['active', Wesib__NS];
  * @returns Navigation link provider.
  */
 export function navElement<TElement extends Element>(
-    element:
-        | TElement
-        | ((this: void, owner: NavLink.Owner) => TElement),
-    options: NavElement.Options<TElement>,
+  element: TElement | ((this: void, owner: NavLink.Owner) => TElement),
+  options: NavElement.Options<TElement>,
 ): (this: void, owner: NavLink.Owner) => NavLink;
 
 /**
@@ -78,30 +72,28 @@ export function navElement<TElement extends Element>(
  * @returns Navigation link provider.
  */
 export function navElement<TElement extends Element>(
-    element:
-        | TElement
-        | ((this: void, owner: NavLink.Owner) => TElement | null | undefined)
-        | null
-        | undefined,
-    options: NavElement.Options<TElement>,
+  element:
+    | TElement
+    | ((this: void, owner: NavLink.Owner) => TElement | null | undefined)
+    | null
+    | undefined,
+  options: NavElement.Options<TElement>,
 ): NavLink.Provider;
 
 export function navElement<TElement extends Element>(
-    element:
-        | TElement
-        | ((this: void, owner: NavLink.Owner) => TElement | null | undefined)
-        | null
-        | undefined,
-    options: NavElement.Options<TElement>,
+  element:
+    | TElement
+    | ((this: void, owner: NavLink.Owner) => TElement | null | undefined)
+    | null
+    | undefined,
+  options: NavElement.Options<TElement>,
 ): NavLink.Provider {
-
   const getHref = options.href.bind(options);
   const events = setOfElements(options.event || 'click');
   const { active = NavElement$activeClass } = options;
   let activeClass: string;
 
   return owner => {
-
     const anchor = valueByRecipe(element, owner);
 
     if (!anchor) {
@@ -119,7 +111,6 @@ export function navElement<TElement extends Element>(
     const handleClick: EventReceiver<[Event]> = {
       supply,
       receive(_ctx, event) {
-
         const href = getHref(anchor);
         const pageURL = navigation.page.url;
         const url = new URL(href, anchor.ownerDocument.baseURI);
@@ -141,18 +132,13 @@ export function navElement<TElement extends Element>(
       eventDispatcher.on(event)(handleClick);
     }
 
-    const css = drekCssClassesOf(anchor)
-        .renderIn(
-            deriveDrekContext(
-                drekContextOf(anchor),
-                {
-                  scheduler: _opts => schedule,
-                },
-            ),
-        );
+    const css = drekCssClassesOf(anchor).renderIn(
+      deriveDrekContext(drekContextOf(anchor), {
+        scheduler: _opts => schedule,
+      }),
+    );
 
-    return ({
-
+    return {
       get href(): string {
         return getHref(anchor);
       },
@@ -162,7 +148,6 @@ export function navElement<TElement extends Element>(
       activate() {
         return css.add(activeClass);
       },
-
-    });
+    };
   };
 }

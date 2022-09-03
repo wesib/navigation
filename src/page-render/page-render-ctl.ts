@@ -19,7 +19,6 @@ import { RenderPageDef } from './render-page-def';
  * Available in component context.
  */
 export interface PageRenderCtl {
-
   /**
    * Enables loaded page rendering by the given `renderer`.
    *
@@ -32,26 +31,23 @@ export interface PageRenderCtl {
    * @returns Renderer supply. The rendering would stop once this supply is cut off.
    */
   renderPageBy(renderer: PageRenderer, def?: RenderPageDef): Supply;
-
 }
 
 /**
  * Component context entry containing {@link PageRenderCtl page render control}.
  */
 export const PageRenderCtl: CxEntry<PageRenderCtl> = {
-  perContext: (/*#__PURE__*/ cxSingle({
+  perContext: /*#__PURE__*/ cxSingle({
     byDefault: target => new PageRenderCtl$(target.get(ComponentContext)),
-  })),
+  }),
   toString: () => '[PageRenderCtl]',
 };
 
 class PageRenderCtl$ implements PageRenderCtl {
 
-  constructor(private readonly _context: ComponentContext) {
-  }
+  constructor(private readonly _context: ComponentContext) {}
 
   renderPageBy(renderer: PageRenderer, def: RenderPageDef = {}): Supply {
-
     const spec = valueByRecipe(def, this._context);
     const { contentKey = RenderPage$contentKey$default } = spec;
     const detectFragment = RenderPage$fragmentDetector(spec);
@@ -62,67 +58,62 @@ class PageRenderCtl$ implements PageRenderCtl {
     let lastPageKey: string;
     const responseTracker = trackValue<[PageLoadResponse, string]>();
     const handleResponse = (response: PageLoadResponse): void => {
-
       const pageKey = contentKey(response.page) as string;
 
       if (pageKey === lastPageKey) {
-        return;// Only hash changed? Do not refresh the page.
+        return; // Only hash changed? Do not refresh the page.
       }
 
       responseTracker.it = [response, pageKey];
     };
     const supply = renderCtl.renderFragmentBy(
-        fragExec => {
+      fragExec => {
+        const responseAndKey = responseTracker.it;
 
-          const responseAndKey = responseTracker.it;
+        if (!responseAndKey) {
+          fragExec.retainContent();
 
-          if (!responseAndKey) {
-            fragExec.retainContent();
+          return;
+        }
 
-            return;
+        const [response, pageKey] = responseAndKey;
+        const exec: PageRendererExecution = {
+          ...fragExec,
+          postpone(postponed) {
+            fragExec.postpone(() => postponed(exec));
+          },
+          response,
+        };
+
+        if (response.ok) {
+          lastPageKey = pageKey;
+
+          const { fragment } = response;
+
+          if (fragment) {
+            importNodeContent(fragment, fragExec.content);
           }
+        }
 
-          const [response, pageKey] = responseAndKey;
-          const exec: PageRendererExecution = {
-            ...fragExec,
-            postpone(postponed) {
-              fragExec.postpone(() => postponed(exec));
-            },
-            response,
-          };
-
-          if (response.ok) {
-            lastPageKey = pageKey;
-
-            const { fragment } = response;
-
-            if (fragment) {
-              importNodeContent(fragment, fragExec.content);
-            }
-          }
-
-          renderer(exec);
-        },
-        {
-          ...spec,
-          when: 'connected',
-          on: responseTracker.on,
-        },
+        renderer(exec);
+      },
+      {
+        ...spec,
+        when: 'connected',
+        on: responseTracker.on,
+      },
     );
 
     this._context.whenConnected(context => {
       lastPageKey = contentKey(navigation.page) as string;
       navigation.read.do(onceAfter)(page => {
-        page.put(
-            PageLoadParam,
-            {
-              fragment: detectFragment(context),
-              receiver: {
-                supply: new Supply().needs(supply),
-                receive: (_ctx, response) => handleResponse(response),
-              },
-            },
-        );
+        page.put(PageLoadParam, {
+          fragment: detectFragment(context),
+          receiver: {
+            supply: new Supply().needs(supply),
+            receive: (_ctx, response) => handleResponse(response),
+          },
+        });
       });
     });
 
@@ -131,20 +122,14 @@ class PageRenderCtl$ implements PageRenderCtl {
 
 }
 
-function RenderPage$fragmentDetector(
-    { fragment }: RenderPageDef.Spec,
-): (context: ComponentContext) => PageFragmentRequest {
+function RenderPage$fragmentDetector({
+  fragment,
+}: RenderPageDef.Spec): (context: ComponentContext) => PageFragmentRequest {
   if (fragment) {
     return _context => fragment;
   }
 
-  return ({
-    element: { id, tagName },
-  }: {
-    element: Element;
-  }) => id
-      ? { id }
-      : { tag: tagName.toLowerCase() };
+  return ({ element: { id, tagName } }: { element: Element }) => id ? { id } : { tag: tagName.toLowerCase() };
 }
 
 function RenderPage$contentKey$default({ url }: Page): string {

@@ -1,4 +1,11 @@
-import { afterAll, AfterEvent, afterThe, isAfterEvent, trackValue, translateAfter_ } from '@proc7ts/fun-events';
+import {
+  afterAll,
+  AfterEvent,
+  afterThe,
+  isAfterEvent,
+  trackValue,
+  translateAfter_,
+} from '@proc7ts/fun-events';
 import { noop, valueByRecipe } from '@proc7ts/primitives';
 import { Supply, SupplyPeer } from '@proc7ts/supply';
 import { BootstrapWindow, ComponentContext } from '@wesib/wesib';
@@ -7,7 +14,7 @@ import { Navigation } from '../navigation';
 import { Page } from '../page';
 import { NavLink } from './nav-link';
 
-const NavMenu$Links__symbol = (/*#__PURE__*/ Symbol('NavMenu.links'));
+const NavMenu$Links__symbol = /*#__PURE__*/ Symbol('NavMenu.links');
 
 /**
  * Navigation menu.
@@ -38,13 +45,15 @@ export class NavMenu implements SupplyPeer {
    * @param options - Additional options.
    */
   constructor(
-      links:
-          | Iterable<NavLink | NavLink.Provider>
-          | AfterEvent<(NavLink | NavLink.Provider)[]>
-          | ((this: void, context: ComponentContext, menu: NavMenu) =>
-          | Iterable<NavLink | NavLink.Provider>
-          | AfterEvent<(NavLink | NavLink.Provider)[]>),
-      options?: NavMenu.Options,
+    links:
+      | Iterable<NavLink | NavLink.Provider>
+      | AfterEvent<(NavLink | NavLink.Provider)[]>
+      | ((
+          this: void,
+          context: ComponentContext,
+          menu: NavMenu,
+        ) => Iterable<NavLink | NavLink.Provider> | AfterEvent<(NavLink | NavLink.Provider)[]>),
+    options?: NavMenu.Options,
   ) {
     this[NavMenu$Links__symbol] = new NavMenu$Links(this, links, options);
   }
@@ -67,12 +76,10 @@ export class NavMenu implements SupplyPeer {
 }
 
 export namespace NavMenu {
-
   /**
    * Navigation menu options.
    */
   export interface Options {
-
     /**
      * Whether to activate navigation links.
      *
@@ -105,22 +112,18 @@ export namespace NavMenu {
      *
      * @returns Navigation link weight. Non-positive wight means the page URL doesn't match the link at all.
      */
-    weigh?(
-        {
-          link,
-          menu,
-          context,
-          page,
-        }: {
-          link: NavLink;
-          menu: NavMenu;
-          context: ComponentContext;
-          page: Page;
-        },
-    ): number;
-
+    weigh?({
+      link,
+      menu,
+      context,
+      page,
+    }: {
+      link: NavLink;
+      menu: NavMenu;
+      context: ComponentContext;
+      page: Page;
+    }): number;
   }
-
 }
 
 class NavMenu$Links {
@@ -132,14 +135,16 @@ class NavMenu$Links {
   private readonly _weigh: typeof defaultNavLinkWeight;
 
   constructor(
-      private readonly _menu: NavMenu,
-      private readonly _navLinks:
-          | Iterable<NavLink | NavLink.Provider>
-          | AfterEvent<(NavLink | NavLink.Provider)[]>
-          | ((this: void, context: ComponentContext, menu: NavMenu) =>
-          | Iterable<NavLink | NavLink.Provider>
-          | AfterEvent<(NavLink | NavLink.Provider)[]>),
-      options: NavMenu.Options = {},
+    private readonly _menu: NavMenu,
+    private readonly _navLinks:
+      | Iterable<NavLink | NavLink.Provider>
+      | AfterEvent<(NavLink | NavLink.Provider)[]>
+      | ((
+          this: void,
+          context: ComponentContext,
+          menu: NavMenu,
+        ) => Iterable<NavLink | NavLink.Provider> | AfterEvent<(NavLink | NavLink.Provider)[]>),
+    options: NavMenu.Options = {},
   ) {
     this.supply = new Supply().cuts(this._links);
 
@@ -152,20 +157,16 @@ class NavMenu$Links {
   bindTo(context: ComponentContext): void {
     this.bindTo = noop;
     context.whenConnected(context => {
-
       let afterLinks: AfterEvent<(NavLink | NavLink.Provider)[]>;
 
       if (isAfterEvent(this._navLinks)) {
         afterLinks = this._navLinks;
       } else {
-
         const linkValues = valueByRecipe(this._navLinks, context, this._menu);
 
         afterLinks = isAfterEvent(linkValues)
-            ? linkValues
-            : afterThe(linkValues).do(
-                translateAfter_((send, links) => send(...links)),
-            );
+          ? linkValues
+          : afterThe(linkValues).do(translateAfter_((send, links) => send(...links)));
       }
 
       const owner: NavLink.Owner = {
@@ -178,16 +179,12 @@ class NavMenu$Links {
       });
 
       if (this._activate) {
-
         const navigation = context.get(Navigation);
 
         afterAll({
           page: navigation,
           links: this._links,
-        })(({
-          page: [page],
-          links: [[links]],
-        }) => {
+        })(({ page: [page], links: [[links]] }) => {
           this._updateActive(context, page, links);
         });
       }
@@ -195,14 +192,12 @@ class NavMenu$Links {
   }
 
   private _replace(
-      owner: NavLink.Owner,
-      replacement: readonly (NavLink | NavLink.Provider)[],
+    owner: NavLink.Owner,
+    replacement: readonly (NavLink | NavLink.Provider)[],
   ): void {
-
     const toAdd = new Set<NavLink>();
 
     for (const linkOrProvider of replacement) {
-
       const link = valueByRecipe(linkOrProvider, owner);
 
       if (link) {
@@ -226,7 +221,6 @@ class NavMenu$Links {
         removed.supply?.off();
       }
       for (const added of toAdd) {
-
         const { supply } = added;
 
         if (supply) {
@@ -253,7 +247,6 @@ class NavMenu$Links {
   }
 
   private _updateActive(context: ComponentContext, page: Page, links: Set<NavLink>): void {
-
     const toDeactivate: NavLink[] = [];
     const toActivate = this._selectActive(context, page, links);
 
@@ -268,21 +261,16 @@ class NavMenu$Links {
     }
     for (const activated of toActivate) {
       if (activated.activate) {
-        this._active.set(
-            activated,
-            activated.activate(),
-        );
+        this._active.set(activated, activated.activate());
       }
     }
   }
 
   private _selectActive(context: ComponentContext, page: Page, links: Set<NavLink>): Set<NavLink> {
-
     let maxWeight = 0;
     let active = new Set<NavLink>();
 
     for (const link of links) {
-
       const weight = this._weigh({ link, menu: this._menu, context, page });
 
       if (weight > maxWeight) {
@@ -297,7 +285,6 @@ class NavMenu$Links {
   }
 
   private _deactivate(link: NavLink): void {
-
     const supply = this._active.get(link);
 
     if (supply) {
@@ -308,19 +295,16 @@ class NavMenu$Links {
 
 }
 
-function defaultNavLinkWeight(
-    {
-      link,
-      context,
-      page,
-    }: {
-      link: NavLink;
-      menu: NavMenu;
-      context: ComponentContext;
-      page: Page;
-    },
-): number {
-
+function defaultNavLinkWeight({
+  link,
+  context,
+  page,
+}: {
+  link: NavLink;
+  menu: NavMenu;
+  context: ComponentContext;
+  page: Page;
+}): number {
   const href = link.href;
   const linkURL = new URL(href, context.get(BootstrapWindow).document.baseURI);
 
@@ -347,9 +331,11 @@ function calcNavLinkWeight(linkURL: URL, pageURL: URL): number {
       return -1;
     }
 
-    return linkURL.pathname.length
-        + searchParamWeight
-        + calcNavLinkWeight(getHashURL(linkURL), getHashURL(pageURL));
+    return (
+      linkURL.pathname.length
+      + searchParamWeight
+      + calcNavLinkWeight(getHashURL(linkURL), getHashURL(pageURL))
+    );
   }
 
   const searchParamWeight = navLinkSearchParamsWeight(linkURL, pageURL);
@@ -373,17 +359,15 @@ function calcNavLinkWeight(linkURL: URL, pageURL: URL): number {
 }
 
 function navLinkPath2dir(url: URL): string {
-
   const path = url.pathname;
 
   return path.endsWith('/') ? path : path + '/';
 }
 
 function navLinkSearchParamsWeight(
-    { searchParams: linkParams }: URL,
-    { searchParams: pageParams }: URL,
+  { searchParams: linkParams }: URL,
+  { searchParams: pageParams }: URL,
 ): number {
-
   let weight = 0;
 
   linkParams.forEach((value, key) => {

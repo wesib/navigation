@@ -6,7 +6,6 @@ import { PageLoadAgent } from './page-load-agent';
 import { PageLoadResponse } from './page-load-response';
 
 describe('PageLoadAgent', () => {
-
   let cxBuilder: CxBuilder;
   let agent: PageLoadAgent;
 
@@ -33,7 +32,6 @@ describe('PageLoadAgent', () => {
     expect(cxBuilder.get(PageLoadAgent, { or: null })).toBeNull();
   });
   it('calls the registered agent', async () => {
-
     const emitter2 = new EventEmitter<[PageLoadResponse]>();
     const mockAgent = jest.fn(() => emitter2.on);
 
@@ -56,10 +54,7 @@ describe('PageLoadAgent', () => {
     expect(mockLoad).toHaveBeenCalledWith(request);
   });
   it('calls the next agent in chain by calling `next`', () => {
-
-    const mockAgent: Mock<PageLoadAgent> = jest.fn(
-        (next, _request) => next(),
-    );
+    const mockAgent: Mock<PageLoadAgent> = jest.fn((next, _request) => next());
 
     cxBuilder.provide(cxConstAsset(PageLoadAgent, next => next()));
     cxBuilder.provide(cxConstAsset(PageLoadAgent, mockAgent));

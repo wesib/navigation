@@ -12,7 +12,6 @@ import { LocationMock, navHistoryState } from './spec/location-mock';
 import { testPageParam, testPageParamHandle } from './spec/test-page-param';
 
 describe('NavHistory', () => {
-
   let locationMock: LocationMock;
 
   beforeEach(() => {
@@ -25,7 +24,6 @@ describe('NavHistory', () => {
   let navigation: Navigation;
 
   beforeEach(async () => {
-
     @Feature({
       setup(setup) {
         setup.provide(cxConstAsset(BootstrapWindow, locationMock.window));
@@ -34,7 +32,6 @@ describe('NavHistory', () => {
     class TestFeature {}
 
     const bsContext = await new Promise<BootstrapContext>(resolve => {
-
       const ctx = bootstrapComponents(TestFeature);
 
       ctx.whenReady(() => resolve(ctx));
@@ -46,7 +43,7 @@ describe('NavHistory', () => {
   let page: Page;
 
   beforeEach(() => {
-    navigation.read(p => page = p);
+    navigation.read(p => (page = p));
   });
 
   let handle: MockObject<PageParam.Handle<string, string>>;
@@ -78,27 +75,25 @@ describe('NavHistory', () => {
   describe('LeavePageEvent', () => {
     describe('to.put', () => {
       it('makes parameter available in future route', async () => {
-
         const promise = new Promise<string | undefined>(resolve => navigation.on.do(onceOn)(event => {
-          if (event.when === 'pre-open') {
-            event.to.put(param, 'init');
-            resolve(event.to.get(param));
-          }
-        }));
+            if (event.when === 'pre-open') {
+              event.to.put(param, 'init');
+              resolve(event.to.get(param));
+            }
+          }));
 
         await navigation.open('/other');
 
         expect(await promise).toBe('init');
       });
       it('makes parameter available in navigated route', async () => {
-
         const promise = new Promise<string | undefined>(resolve => navigation.on(event => {
-          if (event.when === 'pre-open') {
-            event.to.put(param, 'init');
-          } else if (event.when === 'open') {
-            resolve(event.to.get(param));
-          }
-        }));
+            if (event.when === 'pre-open') {
+              event.to.put(param, 'init');
+            } else if (event.when === 'open') {
+              resolve(event.to.get(param));
+            }
+          }));
 
         await navigation.open('/other');
 
@@ -113,7 +108,6 @@ describe('NavHistory', () => {
         expect(handle.put).toHaveBeenCalledTimes(1);
       });
       it('updates history data', async () => {
-
         const data = { some: 'test' };
 
         await navigation.with(param, 'init').with(param, 'new').open({ url: '/other', data });
@@ -158,7 +152,6 @@ describe('NavHistory', () => {
       expect(handle.forget).toHaveBeenCalledTimes(1);
     });
     it('transfers parameters', async () => {
-
       const handle2 = testPageParamHandle({ value: '2' });
 
       page.put(param, '1');
@@ -226,7 +219,6 @@ describe('NavHistory', () => {
       expect(handle.forget).not.toHaveBeenCalled();
     });
     it('transfers parameters', async () => {
-
       const handle2 = testPageParamHandle({ value: '2' });
 
       page.put(param, '1');
@@ -241,7 +233,6 @@ describe('NavHistory', () => {
 
   describe('update', () => {
     it('replaces current page URL', () => {
-
       const updated = navigation.update('other');
 
       expect(updated.url.href).toBe('http://localhost/other');
@@ -250,8 +241,11 @@ describe('NavHistory', () => {
     it('replaces current page state', () => {
       navigation.update('other');
       expect(page.data).toBe('initial');
-      expect(locationMock.history.replaceState)
-          .toHaveBeenCalledWith(navHistoryState({ data: 'initial' }), '', 'http://localhost/other');
+      expect(locationMock.history.replaceState).toHaveBeenCalledWith(
+        navHistoryState({ data: 'initial' }),
+        '',
+        'http://localhost/other',
+      );
     });
     it('retains page parameters', () => {
       page.put(param, '2');
@@ -286,11 +280,13 @@ describe('NavHistory', () => {
     it('assigns new state', () => {
       locationMock.history.replaceState.mockClear();
       locationMock.enter('#newhash', events);
-      expect(locationMock.history.replaceState).toHaveBeenCalledWith(navHistoryState({ data: null }), '');
+      expect(locationMock.history.replaceState).toHaveBeenCalledWith(
+        navHistoryState({ data: null }),
+        '',
+      );
       expect(locationMock.history.replaceState).toHaveBeenCalledTimes(1);
     });
     it('transfers params to new page', () => {
-
       const handle2 = testPageParamHandle({ value: '2' });
 
       page.put(param, '1');
@@ -357,10 +353,12 @@ describe('NavHistory', () => {
 
         expect(page.url.href).toBe('http://localhost/index');
         expect(page.data).toBe('another');
-        expect(locationMock.history.replaceState).toHaveBeenCalledWith(navHistoryState({ data: 'another' }), '');
+        expect(locationMock.history.replaceState).toHaveBeenCalledWith(
+          navHistoryState({ data: 'another' }),
+          '',
+        );
       });
       it('transfers back page parameters', async () => {
-
         const idx = locationMock.history.length - 1;
         const handle2 = testPageParamHandle({ value: '2' });
 

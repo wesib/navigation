@@ -14,7 +14,6 @@ import { NavLink } from './nav-link';
 import { NavMenu } from './nav-menu';
 
 describe('NavMenu', () => {
-
   let locationMock: LocationMock;
 
   beforeEach(() => {
@@ -45,7 +44,6 @@ describe('NavMenu', () => {
   });
 
   it('is constructed by links provider function', () => {
-
     const link1 = testLink('index/path');
     const link2 = testLink('index');
     const link3 = testLink('other');
@@ -57,7 +55,6 @@ describe('NavMenu', () => {
     expect(link3.activate).not.toHaveBeenCalled();
   });
   it('is constructed by empty links provider function', () => {
-
     const link1 = testLink('index/path');
     const link2 = testLink('index');
     const link3 = testLink('other');
@@ -69,7 +66,6 @@ describe('NavMenu', () => {
     expect(link3.activate).not.toHaveBeenCalled();
   });
   it('supports non-activatable links', async () => {
-
     const link1 = testLink('index/path');
     const link2: NavLink = {
       href: 'index',
@@ -78,9 +74,7 @@ describe('NavMenu', () => {
 
     const links = trackValue<NavLink[]>([link1, link2, link3]);
 
-    new NavMenu(links.read.do(
-        translateAfter_((send, links) => send(...links)),
-    )).bindTo(context);
+    new NavMenu(links.read.do(translateAfter_((send, links) => send(...links)))).bindTo(context);
 
     expect(link1.activate).not.toHaveBeenCalled();
     expect(link3.activate).not.toHaveBeenCalled();
@@ -96,7 +90,6 @@ describe('NavMenu', () => {
     expect(lastActivation(link1).isOff).toBe(true);
   });
   it('does not accept disabled nav link', () => {
-
     const link1 = testLink('index/path');
     const link2 = testLink('index');
     const link3 = testLink('other');
@@ -109,7 +102,6 @@ describe('NavMenu', () => {
     expect(link3.activate).not.toHaveBeenCalled();
   });
   it('removes disabled nav link', () => {
-
     const link1 = testLink('index/path');
     const link2 = testLink('index');
     const link3 = testLink('other');
@@ -124,7 +116,6 @@ describe('NavMenu', () => {
     expect(lastActivation(link2).isOff).toBe(true);
   });
   it('allows to disable nav links activation', () => {
-
     const link1 = testLink('index/path');
     const link2 = testLink('index');
     const link3 = testLink('other');
@@ -138,7 +129,6 @@ describe('NavMenu', () => {
 
   describe('supply', () => {
     it('disables nav links', () => {
-
       const link1 = testLink('index/path');
       const link2 = testLink('index');
       const link3 = testLink('other');
@@ -152,7 +142,6 @@ describe('NavMenu', () => {
   });
 
   describe('activation by path', () => {
-
     let link1: MockObject<Required<NavLink>>;
     let link2: MockObject<Required<NavLink>>;
     let link3: MockObject<Required<NavLink>>;
@@ -226,12 +215,9 @@ describe('NavMenu', () => {
       expect(link2.activate).not.toHaveBeenCalled();
     });
     it('moves active nav link after removing active one', async () => {
-
       const links = trackValue<NavLink[]>([link1, link2, link3]);
 
-      new NavMenu(links.read.do(
-          translateAfter_((send, links) => send(...links)),
-      )).bindTo(context);
+      new NavMenu(links.read.do(translateAfter_((send, links) => send(...links)))).bindTo(context);
 
       const navigation = context.get(Navigation);
 
@@ -247,12 +233,9 @@ describe('NavMenu', () => {
       expect(lastActivation(link2).isOff).toBe(false);
     });
     it('moves active nav link after adding more suitable one', async () => {
-
       const links = trackValue<NavLink[]>([link1, link2, link3]);
 
-      new NavMenu(links.read.do(
-          translateAfter_((send, links) => send(...links)),
-      )).bindTo(context);
+      new NavMenu(links.read.do(translateAfter_((send, links) => send(...links)))).bindTo(context);
 
       const navigation = context.get(Navigation);
 
@@ -270,12 +253,9 @@ describe('NavMenu', () => {
       expect(lastActivation(link4).isOff).toBe(false);
     });
     it('does not move active nav link after adding less suitable one', async () => {
-
       const links = trackValue<NavLink[]>([link1, link2, link3]);
 
-      new NavMenu(links.read.do(
-          translateAfter_((send, links) => send(...links)),
-      )).bindTo(context);
+      new NavMenu(links.read.do(translateAfter_((send, links) => send(...links)))).bindTo(context);
 
       const navigation = context.get(Navigation);
 
@@ -292,12 +272,9 @@ describe('NavMenu', () => {
       expect(lastActivation(link2).isOff).toBe(false);
     });
     it('does not move active nav link if links did not updated', () => {
-
       const links = trackValue<NavLink[]>([link1, link2, link3]);
 
-      new NavMenu(links.read.do(
-          translateAfter_((send, links) => send(...links)),
-      )).bindTo(context);
+      new NavMenu(links.read.do(translateAfter_((send, links) => send(...links)))).bindTo(context);
 
       links.it = [link1, link2, link3];
 
@@ -309,7 +286,6 @@ describe('NavMenu', () => {
   });
 
   describe('activation by search parameters', () => {
-
     let link1: MockObject<Required<NavLink>>;
     let link2: MockObject<Required<NavLink>>;
     let link3: MockObject<Required<NavLink>>;
@@ -398,7 +374,6 @@ describe('NavMenu', () => {
   });
 
   describe('activation by hash parameters', () => {
-
     let link1: MockObject<Required<NavLink>>;
     let link2: MockObject<Required<NavLink>>;
     let link3: MockObject<Required<NavLink>>;
@@ -473,7 +448,6 @@ describe('NavMenu', () => {
   });
 
   describe('activation with custom weighing', () => {
-
     let link1: MockObject<Required<NavLink>>;
     let link2: MockObject<Required<NavLink>>;
     let link3: MockObject<Required<NavLink>>;
@@ -483,7 +457,7 @@ describe('NavMenu', () => {
       link1 = testLink('1');
       link2 = testLink('2');
       link3 = testLink('3');
-      weigh = jest.fn(({ link: { href } }) => href.includes('2') ? 1 : 0);
+      weigh = jest.fn(({ link: { href } }) => (href.includes('2') ? 1 : 0));
     });
 
     it('activates nav link with highest weights', () => {
@@ -504,7 +478,6 @@ describe('NavMenu', () => {
   }
 
   function lastActivation(link: MockObject<Required<NavLink>>): Supply {
-
     const results = link.activate.mock.results;
 
     return results[results.length - 1].value as Supply;

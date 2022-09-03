@@ -6,24 +6,20 @@ import { NavLink } from './nav-link';
 type GenericElement = Element;
 
 export namespace NavAnchor {
-
   /**
    * Anchor element.
    */
   export interface Element extends GenericElement {
-
     /**
      * Hyper-reference of this anchor.
      */
     readonly href: string;
-
   }
 
   /**
    * Navigation anchor construction options.
    */
   export interface Options {
-
     /**
      * Type or types of events to handle.
      *
@@ -42,9 +38,7 @@ export namespace NavAnchor {
      * Rendering definition options to pass to nav links render scheduler.
      */
     readonly render?: RenderDef.Options | undefined;
-
   }
-
 }
 
 /**
@@ -56,10 +50,8 @@ export namespace NavAnchor {
  * @returns Navigation link provider.
  */
 export function navAnchor(
-    element:
-        | NavAnchor.Element
-        | ((this: void, owner: NavLink.Owner) => NavAnchor.Element),
-    options?: NavAnchor.Options,
+  element: NavAnchor.Element | ((this: void, owner: NavLink.Owner) => NavAnchor.Element),
+  options?: NavAnchor.Options,
 ): (this: void, owner: NavLink.Owner) => NavLink;
 
 /**
@@ -72,29 +64,26 @@ export function navAnchor(
  * @returns Navigation link provider.
  */
 export function navAnchor(
-    element:
-        | NavAnchor.Element
-        | ((this: void, owner: NavLink.Owner) => NavAnchor.Element | null | undefined)
-        | null
-        | undefined,
-    options?: NavAnchor.Options,
+  element:
+    | NavAnchor.Element
+    | ((this: void, owner: NavLink.Owner) => NavAnchor.Element | null | undefined)
+    | null
+    | undefined,
+  options?: NavAnchor.Options,
 ): NavLink.Provider;
 
 export function navAnchor(
-    element:
-        | NavAnchor.Element
-        | ((this: void, owner: NavLink.Owner) => NavAnchor.Element | null | undefined)
-        | null
-        | undefined,
-    options: NavAnchor.Options = {},
+  element:
+    | NavAnchor.Element
+    | ((this: void, owner: NavLink.Owner) => NavAnchor.Element | null | undefined)
+    | null
+    | undefined,
+  options: NavAnchor.Options = {},
 ): NavLink.Provider {
-  return navElement(
-      element,
-      {
-        ...options,
-        href(element) {
-          return element.href;
-        },
-      },
-  );
+  return navElement(element, {
+    ...options,
+    href(element) {
+      return element.href;
+    },
+  });
 }

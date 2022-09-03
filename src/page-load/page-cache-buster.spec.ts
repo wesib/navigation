@@ -12,7 +12,6 @@ import { PageLoadParam } from './page-load-param';
 import { PageLoadSupport } from './page-load-support.feature';
 
 describe('PageCacheBuster', () => {
-
   let doc: Document;
   let locationMock: LocationMock;
 
@@ -48,10 +47,10 @@ describe('PageCacheBuster', () => {
     responseRev = pageRev;
     responseHtml = () => `<html><head><meta name="wesib-app-rev" content="${responseRev}"></head></html>`;
     mockFetch = jest.fn((_input, _init?) => afterThe({
-      ok: true,
-      headers: new Headers(),
-      text: () => Promise.resolve(responseHtml()),
-    } as Response));
+        ok: true,
+        headers: new Headers(),
+        text: () => Promise.resolve(responseHtml()),
+      } as Response));
 
     @Feature({
       needs: PageLoadSupport,
@@ -78,12 +77,12 @@ describe('PageCacheBuster', () => {
 
   it('sends page revision as search parameter', async () => {
     await new Promise<void>((resolve, reject) => {
-      navigation.with(
-          PageLoadParam,
-          {
-            receiver: r => r.ok && resolve(),
-          },
-      ).open('/some?q=v').catch(reject);
+      navigation
+        .with(PageLoadParam, {
+          receiver: r => r.ok && resolve(),
+        })
+        .open('/some?q=v')
+        .catch(reject);
     });
 
     const request = mockFetch.mock.calls[0][0] as Request;
@@ -91,14 +90,13 @@ describe('PageCacheBuster', () => {
     expect(request.url).toBe(`http://localhost/some?q=v&${appRevSearchParam}=${pageRev}`);
   });
   it('does not reload current page if loaded page revision is the same', async () => {
-
     await new Promise<void>((resolve, reject) => {
-      navigation.with(
-          PageLoadParam,
-          {
-            receiver: r => r.ok && resolve(),
-          },
-      ).open('/some?q=v').catch(reject);
+      navigation
+        .with(PageLoadParam, {
+          receiver: r => r.ok && resolve(),
+        })
+        .open('/some?q=v')
+        .catch(reject);
     });
 
     expect(updateSpy).not.toHaveBeenCalled();
@@ -108,12 +106,12 @@ describe('PageCacheBuster', () => {
     responseRev = '';
 
     await new Promise<void>((resolve, reject) => {
-      navigation.with(
-          PageLoadParam,
-          {
-            receiver: r => r.ok && resolve(),
-          },
-      ).open('/some?q=v').catch(reject);
+      navigation
+        .with(PageLoadParam, {
+          receiver: r => r.ok && resolve(),
+        })
+        .open('/some?q=v')
+        .catch(reject);
     });
 
     expect(updateSpy).not.toHaveBeenCalled();
@@ -123,17 +121,18 @@ describe('PageCacheBuster', () => {
     responseRev = 'updated-rev';
 
     await new Promise<void>((resolve, reject) => {
-      navigation.with(
-          PageLoadParam,
-          {
-            receiver: r => r.ok && resolve(),
-          },
-      ).open('/some?q=v').catch(reject);
+      navigation
+        .with(PageLoadParam, {
+          receiver: r => r.ok && resolve(),
+        })
+        .open('/some?q=v')
+        .catch(reject);
     });
 
     expect(updateSpy).toHaveBeenCalled();
-    expect((updateSpy.mock.calls[0][0] as URL).href)
-        .toBe(`http://localhost/some?q=v&${appRevSearchParam}=${responseRev}`);
+    expect((updateSpy.mock.calls[0][0] as URL).href).toBe(
+      `http://localhost/some?q=v&${appRevSearchParam}=${responseRev}`,
+    );
     expect(reloadSpy).toHaveBeenCalledTimes(1);
   });
 
@@ -142,5 +141,4 @@ describe('PageCacheBuster', () => {
       expect(String(PageCacheBuster)).toBe('[PageCacheBuster]');
     });
   });
-
 });

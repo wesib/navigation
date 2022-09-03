@@ -4,7 +4,7 @@ import { Page } from './page';
 /**
  * A key of {@link PageParam.Ref page parameter request} property containing requested page parameter.
  */
-export const PageParam__symbol = (/*#__PURE__*/ Symbol('PageParam'));
+export const PageParam__symbol = /*#__PURE__*/ Symbol('PageParam');
 
 /**
  * Page navigation parameter.
@@ -34,7 +34,11 @@ export abstract class PageParam<T, TInput> implements PageParam.Ref<T, TInput> {
    *
    * @returns New page parameter value handle.
    */
-  abstract create(page: Page, input: TInput, bsContext: BootstrapContext): PageParam.Handle<T, TInput>;
+  abstract create(
+    page: Page,
+    input: TInput,
+    bsContext: BootstrapContext,
+  ): PageParam.Handle<T, TInput>;
 
   /**
    * Creates default page parameter handle.
@@ -56,7 +60,6 @@ export abstract class PageParam<T, TInput> implements PageParam.Ref<T, TInput> {
 }
 
 export namespace PageParam {
-
   /**
    * Page navigation parameter reference.
    *
@@ -64,12 +67,10 @@ export namespace PageParam {
    * @typeParam TInput - Parameter input type.
    */
   export interface Ref<T, TInput> {
-
     /**
      * Referred page navigation parameter instance.
      */
     readonly [PageParam__symbol]: PageParam<T, TInput>;
-
   }
 
   /**
@@ -79,13 +80,10 @@ export namespace PageParam {
    * @typeParam TInput - Parameter input type.
    */
   export interface WithDefaults<T, TInput> extends PageParam<T, TInput> {
-
     byDefault(page: Page, bsContext: BootstrapContext): PageParam.Handle<T, TInput>;
-
   }
 
   export namespace WithDefaults {
-
     /**
      * A reference to page navigation parameter that has default value.
      *
@@ -93,14 +91,11 @@ export namespace PageParam {
      * @typeParam TInput - Parameter input type.
      */
     export interface Ref<T, TInput> {
-
       /**
        * Referred page navigation parameter instance.
        */
       readonly [PageParam__symbol]: WithDefaults<T, TInput>;
-
     }
-
   }
 
   /**
@@ -114,7 +109,6 @@ export namespace PageParam {
    * @typeParam TInput - Parameter input type.
    */
   export interface Handle<T, TInput> {
-
     /**
      * Returns current parameter value.
      *
@@ -145,7 +139,8 @@ export namespace PageParam {
      * @returns New parameter handle instance for target page, or `undefined` if nothing to transfer.
      */
     transfer?(
-        to: Page, when: 'pretend' | 'pre-open' | 'pre-replace' | 'enter' | 'return',
+      to: Page,
+      when: 'pretend' | 'pre-open' | 'pre-replace' | 'enter' | 'return',
     ): Handle<T, TInput> | undefined;
 
     /**
@@ -176,7 +171,5 @@ export namespace PageParam {
      * The handle won't be accessed after this method call.
      */
     forget?(): void;
-
   }
-
 }

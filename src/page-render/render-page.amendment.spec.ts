@@ -1,4 +1,8 @@
-import { PreRenderScheduler, queuedRenderScheduler, RenderScheduler } from '@frontmeans/render-scheduler';
+import {
+  PreRenderScheduler,
+  queuedRenderScheduler,
+  RenderScheduler,
+} from '@frontmeans/render-scheduler';
 import { afterEach, beforeEach, describe, expect, it, jest } from '@jest/globals';
 import { cxConstAsset } from '@proc7ts/context-builder';
 import { afterThe } from '@proc7ts/fun-events';
@@ -14,7 +18,6 @@ import { RenderPageDef } from './render-page-def';
 import { RenderPage } from './render-page.amendment';
 
 describe('@RenderPage', () => {
-
   let doc: Document;
 
   beforeEach(() => {
@@ -43,13 +46,11 @@ describe('@RenderPage', () => {
 
   beforeEach(() => {
     html = '<page-content></page-content>';
-    mockFetch = jest.fn((_input, _init?) => afterThe(
-        {
-          ok: true,
-          headers: new Headers(),
-          text: () => Promise.resolve(`<html lang="en"><body>${html}</body></html>`),
-        } as Response,
-    ));
+    mockFetch = jest.fn((_input, _init?) => afterThe({
+        ok: true,
+        headers: new Headers(),
+        text: () => Promise.resolve(`<html lang="en"><body>${html}</body></html>`),
+      } as Response));
     mockAgent = jest.fn((next, _request) => next());
   });
 
@@ -67,12 +68,12 @@ describe('@RenderPage', () => {
     const navigation = context.get(Navigation);
 
     await new Promise<void>((resolve, reject) => {
-      navigation.with(
-          PageLoadParam,
-          {
-            receiver: r => r.ok && resolve(),
-          },
-      ).open('page').catch(reject);
+      navigation
+        .with(PageLoadParam, {
+          receiver: r => r.ok && resolve(),
+        })
+        .open('page')
+        .catch(reject);
     });
 
     expect(element.textContent).toBe('(original content)included content');
@@ -88,12 +89,12 @@ describe('@RenderPage', () => {
     const navigation = context.get(Navigation);
 
     await new Promise<void>((resolve, reject) => {
-      navigation.with(
-          PageLoadParam,
-          {
-            receiver: r => r.ok && resolve(),
-          },
-      ).open('page').catch(reject);
+      navigation
+        .with(PageLoadParam, {
+          receiver: r => r.ok && resolve(),
+        })
+        .open('page')
+        .catch(reject);
     });
 
     expect(element.textContent).toBe('(original content)included content');
@@ -108,12 +109,12 @@ describe('@RenderPage', () => {
     const navigation = context.get(Navigation);
 
     await new Promise<void>((resolve, reject) => {
-      navigation.with(
-          PageLoadParam,
-          {
-            receiver: r => r.ok && resolve(),
-          },
-      ).open('page').catch(reject);
+      navigation
+        .with(PageLoadParam, {
+          receiver: r => r.ok && resolve(),
+        })
+        .open('page')
+        .catch(reject);
     });
 
     expect(element.textContent).toBe('(original content)included content');
@@ -127,12 +128,12 @@ describe('@RenderPage', () => {
     const navigation = context.get(Navigation);
 
     await new Promise<void>((resolve, reject) => {
-      navigation.with(
-          PageLoadParam,
-          {
-            receiver: r => r.ok && resolve(),
-          },
-      ).open('page').catch(reject);
+      navigation
+        .with(PageLoadParam, {
+          receiver: r => r.ok && resolve(),
+        })
+        .open('page')
+        .catch(reject);
     });
 
     expect(element.childNodes[0].childNodes).toHaveLength(0);
@@ -145,17 +146,19 @@ describe('@RenderPage', () => {
     const navigation = context.get(Navigation);
 
     await new Promise<void>((resolve, reject) => {
-      navigation.with(
-          PageLoadParam,
-          {
-            receiver: r => r.ok && resolve(),
-          },
-      ).open('page').catch(reject);
+      navigation
+        .with(PageLoadParam, {
+          receiver: r => r.ok && resolve(),
+        })
+        .open('page')
+        .catch(reject);
     });
 
-    expect(render).toHaveBeenLastCalledWith(expect.objectContaining({
-      response: expect.objectContaining({ ok: true }),
-    }));
+    expect(render).toHaveBeenLastCalledWith(
+      expect.objectContaining({
+        response: expect.objectContaining({ ok: true }),
+      }),
+    );
     expect(render).toHaveBeenCalledTimes(2);
   });
   it('does not refresh included content if only URL hash changed', async () => {
@@ -166,12 +169,12 @@ describe('@RenderPage', () => {
     const navigation = context.get(Navigation);
 
     await new Promise<void>((resolve, reject) => {
-      navigation.with(
-          PageLoadParam,
-          {
-            receiver: r => r.ok && resolve(),
-          },
-      ).open(new URL('#another-hash', navigation.page.url)).catch(reject);
+      navigation
+        .with(PageLoadParam, {
+          receiver: r => r.ok && resolve(),
+        })
+        .open(new URL('#another-hash', navigation.page.url))
+        .catch(reject);
     });
 
     expect(render).not.toHaveBeenCalled();
@@ -184,12 +187,12 @@ describe('@RenderPage', () => {
     const navigation = context.get(Navigation);
 
     await new Promise<void>((resolve, reject) => {
-      navigation.with(
-          PageLoadParam,
-          {
-            receiver: r => r.ok && resolve(),
-          },
-      ).open('other').catch(reject);
+      navigation
+        .with(PageLoadParam, {
+          receiver: r => r.ok && resolve(),
+        })
+        .open('other')
+        .catch(reject);
     });
 
     expect(render).not.toHaveBeenCalled();
@@ -207,12 +210,12 @@ describe('@RenderPage', () => {
       const navigation = context.get(Navigation);
 
       await new Promise<void>((resolve, reject) => {
-        navigation.with(
-            PageLoadParam,
-            {
-              receiver: r => r.ok && resolve(),
-            },
-        ).open('page').catch(reject);
+        navigation
+          .with(PageLoadParam, {
+            receiver: r => r.ok && resolve(),
+          })
+          .open('page')
+          .catch(reject);
       });
 
       expect(postponed).toHaveBeenCalled();
@@ -220,32 +223,31 @@ describe('@RenderPage', () => {
     });
   });
 
-  async function bootstrap(def?: RenderPageDef, renderer: PageRenderer = noop): Promise<ComponentContext> {
-
-    @Component(
-        {
-          feature: {
-            setup(setup) {
-              setup.provide(cxConstAsset(BootstrapWindow, locationMock.window));
-              setup.provide(cxConstAsset(RenderScheduler, queuedRenderScheduler));
-              setup.provide(cxConstAsset(PreRenderScheduler, queuedRenderScheduler));
-              setup.provide(cxConstAsset(HttpFetch, mockFetch));
-              setup.provide(cxConstAsset(PageLoadAgent, mockAgent));
-            },
-          },
+  async function bootstrap(
+    def?: RenderPageDef,
+    renderer: PageRenderer = noop,
+  ): Promise<ComponentContext> {
+    @Component({
+      feature: {
+        setup(setup) {
+          setup.provide(cxConstAsset(BootstrapWindow, locationMock.window));
+          setup.provide(cxConstAsset(RenderScheduler, queuedRenderScheduler));
+          setup.provide(cxConstAsset(PreRenderScheduler, queuedRenderScheduler));
+          setup.provide(cxConstAsset(HttpFetch, mockFetch));
+          setup.provide(cxConstAsset(PageLoadAgent, mockAgent));
         },
-    )
+      },
+    })
     class PageContent {
 
       @RenderPage(def)
       render = renderer;
 
-    }
+}
 
     const bsContext = await bootstrapComponents(PageContent).whenReady;
     const defContext = await bsContext.whenDefined(PageContent);
 
     return defContext.mountTo(element);
   }
-
 });

@@ -9,15 +9,15 @@ import { PageLoader } from './page-loader.impl';
  * @internal
  */
 export function cachingPageLoader(loader: PageLoader): PageLoader {
-
-  let state: {
-    readonly url: string;
-    readonly on: OnEvent<[PageLoadResponse]>;
-    readonly sup: Supply;
-  } | undefined;
+  let state:
+    | {
+        readonly url: string;
+        readonly on: OnEvent<[PageLoadResponse]>;
+        readonly sup: Supply;
+      }
+    | undefined;
 
   return page => {
-
     const url = pageUrl(page);
 
     if (state) {
@@ -27,10 +27,12 @@ export function cachingPageLoader(loader: PageLoader): PageLoader {
       state.sup.off();
     }
 
-    let tracked: {
-      readonly on: OnEvent<[PageLoadResponse]>;
-      num: number;
-    } | undefined;
+    let tracked:
+      | {
+          readonly on: OnEvent<[PageLoadResponse]>;
+          num: number;
+        }
+      | undefined;
     const supply = new Supply(() => {
       state = undefined;
       tracked = undefined;
@@ -38,7 +40,6 @@ export function cachingPageLoader(loader: PageLoader): PageLoader {
 
     const on = onEventBy<[PageLoadResponse]>(receiver => {
       if (!tracked) {
-
         const onLoad = loader(page);
         const tracker = trackValue<PageLoadResponse>();
         const trackSupply = onLoad(resp => {
@@ -53,9 +54,7 @@ export function cachingPageLoader(loader: PageLoader): PageLoader {
         supply.cuts(trackSupply).cuts(tracker);
 
         tracked = {
-          on: tracker.read.do(
-              valueOn_<[PageLoadResponse?], PageLoadResponse>(asis),
-          ),
+          on: tracker.read.do(valueOn_<[PageLoadResponse?], PageLoadResponse>(asis)),
           num: 0,
         };
       }
@@ -64,16 +63,20 @@ export function cachingPageLoader(loader: PageLoader): PageLoader {
 
       ++requested.num;
 
-      return requested.on.do(supplyOn(supply))(receiver).whenOff(reason => {
-        if (!--requested.num) {
-          // Allow to request the same page again
-          Promise.resolve().then(() => {
-            if (!requested.num && requested === tracked) {
-              supply.off(reason);
-            }
-          }).catch(console.error);
-        }
-      });
+      return requested.on
+        .do(supplyOn(supply))(receiver)
+        .whenOff(reason => {
+          if (!--requested.num) {
+            // Allow to request the same page again
+            Promise.resolve()
+              .then(() => {
+                if (!requested.num && requested === tracked) {
+                  supply.off(reason);
+                }
+              })
+              .catch(console.error);
+          }
+        });
     });
 
     state = { url, on, sup: supply };

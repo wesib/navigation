@@ -14,7 +14,6 @@ import { PageLoadURLModifier } from './page-load-url-modifier';
 import { PageLoader } from './page-loader.impl';
 
 describe('PageLoader', () => {
-
   let mockHttpFetch: Mock<HttpFetch>;
   let page: Page;
   let mockResponse: MockObject<Response>;
@@ -145,9 +144,7 @@ describe('PageLoader', () => {
   });
   it('parses the response accordingly to `Context-Type` header', async () => {
     mockResponseHeaders.get.mockImplementation(_name => 'application/xml; charset=utf-8');
-    mockResponse.text.mockImplementation(
-        () => Promise.resolve('<?xml version="1.0"?><content>test</content>'),
-    );
+    mockResponse.text.mockImplementation(() => Promise.resolve('<?xml version="1.0"?><content>test</content>'));
 
     const receiver = jest.fn<(response: PageLoadResponse) => void>();
     const done = jest.fn<(reason?: unknown) => void>();
@@ -165,17 +162,15 @@ describe('PageLoader', () => {
     expect(content.textContent).toBe('test');
   });
   it('reports fetch error', async () => {
-
     const error = new Error('Some error');
 
     mockHttpFetch = jest.fn((_input, _init?) => onEventBy(() => {
+        const failedSupply = new Supply();
 
-      const failedSupply = new Supply();
+        failedSupply.off(error);
 
-      failedSupply.off(error);
-
-      return failedSupply;
-    }));
+        return failedSupply;
+      }));
 
     const receiver = jest.fn();
     const done = jest.fn();
@@ -207,9 +202,13 @@ describe('PageLoader', () => {
     expect(done).toHaveBeenCalled();
   });
   it('reports parse error', async () => {
-    mockResponseHeaders.get.mockImplementation(
-        name => name.toLowerCase() === 'content-type' ? 'application/x-wrong' : null,
-    );
+    mockResponseHeaders.get.mockImplementation(name => {
+      if (name.toLowerCase() === 'content-type') {
+        return 'application/x-wrong';
+      }
+
+      return null;
+    });
     mockResponse.text.mockImplementation(() => Promise.resolve('dhfdfhfhg'));
 
     const receiver = jest.fn();
@@ -229,12 +228,13 @@ describe('PageLoader', () => {
     await new Promise(resolve => {
       @Feature({
         setup(setup) {
-          setup.provide(cxConstAsset(PageLoadURLModifier, (url: URL) => url.searchParams.set('test', 'updated')));
+          setup.provide(
+            cxConstAsset(PageLoadURLModifier, (url: URL) => url.searchParams.set('test', 'updated')),
+          );
           setup.whenReady(resolve);
         },
       })
-      class PageLoadURLFeature {
-      }
+      class PageLoadURLFeature {}
 
       bsContext.load(PageLoadURLFeature);
     });
@@ -257,9 +257,7 @@ describe('PageLoader', () => {
       document: document.implementation.createHTMLDocument('other'),
     };
 
-    mockAgent.mockImplementation(next => next().do(mapOn_(
-        response => response.ok ? newResponse : response,
-    )));
+    mockAgent.mockImplementation(next => next().do(mapOn_(response => (response.ok ? newResponse : response))));
 
     const receiver = jest.fn();
 
@@ -276,11 +274,10 @@ describe('PageLoader', () => {
   });
 
   function loadDocument(
-      receiver: EventReceiver<[PageLoadResponse]> = noop,
-      done: (reason?: unknown) => void = noop,
+    receiver: EventReceiver<[PageLoadResponse]> = noop,
+    done: (reason?: unknown) => void = noop,
   ): Promise<Supply> {
     return new Promise<Supply>(resolve => {
-
       const supply = loadPage(page)(receiver);
 
       supply.whenOff(reason => {

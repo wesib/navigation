@@ -6,7 +6,6 @@ import { PageParam } from './page-param';
  * Represents a navigation history entry.
  */
 export interface Page {
-
   /**
    * Page location URL.
    */
@@ -68,5 +67,4 @@ export interface Page {
    * @param input - Parameter input to use when constructing its value.
    */
   put<T, TInput>(ref: PageParam.Ref<T, TInput>, input: TInput): void;
-
 }

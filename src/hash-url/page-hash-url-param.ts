@@ -6,10 +6,9 @@ import { PageHashURLValueParam } from './page-hash-url-param.impl';
 class PageHashURLParam$ extends PageParam<URL, URL | string | null | undefined> {
 
   create(
-      page: Page,
-      input: URL | string | null | undefined,
+    page: Page,
+    input: URL | string | null | undefined,
   ): PageParam.Handle<URL, URL | string | null | undefined> {
-
     const handle: PageParam.Handle<URL, URL | string | null | undefined> = {
       get() {
         return page.get(PageHashURLValueParam) || getHashURL(page.url);
@@ -38,6 +37,5 @@ class PageHashURLParam$ extends PageParam<URL, URL | string | null | undefined> 
  *
  * Requires {@link PageHashURLSupport} for above to function properly.
  */
-export const PageHashURLParam: PageParam.WithDefaults<URL, URL | string | null | undefined> = (
-    /*#__PURE__*/ new PageHashURLParam$()
-);
+export const PageHashURLParam: PageParam.WithDefaults<URL, URL | string | null | undefined> =
+  /*#__PURE__*/ new PageHashURLParam$();

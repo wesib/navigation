@@ -11,7 +11,6 @@ import { PageLoadParam } from './page-load-param';
 import { PageLoadSupport } from './page-load-support.feature';
 
 describe('pageScriptsAgent', () => {
-
   let doc: Document;
   let locationMock: LocationMock;
 
@@ -32,10 +31,10 @@ describe('pageScriptsAgent', () => {
   beforeEach(async () => {
     responseHtml = '<html></html>';
     mockFetch = jest.fn((_input, _init?) => afterThe({
-      ok: true,
-      headers: new Headers(),
-      text: () => Promise.resolve(responseHtml),
-    } as Response));
+        ok: true,
+        headers: new Headers(),
+        text: () => Promise.resolve(responseHtml),
+      } as Response));
 
     @Feature({
       needs: PageLoadSupport,
@@ -65,12 +64,12 @@ describe('pageScriptsAgent', () => {
 <body></body>
 </html>`;
     await new Promise<void>((resolve, reject) => {
-      navigation.with(
-          PageLoadParam,
-          {
-            receiver: r => r.ok && resolve(),
-          },
-      ).open('/some').catch(reject);
+      navigation
+        .with(PageLoadParam, {
+          receiver: r => r.ok && resolve(),
+        })
+        .open('/some')
+        .catch(reject);
     });
     expect(doc.scripts).toHaveLength(1);
 
@@ -89,12 +88,12 @@ describe('pageScriptsAgent', () => {
 <body></body>
 </html>`;
     await new Promise<void>((resolve, reject) => {
-      navigation.with(
-          PageLoadParam,
-          {
-            receiver: r => r.ok && resolve(),
-          },
-      ).open('/some').catch(reject);
+      navigation
+        .with(PageLoadParam, {
+          receiver: r => r.ok && resolve(),
+        })
+        .open('/some')
+        .catch(reject);
     });
 
     responseHtml = `
@@ -108,12 +107,12 @@ describe('pageScriptsAgent', () => {
 </html>`;
 
     await new Promise<void>((resolve, reject) => {
-      navigation.with(
-          PageLoadParam,
-          {
-            receiver: r => r.ok && resolve(),
-          },
-      ).open('/other').catch(reject);
+      navigation
+        .with(PageLoadParam, {
+          receiver: r => r.ok && resolve(),
+        })
+        .open('/other')
+        .catch(reject);
     });
 
     expect(doc.scripts).toHaveLength(2);
@@ -134,18 +133,18 @@ describe('pageScriptsAgent', () => {
   });
   it('passes error messages through', async () => {
     mockFetch.mockImplementation(() => afterThe({
-      ok: true,
-      headers: new Headers({ 'Content-Type': 'application/unknown' }),
-      text: () => Promise.resolve(responseHtml),
-    } as Response));
+        ok: true,
+        headers: new Headers({ 'Content-Type': 'application/unknown' }),
+        text: () => Promise.resolve(responseHtml),
+      } as Response));
 
     const response = await new Promise((resolve, reject) => {
-      navigation.with(
-          PageLoadParam,
-          {
-            receiver: r => r.ok === false && resolve(r),
-          },
-      ).open('/other').catch(reject);
+      navigation
+        .with(PageLoadParam, {
+          receiver: r => r.ok === false && resolve(r),
+        })
+        .open('/other')
+        .catch(reject);
     });
 
     expect(response).toMatchObject({ ok: false });

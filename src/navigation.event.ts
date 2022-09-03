@@ -10,7 +10,6 @@ export type NavigationEvent = LeavePageEvent | EnterPageEvent | StayOnPageEvent;
  * Navigation event type.
  */
 export const enum NavigationEventType {
-
   /**
    * {@link EnterPageEvent Enter page event} type.
    */
@@ -25,7 +24,6 @@ export const enum NavigationEventType {
    * {@link StayOnPageEvent Stay on page event} type.
    */
   StayOnPage = 'wesib:stayOnPage',
-
 }
 
 /**
@@ -69,7 +67,6 @@ export class EnterPageEvent extends Event {
  * {@link EnterPageEvent Enter page event} initialization options.
  */
 export interface EnterPageEventInit extends Omit<EventInit, 'cancelable'> {
-
   /**
    * When navigation event occurred.
    *
@@ -85,7 +82,6 @@ export interface EnterPageEventInit extends Omit<EventInit, 'cancelable'> {
    * Entered page.
    */
   readonly to: Page;
-
 }
 
 /**
@@ -133,7 +129,6 @@ export class LeavePageEvent extends Event {
  * {@link LeavePageEvent Leave page event} initialization options.
  */
 export interface LeavePageEventInit extends Omit<EventInit, 'cancelable'> {
-
   /**
    * When navigation event occurred. Either `pre-open` when leaving a page to open a new one, or `pre-replace` when
    * leaving a page to replace it with another history entry.
@@ -149,7 +144,6 @@ export interface LeavePageEventInit extends Omit<EventInit, 'cancelable'> {
    * Navigation target page.
    */
   readonly to: Page;
-
 }
 
 /**
@@ -201,7 +195,6 @@ export class StayOnPageEvent extends Event {
  * {@link StayOnPageEvent Stay on page event} initialization options.
  */
 export interface StayOnPageEventInit extends Omit<EventInit, 'cancelable'> {
-
   /**
    * The page to stay at.
    */
@@ -216,5 +209,4 @@ export interface StayOnPageEventInit extends Omit<EventInit, 'cancelable'> {
    * A reason of navigation failure. This is set when navigation failed due to some error.
    */
   readonly reason?: unknown | undefined;
-
 }

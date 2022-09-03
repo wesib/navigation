@@ -22,9 +22,7 @@ import { PageLoader } from './page-loader.impl';
  * @internal
  */
 export interface PageLoadReq extends PageLoadRequest {
-
   readonly receiver: EventReceiver.Generic<[PageLoadResponse]>;
-
 }
 
 class PageLoadAbortError extends Error {}
@@ -32,8 +30,8 @@ class PageLoadAbortError extends Error {}
 class PageLoadRequestsParam$ extends PageParam<PageLoadRequests, PageLoadRequests> {
 
   create(
-      _page: Page,
-      requests: PageLoadRequests,
+    _page: Page,
+    requests: PageLoadRequests,
   ): PageParam.Handle<PageLoadRequests, PageLoadRequests> {
     return {
       get() {
@@ -48,7 +46,8 @@ class PageLoadRequestsParam$ extends PageParam<PageLoadRequests, PageLoadRequest
 /**
  * @internal
  */
-export const PageLoadRequestsParam: PageParam<PageLoadRequests, PageLoadRequests> = new PageLoadRequestsParam$();
+export const PageLoadRequestsParam: PageParam<PageLoadRequests, PageLoadRequests> =
+  new PageLoadRequestsParam$();
 
 /**
  * @internal
@@ -58,28 +57,23 @@ export class PageLoadRequests {
   private readonly _map = new Map<Supply, PageLoadReq[]>();
   private readonly _requests: PushIterable<PageLoadReq>;
 
-  constructor(
-      private readonly _navigation: Navigation,
-      private readonly _loader: PageLoader,
-  ) {
+  constructor(private readonly _navigation: Navigation, private readonly _loader: PageLoader) {
     this._requests = flatMapIt(overIterator(() => this._map.values()));
   }
 
   get fragments(): readonly PageFragmentRequest[] {
-
     const result: PageFragmentRequest[] = [];
 
-    if (!itsEvery(
-        this._requests,
-        request => {
-          if (!request.fragment) {
-            return false;
-          }
-          result.push(request.fragment);
+    if (
+      !itsEvery(this._requests, request => {
+        if (!request.fragment) {
+          return false;
+        }
+        result.push(request.fragment);
 
-          return true;
-        },
-    )) {
+        return true;
+      })
+    ) {
       return [];
     }
 
@@ -87,13 +81,14 @@ export class PageLoadRequests {
   }
 
   handle(): PageParam.Handle<void, PageLoadRequest> {
-
     const self = this;
     const pageSupply = new Supply(noop);
     let loadSupply = neverSupply();
 
     return {
-      get() {/* void */},
+      get() {
+        /* void */
+      },
       put(request: PageLoadRequest): void {
         self._add(request);
       },
@@ -117,36 +112,36 @@ export class PageLoadRequests {
         loadSupply = new Supply(noop).needs(pageSupply);
 
         const onLoad = onEventBy<[PageLoadResponse]>(responseReceiver => {
-
           const emitter = new EventEmitter<[PageLoadResponse]>();
           const supply = emitter.on(responseReceiver);
 
-          self._loader(page).do(supplyOn(loadSupply))(
-              response => emitter.send(response),
-          ).whenOff(error => {
-            if (error !== undefined && !(error instanceof PageLoadAbortError)) {
-              // Report current page load error as failed load response
-              emitter.send({
-                ok: false as const,
-                page,
-                // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
-                error,
-              });
-            }
-          });
+          self
+            ._loader(page)
+            .do(supplyOn(loadSupply))(response => emitter.send(response))
+            .whenOff(error => {
+              if (error !== undefined && !(error instanceof PageLoadAbortError)) {
+                // Report current page load error as failed load response
+                emitter.send({
+                  ok: false as const,
+                  page,
+                  // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
+                  error,
+                });
+              }
+            });
 
           return supply;
         }).do(shareOn);
 
-        itsEach(
-            self._requests,
-            ({ fragment, receiver }) => onFragment(onLoad, fragment)({
-              supply: new Supply().needs(receiver.supply),
-              receive(context, response): void {
-                receiver.receive(context, response);
-              },
-            }),
-        );
+        itsEach(self._requests, ({ fragment, receiver }) => onFragment(
+            onLoad,
+            fragment,
+          )({
+            supply: new Supply().needs(receiver.supply),
+            receive(context, response): void {
+              receiver.receive(context, response);
+            },
+          }));
       },
       leave(): void {
         loadSupply.off(new PageLoadAbortError('page left'));
@@ -158,11 +153,9 @@ export class PageLoadRequests {
         pageSupply.off(new PageLoadAbortError('page forgotten'));
       },
     };
-
   }
 
   private _add(request: PageLoadRequest): void {
-
     const req = { ...request, receiver: eventReceiver(request.receiver) };
     const { supply } = req.receiver;
     const list = this._map.get(supply);
@@ -176,7 +169,6 @@ export class PageLoadRequests {
   }
 
   private _transfer(): PageLoadRequests {
-
     const transferred = new PageLoadRequests(this._navigation, this._loader);
 
     for (const [supply, list] of this._map.entries()) {
@@ -189,23 +181,20 @@ export class PageLoadRequests {
 }
 
 function onFragment(
-    onLoad: OnEvent<[PageLoadResponse]>,
-    fragment?: PageFragmentRequest,
+  onLoad: OnEvent<[PageLoadResponse]>,
+  fragment?: PageFragmentRequest,
 ): OnEvent<[PageLoadResponse]> {
   return fragment
-      ? onLoad.do(
-          mapOn_(
-              response => response.ok
-                  ? {
-                    ...response,
-                    fragment: (
-                        fragment.tag != null
-                            ? response.document.getElementsByTagName(fragment.tag)[0]
-                            : response.document.getElementById(fragment.id)
-                    ) || undefined,
-                  }
-                  : response,
-          ),
+    ? onLoad.do(
+        mapOn_(response => response.ok
+            ? {
+                ...response,
+                fragment:
+                  (fragment.tag != null
+                    ? response.document.getElementsByTagName(fragment.tag)[0]
+                    : response.document.getElementById(fragment.id)) || undefined,
+              }
+            : response),
       )
-      : onLoad;
+    : onLoad;
 }

@@ -7,7 +7,6 @@ import { PageLoadResponse } from './page-load-response';
  * Accepted as a input of {@link PageLoadParam page load parameter}.
  */
 export interface PageLoadRequest {
-
   /**
    * Page fragment request.
    *
@@ -27,44 +26,35 @@ export interface PageLoadRequest {
    * is cut off.
    */
   readonly receiver: EventReceiver<[PageLoadResponse]>;
-
 }
 
 /**
  * Page fragment request.
  */
-export type PageFragmentRequest =
-    | PageFragmentRequest.ById
-    | PageFragmentRequest.ByTag;
+export type PageFragmentRequest = PageFragmentRequest.ById | PageFragmentRequest.ByTag;
 
 export namespace PageFragmentRequest {
-
   /**
    * A request of page element with the given identifier.
    */
   export interface ById {
-
     /**
      * Requested element identifier.
      */
     id: string;
 
     tag?: undefined;
-
   }
 
   /**
    * A request of page element with the given tag name.
    */
   export interface ByTag {
-
     id?: undefined;
 
     /**
      * Requested element tag name.
      */
     tag: string;
-
   }
-
 }

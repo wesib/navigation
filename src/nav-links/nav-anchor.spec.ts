@@ -9,7 +9,6 @@ import { navAnchor, NavAnchor } from './nav-anchor';
 import { NavLink } from './nav-link';
 
 describe('navAnchor', () => {
-
   let doc: Document;
 
   beforeEach(() => {
@@ -37,9 +36,7 @@ describe('navAnchor', () => {
     pageURL = trackValue(new URL('current-page', baseURI));
     mockNavigation = {
       open: jest.fn(() => Promise.resolve()),
-      read: pageURL.read.do(
-          mapOn_(url => ({ url })),
-      ),
+      read: pageURL.read.do(mapOn_(url => ({ url }))),
       page: {
         get url() {
           return pageURL.it;
@@ -94,7 +91,6 @@ describe('navAnchor', () => {
     expect(mockNavigation.open).not.toHaveBeenCalled();
   });
   it('does not create a link when absent', async () => {
-
     const context = await bootstrap();
 
     expect(navAnchor(null)({ context })).toBeUndefined();
@@ -104,7 +100,9 @@ describe('navAnchor', () => {
     it('reflects anchor href', async () => {
       anchor.href = `${baseURI}/test`;
 
-      const { component: { navLink } } = await bootstrap();
+      const {
+        component: { navLink },
+      } = await bootstrap();
 
       expect(navLink.href).toBe(anchor.href);
 
@@ -115,16 +113,18 @@ describe('navAnchor', () => {
 
   describe('activate', () => {
     it('appends CSS class to anchor', async () => {
-
-      const { component: { navLink } } = await bootstrap();
+      const {
+        component: { navLink },
+      } = await bootstrap();
 
       navLink.activate!();
 
       expect(anchor.classList).toContain('active@b');
     });
     it('appends custom CSS class to anchor', async () => {
-
-      const { component: { navLink } } = await bootstrap({ active: 'custom-active' });
+      const {
+        component: { navLink },
+      } = await bootstrap({ active: 'custom-active' });
 
       navLink.activate!();
 
@@ -132,8 +132,9 @@ describe('navAnchor', () => {
       expect(anchor.classList).toContain('custom-active');
     });
     it('removes CSS class from anchor when deactivated', async () => {
-
-      const { component: { navLink } } = await bootstrap({ event: 'test:click' });
+      const {
+        component: { navLink },
+      } = await bootstrap({ event: 'test:click' });
 
       navLink.activate!().off();
 
@@ -141,8 +142,9 @@ describe('navAnchor', () => {
     });
   });
 
-  async function bootstrap(options?: NavAnchor.Options): Promise<ComponentContext<{ readonly navLink: NavLink }>> {
-
+  async function bootstrap(
+    options?: NavAnchor.Options,
+  ): Promise<ComponentContext<{ readonly navLink: NavLink }>> {
     @Component()
     @Feature({
       setup(setup) {
@@ -158,7 +160,7 @@ describe('navAnchor', () => {
         this.navLink = navAnchor(anchor, options)(this)!;
       }
 
-    }
+}
 
     const bsContext = await bootstrapComponents(TestComponent).whenReady;
     const defContext = await bsContext.whenDefined(TestComponent);

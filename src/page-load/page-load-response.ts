@@ -6,17 +6,18 @@ import { Page } from '../page';
  * Indicates page load status: either is is {@link PageLoadResponse.Start started}, {@link PageLoadResponse.Ok
  * completed successfully}, or {@link PageLoadResponse.Failure failed}.
  */
-export type PageLoadResponse = PageLoadResponse.Start | PageLoadResponse.Ok | PageLoadResponse.Failure;
+export type PageLoadResponse =
+  | PageLoadResponse.Start
+  | PageLoadResponse.Ok
+  | PageLoadResponse.Failure;
 
 export namespace PageLoadResponse {
-
   /**
    * Page load start.
    *
    * Reported when page load is just started, but not finished yet.
    */
   export interface Start {
-
     /**
      * Page load completeness flag. Always `undefined`.
      */
@@ -26,14 +27,12 @@ export namespace PageLoadResponse {
      * The page to be loaded.
      */
     readonly page: Page;
-
   }
 
   /**
    * Successfully loaded page..
    */
   export interface Ok {
-
     /**
      * Page load completeness flag. Always `true`.
      */
@@ -65,11 +64,9 @@ export namespace PageLoadResponse {
      * Page load error. Always `undefined`.
      */
     readonly error?: undefined;
-
   }
 
   export interface Failure {
-
     /**
      * Page load completeness flag. Always `false`.
      */
@@ -94,7 +91,5 @@ export namespace PageLoadResponse {
      * Page load error. Always present.
      */
     readonly error: unknown;
-
   }
-
 }

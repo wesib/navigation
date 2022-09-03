@@ -26,17 +26,16 @@ export interface NavDataEnvelope {
 
 function extractNavData(state: unknown): PartialNavData {
   return state == null || typeof state !== 'object'
-      // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
-      ? { data: state }
-      : (state as NavDataEnvelope)[NAV_DATA_KEY] as PartialNavData;
+    ? { data: state }
+    : ((state as NavDataEnvelope)[NAV_DATA_KEY] as PartialNavData);
 }
 
-const NavHistory$perContext: CxEntry.Definer<NavHistory> = (/*#__PURE__*/ cxScoped(
-    BootstrapContext,
-    (/*#__PURE__*/ cxSingle({
-      byDefault: target => new NavHistory(target.get(BootstrapContext)),
-    })),
-));
+const NavHistory$perContext: CxEntry.Definer<NavHistory> = /*#__PURE__*/ cxScoped(
+  BootstrapContext,
+  /*#__PURE__*/ cxSingle({
+    byDefault: target => new NavHistory(target.get(BootstrapContext)),
+  }),
+);
 
 export class NavHistory {
 
@@ -56,7 +55,6 @@ export class NavHistory {
   private _lastId = 0;
 
   constructor(private readonly _context: BootstrapContext) {
-
     const window = _context.get(BootstrapWindow);
 
     this._document = window.document;
@@ -66,7 +64,6 @@ export class NavHistory {
   }
 
   init(): PageEntry {
-
     // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
     const { data } = extractNavData(this._history.state);
     const entry = this.newEntry({
@@ -89,28 +86,21 @@ export class NavHistory {
     return new PageEntry(this._context, ++this._lastId, target);
   }
 
-  open(
-      toEntry: PageEntry,
-      tracker: ValueTracker<PageEntry>,
-  ): void {
+  open(toEntry: PageEntry, tracker: ValueTracker<PageEntry>): void {
+    const {
+      page: { title = '', url },
+    } = toEntry;
 
-    const { page: { title = '', url } } = toEntry;
-
-    this._history.pushState(
-        this._historyState(toEntry),
-        title,
-        url.href,
-    );
+    this._history.pushState(this._historyState(toEntry), title, url.href);
 
     this._enter('open', toEntry, tracker);
   }
 
   private _enter(
-      when: 'open' | 'enter',
-      toEntry: PageEntry,
-      tracker: ValueTracker<PageEntry>,
+    when: 'open' | 'enter',
+    toEntry: PageEntry,
+    tracker: ValueTracker<PageEntry>,
   ): void {
-
     const fromEntry = tracker.it;
 
     this._entries.set(toEntry.id, toEntry);
@@ -134,19 +124,13 @@ export class NavHistory {
     }
   }
 
-  replace(
-      toEntry: PageEntry,
-      tracker: ValueTracker<PageEntry>,
-  ): void {
-
+  replace(toEntry: PageEntry, tracker: ValueTracker<PageEntry>): void {
     const fromEntry = tracker.it;
-    const { page: { title = '', url } } = toEntry;
+    const {
+      page: { title = '', url },
+    } = toEntry;
 
-    this._history.replaceState(
-        this._historyState(toEntry),
-        title,
-        url.href,
-    );
+    this._history.replaceState(this._historyState(toEntry), title, url.href);
 
     this._entries.set(toEntry.id, toEntry);
 
@@ -171,11 +155,7 @@ export class NavHistory {
     tracker.it = toEntry;
   }
 
-  popState(
-      popState: PopStateEvent,
-      tracker: ValueTracker<PageEntry>,
-  ): PageEntry | undefined {
-
+  popState(popState: PopStateEvent, tracker: ValueTracker<PageEntry>): PageEntry | undefined {
     // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
     const { state } = popState;
 
@@ -194,7 +174,8 @@ export class NavHistory {
     const { uid, data, id: pageId } = extractNavData(state);
     let toEntry: PageEntry;
 
-    const existingEntry = uid === this._uid && pageId != null ? this._entries.get(pageId) : undefined;
+    const existingEntry =
+      uid === this._uid && pageId != null ? this._entries.get(pageId) : undefined;
 
     if (existingEntry) {
       toEntry = existingEntry;
@@ -234,19 +215,22 @@ export class NavHistory {
   }
 
   public update(tracker: ValueTracker<PageEntry>, url: URL): PageEntry {
-
     const oldEntry = tracker.it;
-    const newEntry = new PageEntry(this._context, ++this._lastId, { ...oldEntry.page, url }, oldEntry);
+    const newEntry = new PageEntry(
+      this._context,
+      ++this._lastId,
+      { ...oldEntry.page, url },
+      oldEntry,
+    );
 
     this._entries.set(newEntry.id, newEntry);
     this._history.replaceState(this._historyState(newEntry), '', url.href);
     this._entries.delete(oldEntry.id);
 
-    return tracker.it = newEntry;
+    return (tracker.it = newEntry);
   }
 
   private _changeHash(tracker: ValueTracker<PageEntry>): PageEntry {
-
     const fromEntry = tracker.it;
     const toEntry = this.newEntry({
       url: new URL(this._location.href),
@@ -301,12 +285,14 @@ export class PageEntry {
   private _update: () => void = noop;
 
   constructor(
-      private readonly _bsContext: BootstrapContext,
-      readonly id: number,
-      target: Navigation.URLTarget,
-      proto?: PageEntry,
+    private readonly _bsContext: BootstrapContext,
+    readonly id: number,
+    target: Navigation.URLTarget,
+    proto?: PageEntry,
   ) {
-    this._params = proto ? proto._params : new Map<PageParam<any, any>, PageParam.Handle<any, any>>();
+    this._params = proto
+      ? proto._params
+      : new Map<PageParam<any, any>, PageParam.Handle<any, any>>();
 
     const entry = this;
 
@@ -336,7 +322,6 @@ export class PageEntry {
   }
 
   get<T>(ref: PageParam.Ref<T, unknown>): T | undefined {
-
     const param = ref[PageParam__symbol];
     const handle: PageParam.Handle<T, unknown> | undefined = this._params.get(param);
 
@@ -350,7 +335,6 @@ export class PageEntry {
   }
 
   put<T, TInput>(ref: PageParam.Ref<T, TInput>, input: TInput): T {
-
     const param = ref[PageParam__symbol];
     const handle: PageParam.Handle<T, TInput> | undefined = this._params.get(param);
 
@@ -376,7 +360,6 @@ export class PageEntry {
   transfer(to: PageEntry, when: 'pretend' | 'pre-open' | 'pre-replace' | 'enter' | 'return'): void {
     itsEach(this._params.entries(), ([param, handle]) => {
       if (handle.transfer) {
-
         const transferred = handle.transfer(to.page, when);
 
         if (transferred) {
@@ -410,7 +393,6 @@ export class PageEntry {
   }
 
   apply(): void {
-
     const update = this._update;
 
     this._update = noop;

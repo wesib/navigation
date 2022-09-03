@@ -40,7 +40,7 @@ export function setHashURL(url: URL, hashURL: URL): URL {
   const { pathname, search, hash } = hashURL;
   const result = new URL('', url);
 
-  result.hash = (search || hash || pathname.length > 1) ? (pathname + search + hash) : (search + hash);
+  result.hash = search || hash || pathname.length > 1 ? pathname + search + hash : search + hash;
 
   return result;
 }

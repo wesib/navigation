@@ -5,12 +5,12 @@ import { Navigation } from '../navigation';
 import { PageLoadAgent } from './page-load-agent';
 import { PageLoadURLModifier } from './page-load-url-modifier';
 
-const PageCacheBuster$perContext: CxEntry.Definer<PageCacheBuster> = (/*#__PURE__*/ cxScoped(
-    BootstrapContext,
-    (/*#__PURE__*/ cxSingle({
-      byDefault: target => new PageCacheBuster(target),
-    })),
-));
+const PageCacheBuster$perContext: CxEntry.Definer<PageCacheBuster> = /*#__PURE__*/ cxScoped(
+  BootstrapContext,
+  /*#__PURE__*/ cxSingle({
+    byDefault: target => new PageCacheBuster(target),
+  }),
+);
 
 export const appRevSearchParam = '__wesib_app_rev__';
 
@@ -28,25 +28,21 @@ export class PageCacheBuster {
   readonly agent: PageLoadAgent | undefined;
 
   constructor(context: CxValues) {
-
     const rev = appRev(context.get(BootstrapWindow).document);
 
     if (!rev) {
       this.urlModifier = undefined;
       this.agent = undefined;
     } else {
-
       const navigation = context.get(Navigation);
 
       this.urlModifier = url => url.searchParams.set(appRevSearchParam, rev);
       this.agent = (next, request) => next(new Request(request.url, request)).do(
           mapOn_(response => {
             if (response.ok) {
-
               const newRev = appRev(response.document);
 
               if (newRev && newRev !== rev) {
-
                 const url = new URL(response.page.url.href);
 
                 url.searchParams.set(appRevSearchParam, newRev);
@@ -57,7 +53,7 @@ export class PageCacheBuster {
 
             return response;
           }),
-      );
+        );
     }
   }
 

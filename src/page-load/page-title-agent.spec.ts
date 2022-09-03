@@ -10,7 +10,6 @@ import { PageLoadParam } from './page-load-param';
 import { PageLoadSupport } from './page-load-support.feature';
 
 describe('pageTitleAgent', () => {
-
   let doc: Document;
   let locationMock: LocationMock;
 
@@ -32,10 +31,10 @@ describe('pageTitleAgent', () => {
   beforeEach(async () => {
     responseHtml = '<html></html>';
     mockFetch = jest.fn((_input, _init?) => afterThe({
-      ok: true,
-      headers: new Headers(),
-      text: () => Promise.resolve(responseHtml),
-    } as Response));
+        ok: true,
+        headers: new Headers(),
+        text: () => Promise.resolve(responseHtml),
+      } as Response));
 
     @Feature({
       needs: PageLoadSupport,
@@ -63,23 +62,23 @@ describe('pageTitleAgent', () => {
 </head>
 </html>`;
     await new Promise<void>((resolve, reject) => {
-      navigation.with(
-          PageLoadParam,
-          {
-            receiver: r => r.ok && resolve(),
-          },
-      ).open('/some').catch(reject);
+      navigation
+        .with(PageLoadParam, {
+          receiver: r => r.ok && resolve(),
+        })
+        .open('/some')
+        .catch(reject);
     });
     expect(doc.title).toBe('New Title');
   });
   it('does not update page title if absent in loaded document', async () => {
     await new Promise<void>((resolve, reject) => {
-      navigation.with(
-          PageLoadParam,
-          {
-            receiver: r => r.ok && resolve(),
-          },
-      ).open('/some').catch(reject);
+      navigation
+        .with(PageLoadParam, {
+          receiver: r => r.ok && resolve(),
+        })
+        .open('/some')
+        .catch(reject);
     });
     expect(doc.title).toBe('Initial Title');
   });
@@ -91,12 +90,12 @@ describe('pageTitleAgent', () => {
 </head>
 </html>`;
     await new Promise<void>((resolve, reject) => {
-      navigation.with(
-          PageLoadParam,
-          {
-            receiver: r => r.ok && resolve(),
-          },
-      ).open('/some').catch(reject);
+      navigation
+        .with(PageLoadParam, {
+          receiver: r => r.ok && resolve(),
+        })
+        .open('/some')
+        .catch(reject);
     });
     expect(doc.title).toBe('Initial Title');
   });

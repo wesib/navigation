@@ -7,7 +7,6 @@ import { PageLoadResponse } from './page-load-response';
 import { PageLoader } from './page-loader.impl';
 
 describe('cachingPageLoader', () => {
-
   let responder: EventEmitter<[PageLoadResponse]>;
   let mockLoader: Mock<PageLoader>;
   let caching: PageLoader;
@@ -23,7 +22,9 @@ describe('cachingPageLoader', () => {
     caching = cachingPageLoader(mockLoader);
     page = { url: new URL('http://localhost/page?p=1#test') } as Page;
     page2 = { url: new URL('http://localhost/page2?p=1#test') } as Page;
-    mockReceiver = jest.fn(r => { received = r; });
+    mockReceiver = jest.fn(r => {
+      received = r;
+    });
     mockReceiver2 = jest.fn();
   });
 
@@ -82,7 +83,6 @@ describe('cachingPageLoader', () => {
     expect(mockReceiver2).toHaveBeenCalledTimes(1);
   });
   it('aborts previous page load when another one requested', () => {
-
     const done1 = jest.fn();
 
     caching(page)(mockReceiver).whenOff(done1);
@@ -98,12 +98,9 @@ describe('cachingPageLoader', () => {
     expect(mockReceiver2).toHaveBeenCalledTimes(1);
   });
   it('aborts page load when all supplies cut off', async () => {
-
     const loadDone = jest.fn();
 
-    mockLoader.mockImplementation(
-        () => onEventBy(receiver => responder.on(receiver).whenOff(loadDone)),
-    );
+    mockLoader.mockImplementation(() => onEventBy(receiver => responder.on(receiver).whenOff(loadDone)));
 
     const supply1 = caching(page)(mockReceiver);
     const supply2 = caching(page)(mockReceiver2);
@@ -116,12 +113,9 @@ describe('cachingPageLoader', () => {
     expect(loadDone).toHaveBeenCalledWith(2);
   });
   it('allows the same page load right after all supplies cut off', async () => {
-
     const loadDone = jest.fn();
 
-    mockLoader.mockImplementation(
-        () => onEventBy(receiver => responder.on(receiver).whenOff(loadDone)),
-    );
+    mockLoader.mockImplementation(() => onEventBy(receiver => responder.on(receiver).whenOff(loadDone)));
 
     const supply1 = caching(page)(mockReceiver);
 
@@ -142,12 +136,9 @@ describe('cachingPageLoader', () => {
     expect(mockLoader).toHaveBeenCalledTimes(1);
   });
   it('reloads the same page after all supplies cut off and timeout passed', async () => {
-
     const loadDone = jest.fn();
 
-    mockLoader.mockImplementation(
-        () => onEventBy(receiver => responder.on(receiver).whenOff(loadDone)),
-    );
+    mockLoader.mockImplementation(() => onEventBy(receiver => responder.on(receiver).whenOff(loadDone)));
 
     const supply1 = caching(page)(mockReceiver);
 

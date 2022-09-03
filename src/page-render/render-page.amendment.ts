@@ -27,29 +27,31 @@ import { RenderPageDef } from './render-page-def';
  * @returns New component method amendment.
  */
 export function RenderPage<
-    TClass extends ComponentClass,
-    TAmended extends AeComponentMember<RenderPageDef.Method, TClass> =
-        AeComponentMember<RenderPageDef.Method, TClass>>(
-    def?: RenderPageDef,
+  TClass extends ComponentClass,
+  TAmended extends AeComponentMember<RenderPageDef.Method, TClass> = AeComponentMember<
+    RenderPageDef.Method,
+    TClass
+  >,
+>(
+  def?: RenderPageDef,
 ): ComponentMemberAmendment<RenderPageDef.Method, TClass, RenderPageDef.Method, TAmended> {
-  return ComponentMember<RenderPageDef.Method, TClass, RenderPageDef.Method, TAmended>((
-      { get, amend }: AeComponentMemberTarget<RenderPageDef.Method, TClass>,
-  ) => amend({
-    componentDef: {
-      feature: {
-        needs: [PageLoadSupport],
-      },
-      define(defContext: DefinitionContext<InstanceType<TClass>>) {
-        defContext.whenComponent((context: ComponentContext<InstanceType<TClass>>) => {
-          context.whenReady(context => {
+  return ComponentMember<RenderPageDef.Method, TClass, RenderPageDef.Method, TAmended>(
+    ({ get, amend }: AeComponentMemberTarget<RenderPageDef.Method, TClass>) => amend({
+        componentDef: {
+          feature: {
+            needs: [PageLoadSupport],
+          },
+          define(defContext: DefinitionContext<InstanceType<TClass>>) {
+            defContext.whenComponent((context: ComponentContext<InstanceType<TClass>>) => {
+              context.whenReady(context => {
+                const { component } = context;
+                const renderer = get(component).bind(component);
 
-            const { component } = context;
-            const renderer = get(component).bind(component);
-
-            context.get(PageRenderCtl).renderPageBy(renderer, def);
-          });
-        });
-      },
-    },
-  }));
+                context.get(PageRenderCtl).renderPageBy(renderer, def);
+              });
+            });
+          },
+        },
+      }),
+  );
 }

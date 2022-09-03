@@ -10,7 +10,6 @@ import { Page } from './page';
 import { testPageParam } from './spec';
 
 describe('NavigationAgent', () => {
-
   let cxBuilder: CxBuilder;
   let agent: NavigationAgent;
 
@@ -55,10 +54,12 @@ describe('NavigationAgent', () => {
 
   it('performs navigation without agents', () => {
     agent(mockNavigate, when, from, to);
-    expect(mockNavigate).toHaveBeenCalledWith(expect.objectContaining({
-      url: expect.objectContaining({ href: to.url.href }),
-      get: expect.any(Function),
-    }));
+    expect(mockNavigate).toHaveBeenCalledWith(
+      expect.objectContaining({
+        url: expect.objectContaining({ href: to.url.href }),
+        get: expect.any(Function),
+      }),
+    );
   });
   it('returns `null` fallback without agents', () => {
     expect(cxBuilder.get(NavigationAgent, { or: null })).toBeNull();
@@ -73,14 +74,8 @@ describe('NavigationAgent', () => {
     expect(mockAgent).toHaveBeenCalledWith(mockNavigate, when, from, to);
   });
   it('calls the registered agent', () => {
-
     const mockAgent = jest.fn(
-        (
-            next: (target?: Navigation.URLTarget) => void,
-            _when: string,
-            _from: Page,
-            _to: Page,
-        ) => next(),
+      (next: (target?: Navigation.URLTarget) => void, _when: string, _from: Page, _to: Page) => next(),
     );
 
     cxBuilder.provide(cxConstAsset(NavigationAgent, mockAgent));
@@ -99,7 +94,9 @@ describe('NavigationAgent', () => {
     });
   });
   it('updates URL', () => {
-    cxBuilder.provide(cxConstAsset(NavigationAgent, next => next({ url: new URL('http://localhost/other') })));
+    cxBuilder.provide(
+      cxConstAsset(NavigationAgent, next => next({ url: new URL('http://localhost/other') })),
+    );
 
     agent(mockNavigate, when, from, to);
     expect(mockNavigate).toHaveBeenCalledWith({
@@ -143,42 +140,41 @@ describe('NavigationAgent', () => {
     });
   });
   it('accesses page parameters', () => {
-
     const [param] = testPageParam();
 
     cxBuilder.provide(cxConstAsset(NavigationAgent, next => next()));
-    cxBuilder.provide(cxConstAsset(NavigationAgent, (next, _when, _from, toPage) => {
-      toPage.get(param);
+    cxBuilder.provide(
+      cxConstAsset(NavigationAgent, (next, _when, _from, toPage) => {
+        toPage.get(param);
 
-      return next();
-    }));
+        return next();
+      }),
+    );
 
     agent(mockNavigate, when, from, to);
     expect(to.get).toHaveBeenCalledWith(param);
   });
   it('updates page parameters', () => {
-
     const [param] = testPageParam();
 
     cxBuilder.provide(cxConstAsset(NavigationAgent, next => next()));
-    cxBuilder.provide(cxConstAsset(NavigationAgent, (next, _when, _from, toPage) => {
-      toPage.put(param, 'test');
+    cxBuilder.provide(
+      cxConstAsset(NavigationAgent, (next, _when, _from, toPage) => {
+        toPage.put(param, 'test');
 
-      return next();
-    }));
+        return next();
+      }),
+    );
 
     agent(mockNavigate, when, from, to);
     expect(to.put).toHaveBeenCalledWith(param, 'test');
   });
   it('throws when context destroyed', () => {
-
     const reason = new Error('reason');
 
     cxBuilder.supply.off(reason);
-    expect(() => agent(mockNavigate, when, from, to)).toThrow(new CxReferenceError(
-        NavigationAgent,
-        'The [NavigationAgent] is no longer available',
-        reason,
-    ));
+    expect(() => agent(mockNavigate, when, from, to)).toThrow(
+      new CxReferenceError(NavigationAgent, 'The [NavigationAgent] is no longer available', reason),
+    );
   });
 });
