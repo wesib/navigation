@@ -67,7 +67,10 @@ describe('PageLoader', () => {
 
     await loadDocument();
 
-    expect(mockHttpFetch).toHaveBeenCalledWith(expect.any(Request), undefined);
+    expect(mockHttpFetch).toHaveBeenCalledWith(
+      expect.any(Request) as unknown as Request,
+      undefined,
+    );
 
     const request = mockHttpFetch.mock.calls[0][0] as Request;
 
@@ -87,8 +90,8 @@ describe('PageLoader', () => {
     expect(receiver).toHaveBeenLastCalledWith({
       ok: true,
       page,
-      document: expect.any(Document),
-      response: expect.anything(),
+      document: expect.any(Document) as unknown as Document,
+      response: expect.anything() as unknown as Response,
     });
     expect(receiver).toHaveBeenCalledTimes(2);
     expect(supply.isOff).toBe(true);
@@ -97,7 +100,7 @@ describe('PageLoader', () => {
     const document = (receiver.mock.calls[1][0] as PageLoadResponse.Ok).document;
     const div: Element = document.querySelector('div') as Element;
 
-    expect(div.ownerDocument).toBeInstanceOf(HTMLDocument);
+    expect(div.ownerDocument).toBeInstanceOf(Document);
     expect(div).toBeInstanceOf(HTMLDivElement);
     expect(div.textContent).toBe('test');
   });
@@ -108,14 +111,16 @@ describe('PageLoader', () => {
     const done = jest.fn<(reason?: unknown) => void>();
     const supply = await loadDocument(receiver, done);
 
-    expect(receiver).toHaveBeenLastCalledWith(expect.objectContaining({ ok: true, page }));
+    expect(receiver).toHaveBeenLastCalledWith(
+      expect.objectContaining({ ok: true, page }) as unknown as PageLoadResponse,
+    );
     expect(supply.isOff).toBe(true);
     expect(done).toHaveBeenCalledWith(undefined);
 
     const document = (receiver.mock.calls[1][0] as PageLoadResponse.Ok).document;
     const div: Element = document.querySelector('div') as Element;
 
-    expect(div.ownerDocument).toBeInstanceOf(HTMLDocument);
+    expect(div.ownerDocument).toBeInstanceOf(Document);
     expect(div).toBeInstanceOf(HTMLDivElement);
     expect(div.textContent).toBe('test');
   });
@@ -150,7 +155,9 @@ describe('PageLoader', () => {
     const done = jest.fn<(reason?: unknown) => void>();
     const supply = await loadDocument(receiver, done);
 
-    expect(receiver).toHaveBeenLastCalledWith(expect.objectContaining({ ok: true, page }));
+    expect(receiver).toHaveBeenLastCalledWith(
+      expect.objectContaining({ ok: true, page }) as unknown as PageLoadResponse,
+    );
     expect(supply.isOff).toBe(true);
     expect(done).toHaveBeenCalledWith(undefined);
 

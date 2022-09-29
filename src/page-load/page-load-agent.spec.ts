@@ -60,7 +60,13 @@ describe('PageLoadAgent', () => {
     cxBuilder.provide(cxConstAsset(PageLoadAgent, mockAgent));
 
     expect(agent(mockLoad, request)).toBe(emitter.on);
-    expect(mockAgent).toHaveBeenCalledWith(expect.any(Function), request);
+    expect(mockAgent).toHaveBeenCalledWith(
+      expect.any(Function) as unknown as (
+        this: void,
+        request?: Request,
+      ) => OnEvent<[PageLoadResponse]>,
+      request,
+    );
     expect(mockLoad).toHaveBeenCalledWith(request);
   });
 

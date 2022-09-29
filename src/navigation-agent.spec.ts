@@ -58,7 +58,7 @@ describe('NavigationAgent', () => {
       expect.objectContaining({
         url: expect.objectContaining({ href: to.url.href }),
         get: expect.any(Function),
-      }),
+      }) as unknown as Navigation.Target,
     );
   });
   it('returns `null` fallback without agents', () => {
@@ -81,7 +81,12 @@ describe('NavigationAgent', () => {
     cxBuilder.provide(cxConstAsset(NavigationAgent, mockAgent));
 
     agent(mockNavigate, when, from, to);
-    expect(mockAgent).toHaveBeenCalledWith(expect.any(Function), when, from, to);
+    expect(mockAgent).toHaveBeenCalledWith(
+      expect.any(Function) as unknown as (target?: Navigation.Target) => void,
+      when,
+      from,
+      to,
+    );
   });
   it('performs navigation by calling `next`', () => {
     cxBuilder.provide(cxConstAsset(NavigationAgent, next => next()));
@@ -89,9 +94,9 @@ describe('NavigationAgent', () => {
     agent(mockNavigate, when, from, to);
     expect(mockNavigate).toHaveBeenCalledWith({
       ...to,
-      get: expect.any(Function),
-      put: expect.any(Function),
-    });
+      get: expect.any(Function) as unknown as Page['get'],
+      put: expect.any(Function) as unknown as Page['put'],
+    } as Page);
   });
   it('updates URL', () => {
     cxBuilder.provide(
@@ -102,9 +107,9 @@ describe('NavigationAgent', () => {
     expect(mockNavigate).toHaveBeenCalledWith({
       ...to,
       url: new URL('http://localhost/other'),
-      get: expect.any(Function),
-      put: expect.any(Function),
-    });
+      get: expect.any(Function) as unknown as Page['get'],
+      put: expect.any(Function) as unknown as Page['put'],
+    } as Page);
   });
   it('updates URL using path', () => {
     cxBuilder.provide(cxConstAsset(NavigationAgent, next => next({ url: 'other' })));
@@ -113,9 +118,9 @@ describe('NavigationAgent', () => {
     expect(mockNavigate).toHaveBeenCalledWith({
       ...to,
       url: new URL('http://localhost/other'),
-      get: expect.any(Function),
-      put: expect.any(Function),
-    });
+      get: expect.any(Function) as unknown as Page['get'],
+      put: expect.any(Function) as unknown as Page['put'],
+    } as Page);
   });
   it('updates title', () => {
     cxBuilder.provide(cxConstAsset(NavigationAgent, next => next({ title: 'other title' })));
@@ -124,9 +129,9 @@ describe('NavigationAgent', () => {
     expect(mockNavigate).toHaveBeenCalledWith({
       ...to,
       title: 'other title',
-      get: expect.any(Function),
-      put: expect.any(Function),
-    });
+      get: expect.any(Function) as unknown as Page['get'],
+      put: expect.any(Function) as unknown as Page['put'],
+    } as Page);
   });
   it('updates data', () => {
     cxBuilder.provide(cxConstAsset(NavigationAgent, next => next({ data: 'other data' })));
@@ -135,9 +140,9 @@ describe('NavigationAgent', () => {
     expect(mockNavigate).toHaveBeenCalledWith({
       ...to,
       data: 'other data',
-      get: expect.any(Function),
-      put: expect.any(Function),
-    });
+      get: expect.any(Function) as unknown as Page['get'],
+      put: expect.any(Function) as unknown as Page['put'],
+    } as Page);
   });
   it('accesses page parameters', () => {
     const [param] = testPageParam();

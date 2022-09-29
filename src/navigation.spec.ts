@@ -9,6 +9,7 @@ import { NavigationAgent } from './navigation-agent';
 import {
   EnterPageEvent,
   LeavePageEvent,
+  NavigationEvent,
   NavigationEventType,
   StayOnPageEvent,
 } from './navigation.event';
@@ -204,7 +205,9 @@ describe('Navigation', () => {
       expect(locationMock.history.pushState).not.toHaveBeenCalled();
       expect(location).toEqual({ url: 'http://localhost/index', data: 'initial' });
       expect(locationMock.window.dispatchEvent).toHaveBeenCalledWith(
-        expect.objectContaining({ type: NavigationEventType.StayOnPage }),
+        expect.objectContaining({
+          type: NavigationEventType.StayOnPage,
+        }) as unknown as NavigationEvent,
       );
     });
     it('informs on navigation cancellation', async () => {
@@ -225,17 +228,17 @@ describe('Navigation', () => {
         await navigation.open({ url: '/other', title: 'new title', data: 'new data' }),
       ).toMatchObject({ title: 'new title', data: 'new data' });
       expect(agent).toHaveBeenCalledWith(
-        expect.any(Function),
+        expect.any(Function) as unknown as (target?: Navigation.Target) => void,
         'pre-open',
         expect.objectContaining({
           url: expect.objectContaining({ href: 'http://localhost/index' }),
           data: 'initial',
-        }),
+        }) as unknown as Page,
         expect.objectContaining({
           url: expect.objectContaining({ href: 'http://localhost/other' }),
           title: 'new title',
           data: 'new data',
-        }),
+        }) as unknown as Page,
       );
     });
     it("cancels navigation if agent didn't call the next one", async () => {
@@ -248,7 +251,9 @@ describe('Navigation', () => {
       expect(locationMock.history.pushState).not.toHaveBeenCalled();
       expect(location).toEqual({ url: 'http://localhost/index', data: 'initial' });
       expect(locationMock.window.dispatchEvent).toHaveBeenCalledWith(
-        expect.objectContaining({ type: NavigationEventType.StayOnPage }),
+        expect.objectContaining({
+          type: NavigationEventType.StayOnPage,
+        }) as unknown as NavigationEvent,
       );
     });
     it('cancels the failed navigation', async () => {
@@ -281,7 +286,9 @@ describe('Navigation', () => {
       expect(locationMock.history.pushState).toHaveBeenCalledTimes(1);
       expect(location).toEqual({ url: 'http://localhost/second', data: 3 });
       expect(locationMock.window.dispatchEvent).toHaveBeenLastCalledWith(
-        expect.objectContaining({ type: NavigationEventType.EnterPage }),
+        expect.objectContaining({
+          type: NavigationEventType.EnterPage,
+        }) as unknown as NavigationEvent,
       );
     });
     it('cancels previous navigation when the third one initiated', async () => {
@@ -301,7 +308,9 @@ describe('Navigation', () => {
       expect(locationMock.history.pushState).toHaveBeenCalledTimes(1);
       expect(location).toEqual({ url: 'http://localhost/third' });
       expect(locationMock.window.dispatchEvent).toHaveBeenLastCalledWith(
-        expect.objectContaining({ type: NavigationEventType.EnterPage }),
+        expect.objectContaining({
+          type: NavigationEventType.EnterPage,
+        }) as unknown as NavigationEvent,
       );
     });
   });
@@ -438,7 +447,9 @@ describe('Navigation', () => {
       expect(locationMock.history.replaceState).not.toHaveBeenCalled();
       expect(location).toEqual({ url: 'http://localhost/index', data: 'initial' });
       expect(locationMock.window.dispatchEvent).toHaveBeenCalledWith(
-        expect.objectContaining({ type: NavigationEventType.StayOnPage }),
+        expect.objectContaining({
+          type: NavigationEventType.StayOnPage,
+        }) as unknown as NavigationEvent,
       );
     });
     it('informs on navigation cancellation', async () => {
