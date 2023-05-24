@@ -26,6 +26,7 @@
     "types": "./dist/wesib-navigation.d.ts",
     "default": "./dist/wesib-navigation.js"
   },
+  "sideEffects": false,
   "peerDependencies": {
     "@proc7ts/fun-events": "^10.5.2",
     "@wesib/generic": "^2.0.2",
